@@ -30,19 +30,17 @@
 # The following list include all the items that are mapped to memory segments
 # The structure of each item is as follows {<Prefix name> <ID> <has registers> <library name>}
 
+#if i have multiple parsers,then modify id of each
+#prefix id has_reg libname
 set DEF_LIST {
 	{MICROBLAZE_AXI_IIC 0 0 ""} \
 	{MICROBLAZE_UARTLITE 0 0 ""} \
 	{MICROBLAZE_DLMB_BRAM 0 0 ""} \
 	{MICROBLAZE_ILMB_BRAM 0 0 ""} \
 	{MICROBLAZE_AXI_INTC 0 0 ""} \
-	{INPUT_ARBITER 0 1 input_arbiter_v1_0_0/data/input_arbiter_regs_defines.txt} \
-	{OUTPUT_QUEUES 0 1 output_queues_v1_0_0/data/output_queues_regs_defines.txt} \
-	{OUTPUT_PORT_LOOKUP 0 1 switch_lite_output_port_lookup_v1_0_0/data/output_port_lookup_regs_defines.txt} \
+	{PARSER 0 1 pswitch_parser_v1_0_0/data/parser_regs_defines.txt} \
 	{NF_10G_INTERFACE0 0 1 nf_10ge_interface_shared_v1_0_0/data/nf_10g_interface_shared_regs_defines.txt} \
 	{NF_10G_INTERFACE1 1 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
-	{NF_10G_INTERFACE2 2 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
-	{NF_10G_INTERFACE3 3 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
 	{NF_RIFFA_DMA 0 1 nf_riffa_dma_v1_0_0/data/nf_riffa_dma_regs_defines.txt} \
 
 
@@ -115,9 +113,9 @@ set h_file [open $target_file "a"]
 
 #First, read the memory map information from the reference_project defines file
 source $::env(NF_DESIGN_DIR)/hw/tcl/$::env(NF_PROJECT_NAME)_defines.tcl
-set public_repo_dir $::env(SUME_FOLDER)/lib/hw/
+set public_repo_dir $::env(SUME_FOLDER)/lib/myhw/
 
-
+#reads baseaddress for each prefix being first entry in def list
 set baseaddr [set $prefix\_BASEADDR]
 set highaddr [set $prefix\_HIGHADDR]
 set sizeaddr [set $prefix\_SIZEADDR]
