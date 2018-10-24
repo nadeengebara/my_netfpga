@@ -29,7 +29,7 @@
 # @NETFPGA_LICENSE_HEADER_END@
 
 all: clean
-	vivado -mode batch -source input_arbiter.tcl
+	vivado -mode batch -source pswitch_parser.tcl
 
 clean:
 	rm -rf ip_*  vivado*.* *.xml xgui/ .Xil* *.*~ *.zip
