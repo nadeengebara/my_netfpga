@@ -34,7 +34,7 @@ set design $::env(NF_PROJECT_NAME)
 set top top
 set device xc7vx690t-3-ffg1761
 set proj_dir ./project
-set public_repo_dir $::env(SUME_FOLDER)/lib/myhw/
+set public_repo_dir $::env(SUME_FOLDER)/lib/my_hw/
 set xilinx_repo_dir $::env(XILINX_PATH)/data/ip/xilinx/
 set repo_dir ./ip_repo
 set bit_settings $::env(CONSTRAINTS)/generic_bit.xdc 

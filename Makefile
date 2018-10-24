@@ -39,8 +39,8 @@
 
 
 SCRIPTS_DIR	= tools/
-LIB_REPO	= lib/myhw/ip_repo
-LIB_HW_DIR	= lib/myhw
+LIB_REPO	= lib/my_hw/ip_repo
+LIB_HW_DIR	= lib/my_hw
 LIB_SW_DIR	= lib/sw
 LIB_HW_DIR_INSTANCES := $(shell cd $(LIB_HW_DIR) && find . -maxdepth 4 -type d)
 LIB_HW_DIR_INSTANCES := $(basename $(patsubst ./%,%,$(LIB_HW_DIR_INSTANCES)))
@@ -76,7 +76,7 @@ clean: libclean toolsclean projectsclean hwtestlibclean swclean
 	@find . -type f -name '*.mif' -delete
 
 sume:
-	make -C $(LIB_HW_DIR)/std/cores/pswitch_parser_v1_0_0/
+	make -C $(LIB_HW_DIR)/contrib/cores/pswitch_parser_v1_0_0/
 	make -C $(LIB_HW_DIR)/contrib/cores/nf_endianess_manager_v1_0_0/
 	make -C $(LIB_HW_DIR)/std/cores/fallthrough_small_fifo_v1_0_0/
 	make -C $(LIB_HW_DIR)/std/cores/input_arbiter_v1_0_0/
