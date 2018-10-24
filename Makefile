@@ -76,7 +76,7 @@ clean: libclean toolsclean projectsclean hwtestlibclean swclean
 	@find . -type f -name '*.mif' -delete
 
 sume:
-	make -C $(LIB_HW_DIR)/contrib/cores/pswitch_parser_v1_0_0/
+	make -C $(LIB_HW_DIR)/std/cores/pswitch_parser_v1_0_0/
 	make -C $(LIB_HW_DIR)/contrib/cores/nf_endianess_manager_v1_0_0/
 	make -C $(LIB_HW_DIR)/std/cores/fallthrough_small_fifo_v1_0_0/
 	make -C $(LIB_HW_DIR)/std/cores/input_arbiter_v1_0_0/
