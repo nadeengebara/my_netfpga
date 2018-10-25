@@ -80,7 +80,7 @@ module nf_datapath #(
     output     [1 :0]                         S0_AXI_BRESP,
     output                                    S0_AXI_BVALID,
     output                                    S0_AXI_AWREADY,
-    
+   /* 
     input      [C_S_AXI_ADDR_WIDTH-1 : 0]     S1_AXI_AWADDR,
     input                                     S1_AXI_AWVALID,
     input      [C_S_AXI_DATA_WIDTH-1 : 0]     S1_AXI_WDATA,
@@ -116,7 +116,7 @@ module nf_datapath #(
     output     [1 :0]                         S2_AXI_BRESP,
     output                                    S2_AXI_BVALID,
     output                                    S2_AXI_AWREADY,
-
+*/
     
     // Slave Stream Ports (interface from Rx queues)
     input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_0_tdata,
@@ -125,12 +125,13 @@ module nf_datapath #(
     input                                     s_axis_0_tvalid,
     output                                    s_axis_0_tready,
     input                                     s_axis_0_tlast,
-    input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_1_tdata,
-    input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_1_tkeep,
-    input [C_S_AXIS_TUSER_WIDTH-1:0]          s_axis_1_tuser,
-    input                                     s_axis_1_tvalid,
-    output                                    s_axis_1_tready,
-    input                                     s_axis_1_tlast,
+  
+  //input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_1_tdata,
+  //input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_1_tkeep,
+  //input [C_S_AXIS_TUSER_WIDTH-1:0]          s_axis_1_tuser,
+  //input                                     s_axis_1_tvalid,
+  //output                                    s_axis_1_tready,
+  //input                                     s_axis_1_tlast,
     //input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_2_tdata,
     //input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_2_tkeep,
     //input [C_S_AXIS_TUSER_WIDTH-1:0]          s_axis_2_tuser,
@@ -191,6 +192,63 @@ module nf_datapath #(
     //don't need anything for now since only one module in datapath 
 
 
+
+
+
+   parser
+   pswitch_parser_ip (
+
+
+    .axis_aclk(axis_aclk),
+    .axis_resetn(axis_resetn),
+    .m_axis_agg_tdata(m_axis_0_tdata),
+    .m_axis_agg_tkeep(m_axis_0_tkeep),
+    .m_axis_agg_tuser(m_axis_0_tuser),
+    .m_axis_agg_tvalid(m_axis_0_tvalid),
+    .m_axis_agg_tready(m_axis_0_tready),
+    .m_axis_agg_tlast(m_axis_0_tlast),
+
+    .m_axis_OQ_tdata(m_axis_1_tdata),
+    .m_axis_OQ_tkeep(m_axis_1_tkeep),
+    .m_axis_OQ_tuser(m_axis_1_tuser),
+    .m_axis_OQ_tvalid(m_axis_1_tvalid)),
+    .m_axis_OQ_tready(m_axis_1_tready)),
+    .m_axis_OQ_tlast(m_axis_1_tlast)),
+
+    .s_axis_rxq_tdata(s_axis_0_tdata),
+    .s_axis_rxq_tkeep(s_axis_0_tkeep),
+    .s_axis_rxq_tuser(s_axis_0_tuser),
+    .s_axis_rxq_tvalid(s_axis_0_tvalid),
+    .s_axis_rxq_tready(s_axis_0_tready),
+    .s_axis_rxq_tlast(s_axis_0_tlast),
+
+    // Slave AXI Ports
+      .S_AXI_AWADDR(S0_AXI_AWADDR), 
+      .S_AXI_AWVALID(S0_AXI_AWVALID),
+      .S_AXI_WDATA(S0_AXI_WDATA),  
+      .S_AXI_WSTRB(S0_AXI_WSTRB),  
+      .S_AXI_WVALID(S0_AXI_WVALID), 
+      .S_AXI_BREADY(S0_AXI_BREADY), 
+      .S_AXI_ARADDR(S0_AXI_ARADDR), 
+      .S_AXI_ARVALID(S0_AXI_ARVALID),
+      .S_AXI_RREADY(S0_AXI_RREADY), 
+      .S_AXI_ARREADY(S0_AXI_ARREADY),
+      .S_AXI_RDATA(S0_AXI_RDATA),  
+      .S_AXI_RRESP(S0_AXI_RRESP),  
+      .S_AXI_RVALID(S0_AXI_RVALID), 
+      .S_AXI_WREADY(S0_AXI_WREADY), 
+      .S_AXI_BRESP(S0_AXI_BRESP),  
+      .S_AXI_BVALID(S0_AXI_BVALID), 
+      .S_AXI_AWREADY(S0_AXI_AWREADY),
+      .S_AXI_ACLK (axi_aclk), 
+      .S_AXI_ARESETN(axi_resetn),
+
+
+      );
+
+
+
+/*
     
   //Input Arbiter
   input_arbiter_ip 
@@ -376,7 +434,7 @@ module nf_datapath #(
       .S_AXI_ARESETN(axi_resetn)
     ); 
     
-    
+  */  
     
     
 endmodule
