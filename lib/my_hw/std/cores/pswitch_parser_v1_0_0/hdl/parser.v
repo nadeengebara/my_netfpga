@@ -362,7 +362,8 @@ always @(posedge axis_aclk)
                 version_reg <= #1    `REG_VERSION_DEFAULT;
                 ip2cpu_flip_reg <= #1    `REG_FLIP_DEFAULT;
                 pktin_reg <= #1    `REG_PKTIN_DEFAULT;
-                pktout_reg <= #1    `REG_PKTOUT_DEFAULT;
+                pktout_agg_reg <= #1    `REG_PKTOUT_AGG_DEFAULT;
+                pktout_oq_reg <= #1    `REG_PKTOUT_OQ_DEFAULT;
                 ip2cpu_debug_reg <= #1    `REG_DEBUG_DEFAULT;
         end
         else begin

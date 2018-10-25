@@ -1148,9 +1148,18 @@
     <spirit:fileSet>
       <spirit:name>xilinx_anylanguagesynthesis_view_fileset</spirit:name>
       <spirit:file>
+        <spirit:name>hdl/parser_cpu_regs_defines.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:isIncludeFile>true</spirit:isIncludeFile>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/parser_cpu_regs.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/parser.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_5f7317e6</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_1d428ea7</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1165,6 +1174,15 @@
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_anylanguagebehavioralsimulation_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>hdl/parser_cpu_regs_defines.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:isIncludeFile>true</spirit:isIncludeFile>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/parser_cpu_regs.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
       <spirit:file>
         <spirit:name>hdl/parser.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
@@ -1265,7 +1283,7 @@
       <xilinx:vendorDisplayName>NetFPGA</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.netfpga.org</xilinx:vendorURL>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-10-24T13:04:10Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-10-25T09:09:18Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2016.4</xilinx:xilinxVersion>

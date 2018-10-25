@@ -6,7 +6,7 @@
 <Project Version="7" Minor="17" Path="/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/pswitch_parser_v1_0_0/ip_proj/pswitch_parser.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="bb07516ce7c846908435fd5c45a96787"/>
+    <Option Name="Id" Val="ab220dfb22004e65b80e7b53d90e9604"/>
     <Option Name="Part" Val="xc7vx690tffg1761-3"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -20,7 +20,7 @@
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ManageIP" Val="TRUE"/>
-    <Option Name="IPRepoPath" Val="$PPRDIR/../../../../../myhw"/>
+    <Option Name="IPRepoPath" Val="$PPRDIR/../../../../../my_hw"/>
     <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
     <Option Name="IPCachePermission" Val="read"/>
     <Option Name="IPCachePermission" Val="write"/>
@@ -53,16 +53,8 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../hdl/parser.v">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PPRDIR/../hdl/parser_cpu_regs_defines.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -70,7 +62,13 @@
       </File>
       <File Path="$PPRDIR/../hdl/parser_cpu_regs.v">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../hdl/parser.v">
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
