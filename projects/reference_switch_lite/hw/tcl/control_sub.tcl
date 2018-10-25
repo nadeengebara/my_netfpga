@@ -535,7 +535,7 @@ CONFIG.tx_fc_if {false} CONFIG.xlnx_ref_board {None} \
 	
  
 
- connect_bd_intf_net -intf_net nf_riffa_dma_1_pcie3_cfg_interrupt [get_bd_intf_pins nf_riffa_dma_1/cfg_interrupt] [get_bd_intf_pins pcie3_7x_1/pcie3_cfg_interrupt]
+  connect_bd_intf_net -intf_net nf_riffa_dma_1_pcie3_cfg_interrupt [get_bd_intf_pins nf_riffa_dma_1/cfg_interrupt] [get_bd_intf_pins pcie3_7x_1/pcie3_cfg_interrupt]
   connect_bd_intf_net -intf_net nf_riffa_dma_1_pcie3_cfg_msi [get_bd_intf_pins nf_riffa_dma_1/cfg_interrupt_msi] [get_bd_intf_pins pcie3_7x_1/pcie3_cfg_msi]
   connect_bd_intf_net -intf_net nf_riffa_dma_1_pcie3_cfg_status [get_bd_intf_pins nf_riffa_dma_1/cfg] [get_bd_intf_pins pcie3_7x_1/pcie3_cfg_status]
   connect_bd_intf_net -intf_net nf_riffa_dma_1_pcie_cfg_fc [get_bd_intf_pins nf_riffa_dma_1/cfg_fc] [get_bd_intf_pins pcie3_7x_1/pcie_cfg_fc]
@@ -549,7 +549,7 @@ CONFIG.tx_fc_if {false} CONFIG.xlnx_ref_board {None} \
   #Clock converter connections
   connect_bd_intf_net -intf_net axi_clock_converter_0_M_AXI [get_bd_intf_pins axi_clock_converter_0/M_AXI] [get_bd_intf_pins nf_riffa_dma_1/s_axi_lite]
   connect_bd_intf_net -intf_net axi_interconnect_0_M08_AXI [get_bd_intf_pins axi_clock_converter_0/S_AXI] [get_bd_intf_pins axi_interconnect_0/M08_AXI]
-set_property -dict [ list CONFIG.FREQ_HZ {250000000}  ] [get_bd_intf_pins nf_riffa_dma_1/s_axi_lite]
+  set_property -dict [ list CONFIG.FREQ_HZ {250000000}  ] [get_bd_intf_pins nf_riffa_dma_1/s_axi_lite]
 
   
 
@@ -701,10 +701,10 @@ proc create_root_design { parentCell } {
   create_bd_addr_seg -range $M01_SIZEADDR -offset $M01_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M01_AXI/Reg] SEG_M01_AXI_Reg
   create_bd_addr_seg -range $M02_SIZEADDR -offset $M02_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M02_AXI/Reg] SEG_M02_AXI_Reg
   create_bd_addr_seg -range $M03_SIZEADDR -offset $M03_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M03_AXI/Reg] SEG_M03_AXI_Reg
-  create_bd_addr_seg -range $M04_SIZEADDR -offset $M04_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M04_AXI/Reg] SEG_M04_AXI_Reg
-  create_bd_addr_seg -range $M05_SIZEADDR -offset $M05_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M05_AXI/Reg] SEG_M05_AXI_Reg
-  create_bd_addr_seg -range $M06_SIZEADDR -offset $M06_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M06_AXI/Reg] SEG_M06_AXI_Reg
-  create_bd_addr_seg -range $M07_SIZEADDR -offset $M07_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M07_AXI/Reg] SEG_M07_AXI_Reg
+  #create_bd_addr_seg -range $M04_SIZEADDR -offset $M04_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M04_AXI/Reg] SEG_M04_AXI_Reg
+ # create_bd_addr_seg -range $M05_SIZEADDR -offset $M05_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M05_AXI/Reg] SEG_M05_AXI_Reg
+  #create_bd_addr_seg -range $M06_SIZEADDR -offset $M06_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M06_AXI/Reg] SEG_M06_AXI_Reg
+  #create_bd_addr_seg -range $M07_SIZEADDR -offset $M07_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M07_AXI/Reg] SEG_M07_AXI_Reg
   create_bd_addr_seg -range $M08_SIZEADDR -offset $M08_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs  dma_sub/nf_riffa_dma_1/s_axi_lite/reg0] SEG_nf_riffa_dma_1_reg0
   
   create_bd_addr_seg -range $MICROBLAZE_AXI_IIC_SIZEADDR -offset $MICROBLAZE_AXI_IIC_BASEADDR [get_bd_addr_spaces nf_mbsys/mbsys/microblaze_0/Data] [get_bd_addr_segs nf_mbsys/axi_iic_0/S_AXI/Reg] SEG_axi_iic_0_Reg

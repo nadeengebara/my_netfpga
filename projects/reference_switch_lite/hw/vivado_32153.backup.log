@@ -1,0 +1,75 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Thu Oct 25 16:11:21 2018
+# Process ID: 32153
+# Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw
+# Command line: vivado -mode tcl -source tcl/export_hardware.tcl -tclargs reference_switch_lite
+# Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/vivado.log
+# Journal file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/vivado.jou
+#-----------------------------------------------------------
+source tcl/export_hardware.tcl
+# set design [lindex $argv 0] 
+# puts "\nOpening $design XPR project\n"
+
+Opening reference_switch_lite XPR project
+
+# open_project project/$design.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/ip_repo'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2016.4/data/ip'.
+# puts "\nOpening $design Implementation design\n"
+
+Opening reference_switch_lite Implementation design
+
+# open_run impl_1
+INFO: [Netlist 29-17] Analyzing 1508 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2016.4
+INFO: [Device 21-403] Loading part xc7vx690tffg1761-3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top_early.xdc]
+INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/bd/control_sub/ip/control_sub_pcie3_7x_1_0/source/control_sub_pcie3_7x_1_0-PCIE_X0Y1.xdc:124]
+INFO: [Timing 38-2] Deriving generated clocks [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/bd/control_sub/ip/control_sub_pcie3_7x_1_0/source/control_sub_pcie3_7x_1_0-PCIE_X0Y1.xdc:124]
+create_generated_clock: Time (s): cpu = 00:00:11 ; elapsed = 00:00:09 . Memory (MB): peak = 2525.000 ; gain = 769.258 ; free physical = 57210 ; free virtual = 126131
+INFO: [Timing 38-2] Deriving generated clocks [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/clk_wiz_ip/clk_wiz_ip.xdc:57]
+Finished Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top_early.xdc]
+Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top.xdc]
+WARNING: [Constraints 18-619] A clock with name 'xphy_refclk_p' already exists, overwriting the previous clock with the same name. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:92]
+WARNING: [Constraints 18-619] A clock with name 'nf_10g_interface_0/inst/nf_10g_interface_shared_i/axi_10g_ethernet_i/inst/xpcs/inst/ten_gig_eth_pcs_pma_block_i/gt0_gtwizard_10gbaser_multi_gt_i/gt0_gtwizard_gth_10gbaser_i/gthe2_i/RXOUTCLK' already exists, overwriting the previous clock with the same name. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:114]
+WARNING: [Constraints 18-619] A clock with name 'nf_10g_interface_0/inst/nf_10g_interface_shared_i/axi_10g_ethernet_i/inst/xpcs/inst/ten_gig_eth_pcs_pma_block_i/gt0_gtwizard_10gbaser_multi_gt_i/gt0_gtwizard_gth_10gbaser_i/gthe2_i/TXOUTCLK' already exists, overwriting the previous clock with the same name. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:115]
+WARNING: [Constraints 18-619] A clock with name 'nf_10g_interface_1/inst/nf_10g_interface_block_i/axi_10g_ethernet_i/inst/xpcs/inst/gt0_gtwizard_10gbaser_multi_gt_i/gt0_gtwizard_gth_10gbaser_i/gthe2_i/RXOUTCLK' already exists, overwriting the previous clock with the same name. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:116]
+WARNING: [Constraints 18-619] A clock with name 'nf_10g_interface_1/inst/nf_10g_interface_block_i/axi_10g_ethernet_i/inst/xpcs/inst/gt0_gtwizard_10gbaser_multi_gt_i/gt0_gtwizard_gth_10gbaser_i/gthe2_i/TXOUTCLK' already exists, overwriting the previous clock with the same name. [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:117]
+INFO: [Timing 38-2] Deriving generated clocks [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/constraints/nf_sume_10g.xdc:149]
+Finished Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top.xdc]
+Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top_late.xdc]
+Finished Parsing XDC File [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/.Xil/Vivado-32153-PRIME/dcp/top_late.xdc]
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2705.961 ; gain = 0.000 ; free physical = 57029 ; free virtual = 125950
+Restored from archive | CPU: 1.900000 secs | Memory: 64.656654 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2705.961 ; gain = 0.000 ; free physical = 57029 ; free virtual = 125950
+Generating merged BMM file for the design top 'top'...
+INFO: [Memdata 28-144] Successfully populated the BRAM INIT strings from the following elf files: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/bd/control_sub/ip/control_sub_microblaze_0_0/data/mb_bootloop_le.elf 
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 330 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 2 instances
+  LUT6_2 => LUT6_2 (LUT6, LUT5): 79 instances
+  RAM16X1D => RAM32X1D (RAMD32, RAMD32): 32 instances
+  RAM32M => RAM32M (RAMS32, RAMS32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32, RAMD32): 202 instances
+  RAM32X1D => RAM32X1D (RAMD32, RAMD32): 2 instances
+  RAM64M => RAM64M (RAMD64E, RAMD64E, RAMD64E, RAMD64E): 9 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 4 instances
+
+open_run: Time (s): cpu = 00:00:39 ; elapsed = 00:00:33 . Memory (MB): peak = 2705.961 ; gain = 1540.906 ; free physical = 57140 ; free virtual = 125952
+# puts "\nCopying top.sysdef\n"
+
+Copying top.sysdef
+
+# file copy -force ./project/$design.runs/impl_1/top.sysdef ../sw/embedded/$design.hdf
+# exit
+INFO: [Common 17-206] Exiting Vivado at Thu Oct 25 16:12:03 2018...

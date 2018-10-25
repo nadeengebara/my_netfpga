@@ -211,9 +211,9 @@ module nf_datapath #(
     .m_axis_OQ_tdata(m_axis_1_tdata),
     .m_axis_OQ_tkeep(m_axis_1_tkeep),
     .m_axis_OQ_tuser(m_axis_1_tuser),
-    .m_axis_OQ_tvalid(m_axis_1_tvalid)),
-    .m_axis_OQ_tready(m_axis_1_tready)),
-    .m_axis_OQ_tlast(m_axis_1_tlast)),
+    .m_axis_OQ_tvalid(m_axis_1_tvalid),
+    .m_axis_OQ_tready(m_axis_1_tready),
+    .m_axis_OQ_tlast(m_axis_1_tlast),
 
     .s_axis_rxq_tdata(s_axis_0_tdata),
     .s_axis_rxq_tkeep(s_axis_0_tkeep),
@@ -241,7 +241,7 @@ module nf_datapath #(
       .S_AXI_BVALID(S0_AXI_BVALID), 
       .S_AXI_AWREADY(S0_AXI_AWREADY),
       .S_AXI_ACLK (axi_aclk), 
-      .S_AXI_ARESETN(axi_resetn),
+      .S_AXI_ARESETN(axi_resetn)
 
 
       );

@@ -75,19 +75,26 @@ set_property constrset constraints [get_runs impl_1]
 # Project 
 #####################################
 update_ip_catalog
-create_ip -name switch_lite_output_port_lookup -vendor NetFPGA -library NetFPGA -module_name output_port_lookup_ip
-set_property generate_synth_checkpoint false [get_files output_port_lookup_ip.xci]
-reset_target all [get_ips output_port_lookup_ip]
-generate_target all [get_ips output_port_lookup_ip]
-create_ip -name input_arbiter -vendor NetFPGA -library NetFPGA -module_name input_arbiter_ip
-set_property generate_synth_checkpoint false [get_files input_arbiter_ip.xci]
-reset_target all [get_ips input_arbiter_ip]
-generate_target all [get_ips input_arbiter_ip]
-create_ip -name output_queues -vendor NetFPGA -library NetFPGA -module_name output_queues_ip
-set_property generate_synth_checkpoint false [get_files output_queues_ip.xci]
-reset_target all [get_ips output_queues_ip]
-generate_target all [get_ips output_queues_ip]
 
+create_ip -name pswitch_parser -vendor NetFPGA -library NetFPGA -module_name pswitch_parser_ip
+set_property generate_synth_checkpoint false [get_files pswitch_parser_ip.xci]
+reset_target all [get_ips pswitch_parser_ip]
+generate_target all [get_ips pswitch_parser_ip]
+
+#create_ip -name switch_lite_output_port_lookup -vendor NetFPGA -library NetFPGA -module_name output_port_lookup_ip
+#set_property generate_synth_checkpoint false [get_files output_port_lookup_ip.xci]
+#reset_target all [get_ips output_port_lookup_ip]
+#generate_target all [get_ips output_port_lookup_ip]
+
+#create_ip -name input_arbiter -vendor NetFPGA -library NetFPGA -module_name input_arbiter_ip
+#set_property generate_synth_checkpoint false [get_files input_arbiter_ip.xci]
+#reset_target all [get_ips input_arbiter_ip]
+#generate_target all [get_ips input_arbiter_ip]
+
+#create_ip -name output_queues -vendor NetFPGA -library NetFPGA -module_name output_queues_ip
+#set_property generate_synth_checkpoint false [get_files output_queues_ip.xci]
+#reset_target all [get_ips output_queues_ip]
+#generate_target all [get_ips output_queues_ip]
 
 #create the IPI Block Diagram
 source ./tcl/control_sub.tcl

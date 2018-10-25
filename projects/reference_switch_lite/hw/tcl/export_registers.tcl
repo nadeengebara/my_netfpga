@@ -113,7 +113,7 @@ set h_file [open $target_file "a"]
 
 #First, read the memory map information from the reference_project defines file
 source $::env(NF_DESIGN_DIR)/hw/tcl/$::env(NF_PROJECT_NAME)_defines.tcl
-set public_repo_dir $::env(SUME_FOLDER)/lib/myhw/
+set public_repo_dir $::env(SUME_FOLDER)/lib/my_hw
 
 #reads baseaddress for each prefix being first entry in def list
 set baseaddr [set $prefix\_BASEADDR]
