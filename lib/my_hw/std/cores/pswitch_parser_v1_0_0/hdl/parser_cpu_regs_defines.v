@@ -69,7 +69,12 @@
            `define  REG_PKTIN_DEFAULT			32'h0
            `define  REG_PKTIN_ADDR				32'h14
 
-           `define  REG_PKTOUT_BITS				31:0
-           `define  REG_PKTOUT_WIDTH				32
-           `define  REG_PKTOUT_DEFAULT			32'h0
-           `define  REG_PKTOUT_ADDR				32'h18
+           `define  REG_PKTOUT_AGG_BITS				31:0
+           `define  REG_PKTOUT_AGG_WIDTH			32
+           `define  REG_PKTOUT_AGG_DEFAULT			32'h0
+           `define  REG_PKTOUT_AGG_ADDR				32'h18
+
+           `define  REG_PKTOUT_OQ_BITS				31:0
+           `define  REG_PKTOUT_OQ_WIDTH				32
+           `define  REG_PKTOUT_OQ_DEFAULT			32'h0
+           `define  REG_PKTOUT_OQ_ADDR				32'h1C

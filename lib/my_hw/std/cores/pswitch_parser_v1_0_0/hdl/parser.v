@@ -119,17 +119,14 @@ module parser
    localparam WRITE_FIRST_BEAT=2;
    localparam WRITE=3;
    localparam CONT_WRITE=4;
-   
-  
-  
-
    localparam MAX_PKT_SIZE = 2000; // In bytes
    localparam IN_FIFO_DEPTH_BIT = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
    localparam FIRST_BEAT_FIFO_DEPTH = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
 
-   // ------------- Regs/ wires -----------
    
-   // Signals 
+// ------------- Regs/ wires -----------
+   
+   // Streaming Datapath Signals 
    
    //Signals from nf_10g interface
    wire in_rxq_tvalid;
@@ -154,9 +151,7 @@ module parser
 
    //Signal I want
    reg [15:0] ethertype;
-   reg [1:0] appcode;
- 
-   
+   reg [1:0] appcode;  
    
    // Registers
    reg  fifo_rd_en;
@@ -165,6 +160,27 @@ module parser
    reg [NUM_STATES-1:0]                state_next;
       
    
+   //Slave register signals
+
+   reg      [`REG_ID_BITS]    id_reg;
+   reg      [`REG_VERSION_BITS]    version_reg;
+   wire     [`REG_RESET_BITS]    reset_reg;
+   reg      [`REG_FLIP_BITS]    ip2cpu_flip_reg;
+   wire     [`REG_FLIP_BITS]    cpu2ip_flip_reg;
+   reg      [`REG_PKTIN_BITS]    pktin_reg;
+   wire                             pktin_reg_clear;
+   reg      [`REG_PKTOUT_AGG_BITS]    pktout_agg_reg;
+   wire                             pktout_agg_reg_clear;
+   reg      [`REG_PKTOUT_OQ_BITS]    pktout_oq_reg;
+   wire                             pktout_oq_reg_clear;
+   reg      [`REG_DEBUG_BITS]    ip2cpu_debug_reg;
+   wire     [`REG_DEBUG_BITS]    cpu2ip_debug_reg;
+
+   wire clear_counters;
+   wire reset_registers;
+
+
+
    //Modules
    fallthrough_small_fifo
         #( .WIDTH(C_M_AXIS_DATA_WIDTH+C_M_AXIS_TUSER_WIDTH+C_M_AXIS_DATA_WIDTH/8+1),
@@ -279,6 +295,93 @@ module parser
       end
    end
 
+
+//Registers Declaration
+
+ parser_cpu_regs
+ #(
+   .C_S_AXI_DATA_WIDTH (C_S_AXI_DATA_WIDTH),
+   .C_S_AXI_ADDR_WIDTH (C_S_AXI_ADDR_WIDTH),
+   .C_BASE_ADDRESS    (C_BASEADDR)
+ ) arbiter_cpu_regs_inst
+ (
+   // General ports
+    .clk                    (axis_aclk),
+    .resetn                 (axis_resetn),
+   // AXI Lite ports
+    .S_AXI_ACLK             (S_AXI_ACLK),
+    .S_AXI_ARESETN          (S_AXI_ARESETN),
+    .S_AXI_AWADDR           (S_AXI_AWADDR),
+    .S_AXI_AWVALID          (S_AXI_AWVALID),
+    .S_AXI_WDATA            (S_AXI_WDATA),
+    .S_AXI_WSTRB            (S_AXI_WSTRB),
+    .S_AXI_WVALID           (S_AXI_WVALID),
+    .S_AXI_BREADY           (S_AXI_BREADY),
+    .S_AXI_ARADDR           (S_AXI_ARADDR),
+    .S_AXI_ARVALID          (S_AXI_ARVALID),
+    .S_AXI_RREADY           (S_AXI_RREADY),
+    .S_AXI_ARREADY          (S_AXI_ARREADY),
+    .S_AXI_RDATA            (S_AXI_RDATA),
+    .S_AXI_RRESP            (S_AXI_RRESP),
+    .S_AXI_RVALID           (S_AXI_RVALID),
+    .S_AXI_WREADY           (S_AXI_WREADY),
+    .S_AXI_BRESP            (S_AXI_BRESP),
+    .S_AXI_BVALID           (S_AXI_BVALID),
+    .S_AXI_AWREADY          (S_AXI_AWREADY),
+
+
+   // Register ports
+   .id_reg          (id_reg),
+   .version_reg          (version_reg),
+   .reset_reg          (reset_reg),
+   .ip2cpu_flip_reg          (ip2cpu_flip_reg),
+   .cpu2ip_flip_reg          (cpu2ip_flip_reg),
+   .pktin_reg          (pktin_reg),
+   .pktin_reg_clear    (pktin_reg_clear),
+   .pktout_agg_reg          (pktout_agg_reg),
+   .pktout_agg_reg_clear    (pktout_agg_reg_clear),
+   .pktout_oq_reg          (pktout_oq_reg),
+   .pktout_oq_reg_clear    (pktout_oq_reg_clear),
+   .ip2cpu_debug_reg          (ip2cpu_debug_reg),
+   .cpu2ip_debug_reg          (cpu2ip_debug_reg),
+   // Global Registers - user can select if to use
+   .cpu_resetn_soft(),//software reset, after cpu module
+   .resetn_soft    (),//software reset to cpu module (from central reset management)
+   .resetn_sync    (resetn_sync)//synchronized reset, use for better timing
+
+
+);
+
+
+assign clear_counters = reset_reg[0];
+assign reset_registers = reset_reg[4];
+
+always @(posedge axis_aclk)
+        if (~resetn_sync | reset_registers) begin
+                id_reg <= #1    `REG_ID_DEFAULT;
+                version_reg <= #1    `REG_VERSION_DEFAULT;
+                ip2cpu_flip_reg <= #1    `REG_FLIP_DEFAULT;
+                pktin_reg <= #1    `REG_PKTIN_DEFAULT;
+                pktout_reg <= #1    `REG_PKTOUT_DEFAULT;
+                ip2cpu_debug_reg <= #1    `REG_DEBUG_DEFAULT;
+        end
+        else begin
+                id_reg <= #1    `REG_ID_DEFAULT;
+                version_reg <= #1    `REG_VERSION_DEFAULT;
+                ip2cpu_flip_reg <= #1    ~cpu2ip_flip_reg;
+
+                pktin_reg[`REG_PKTIN_WIDTH -2: 0] <= #1  clear_counters | pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) ;
+
+        pktin_reg[`REG_PKTIN_WIDTH-1] <= #1 clear_counters | pktin_reg_clear ? 1'h0 : pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) > {(`REG_PKTIN_WIDTH-1){1'b1}} ? 1'b1 : pktin_reg[`REG_PKTIN_WIDTH-1];
+
+                pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready ) ;
+                pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready) > {(`REG_PKTOUT_AGG_WIDTH-1){1'b1}} ?1'b1 : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1];
+
+                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_oq_tvalid && m_axis_oq_tlast && m_axis_oq_tready ) ;
+                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_oq_tvalid && m_axis_oq_tlast && m_axis_oq_tready) > {(`REG_PKTOUT_OQ_WIDTH-1){1'b1}} ?1'b1 : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1];
+
+                ip2cpu_debug_reg <= #1    `REG_DEBUG_DEFAULT+cpu2ip_debug_reg;
+        end
 
 
 endmodule

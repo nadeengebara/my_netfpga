@@ -38,8 +38,8 @@
 // @NETFPGA_LICENSE_HEADER_END@
 //
 
-`include "input_arbiter_cpu_regs_defines.v"
-module input_arbiter_cpu_regs #
+`include "parser_cpu_regs_defines.v"
+module parser_cpu_regs #
 (
 parameter C_BASE_ADDRESS        = 32'h00000000,
 parameter C_S_AXI_DATA_WIDTH    = 32,
@@ -64,8 +64,10 @@ parameter C_S_AXI_ADDR_WIDTH    = 32
     output reg [`REG_DEBUG_BITS]    cpu2ip_debug_reg,
     input      [`REG_PKTIN_BITS]    pktin_reg,
     output reg                          pktin_reg_clear,
-    input      [`REG_PKTOUT_BITS]    pktout_reg,
-    output reg                          pktout_reg_clear,
+    input      [`REG_PKTOUT_AGG_BITS]    pktout_agg_reg,
+    output reg                          pktout_agg_reg_clear,
+    input      [`REG_PKTOUT_OQ_BITS]    pktout_oq_reg,
+    output reg                          pktout_oq_reg_clear,
 
     // AXI Lite ports
     input                                     S_AXI_ACLK,
@@ -108,7 +110,8 @@ parameter C_S_AXI_ADDR_WIDTH    = 32
     reg [C_S_AXI_DATA_WIDTH-1:0]        reg_data_out;
     integer                             byte_index;
     reg                                 pktin_reg_clear_d;
-    reg                                 pktout_reg_clear_d;
+    reg                                 pktout_agg_reg_clear_d;
+    reg                                 pktout_oq_reg_clear_d;
 
     // I/O Connections assignments
     assign S_AXI_AWREADY    = axi_awready;
@@ -387,10 +390,15 @@ parameter C_S_AXI_ADDR_WIDTH    = 32
             `REG_PKTIN_ADDR : begin
                 reg_data_out [`REG_PKTIN_BITS] =  pktin_reg;
             end
-            //Pktout Register
-            `REG_PKTOUT_ADDR : begin
-                reg_data_out [`REG_PKTOUT_BITS] =  pktout_reg;
+            //Pktout_AGG Register
+            `REG_PKTOUT_AGG_ADDR : begin
+                reg_data_out [`REG_PKTOUT_AGG_BITS] =  pktout_agg_reg;
             end
+           
+	    `REG_PKTOUT_OQ_ADDR : begin
+                reg_data_out [`REG_PKTOUT_OQ_BITS] =  pktout_oq_reg;
+            end
+
             //Default return value
             default: begin
                 reg_data_out [31:0] =  32'hDEADBEEF;
@@ -409,14 +417,20 @@ parameter C_S_AXI_ADDR_WIDTH    = 32
     if (!resetn_sync) begin
         pktin_reg_clear <= #1 1'b0;
         pktin_reg_clear_d <= #1 1'b0;
-        pktout_reg_clear <= #1 1'b0;
-        pktout_reg_clear_d <= #1 1'b0;
+        pktout_agg_reg_clear <= #1 1'b0;
+        pktout_agg_reg_clear_d <= #1 1'b0;
+        pktout_oq_reg_clear <= #1 1'b0;
+        pktout_oq_reg_clear_d <= #1 1'b0;
+
     end
     else begin
         pktin_reg_clear <= #1 pktin_reg_clear_d;
         pktin_reg_clear_d <= #1(reg_rden && (axi_araddr==`REG_PKTIN_ADDR)) ? 1'b1 : 1'b0;
-        pktout_reg_clear <= #1 pktout_reg_clear_d;
-        pktout_reg_clear_d <= #1(reg_rden && (axi_araddr==`REG_PKTOUT_ADDR)) ? 1'b1 : 1'b0;
+        pktout_agg_reg_clear <= #1 pktout_agg_reg_clear_d;
+        pktout_agg_reg_clear_d <= #1(reg_rden && (axi_araddr==`REG_PKTOUT_AGG_ADDR)) ? 1'b1 : 1'b0;
+        pktout_oq_reg_clear <= #1 pktout_oq_reg_clear_d;
+        pktout_oq_reg_clear_d <= #1(reg_rden && (axi_araddr==`REG_PKTOUT_OQ_ADDR)) ? 1'b1 : 1'b0;
+
     end
 
 
