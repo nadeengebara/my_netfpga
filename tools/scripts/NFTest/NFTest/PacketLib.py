@@ -126,6 +126,19 @@ def make_IP_pkt(pkt_len = 60, **kwargs):
     pkt = make_MAC_hdr(**kwargs)/make_IP_hdr(**kwargs)/generate_load(pkt_len - 34)
     return pkt
 
+##########################
+#Function: make_agg_pkt
+#Keyword Arguments: src_MAC, dst_MAC, EtherType
+#                    pkt_len
+# Description: creates and returns an aggregation packet of length pkt_len
+
+def make_agg_pkt(pkt_len = 60, **kwargs):
+  if pkt_len<60:
+    pkt_len=60
+  pkt=make_MAC_hdr(**kwargs)/generate_load(pkt-len -14)
+  return pkt
+
+
 ############################
 # Function: make_VLAN_pkt
 # Keyword Arguments: src_MAC, dst_MAC, EtherType
