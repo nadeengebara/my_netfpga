@@ -303,7 +303,7 @@ module parser
    .C_S_AXI_DATA_WIDTH (C_S_AXI_DATA_WIDTH),
    .C_S_AXI_ADDR_WIDTH (C_S_AXI_ADDR_WIDTH),
    .C_BASE_ADDRESS    (C_BASEADDR)
- ) arbiter_cpu_regs_inst
+ ) parser_cpu_regs_inst
  (
    // General ports
     .clk                    (axis_aclk),
@@ -378,8 +378,8 @@ always @(posedge axis_aclk)
                 pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready ) ;
                 pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready) > {(`REG_PKTOUT_AGG_WIDTH-1){1'b1}} ?1'b1 : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1];
 
-                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_oq_tvalid && m_axis_oq_tlast && m_axis_oq_tready ) ;
-                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_oq_tvalid && m_axis_oq_tlast && m_axis_oq_tready) > {(`REG_PKTOUT_OQ_WIDTH-1){1'b1}} ?1'b1 : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1];
+                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_OQ_tvalid && m_axis_OQ_tlast && m_axis_OQ_tready ) ;
+                pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1]<= #1  clear_counters | pktout_oq_reg_clear ? 'h0  : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-2:0] + (m_axis_OQ_tvalid && m_axis_OQ_tlast && m_axis_OQ_tready) > {(`REG_PKTOUT_OQ_WIDTH-1){1'b1}} ?1'b1 : pktout_oq_reg [`REG_PKTOUT_OQ_WIDTH-1];
 
                 ip2cpu_debug_reg <= #1    `REG_DEBUG_DEFAULT+cpu2ip_debug_reg;
         end

@@ -1159,7 +1159,7 @@
       <spirit:file>
         <spirit:name>hdl/parser.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_1d428ea7</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_adf38d07</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1283,7 +1283,7 @@
       <xilinx:vendorDisplayName>NetFPGA</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.netfpga.org</xilinx:vendorURL>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-10-25T09:09:18Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-10-25T14:12:09Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2016.4</xilinx:xilinxVersion>
