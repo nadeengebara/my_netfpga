@@ -6,7 +6,7 @@
  *        parser.v
  *
  *  Library:
- *        hw/std/cores/input_arbiter
+ *        hw/std/cores/parser
  *
  *  Module:
  *        parser
@@ -16,13 +16,12 @@
  * 		
  *  Description:
    Parses bit from HOP to determine whether it should be forwarded to Aggregation pipeline or  Output Queues
-   
-  
-   
-   
+        
  *
  */
 
+
+`include "parser_cpu_regs_defines.v"
 `timescale 1ns/1ps
 
 module parser
@@ -143,9 +142,9 @@ module parser
    wire [C_M_AXIS_DATA_WIDTH - 1:0] fifo_out_tdata;
    wire [((C_M_AXIS_DATA_WIDTH / 8)) - 1:0]fifo_out_tkeep;
    wire fifo_out_tlast;
-   wire fifo_tvalid;
    
-   // Signals from OQ and AGGREGATOR
+   
+   // Signals from TX Queues
    wire in_OQ_tready;
    wire in_agg_tready;
 
@@ -194,7 +193,7 @@ module parser
          .empty                          (fifo_empty),
          // Inputs
          .din                            ({in_rxq_tlast, in_rxq_tuser, in_rxq_tkeep, in_rxq_tdata}),
-         .wr_en                          (in_rxq_tvalid & ~nearly_full),
+         .wr_en                          (in_rxq_tvalid & ~fifo_nearly_full),
          .rd_en                          (fifo_rd_en),
          .reset                          (~axis_resetn),
          .clk                            (axis_aclk));
@@ -303,7 +302,7 @@ module parser
    .C_S_AXI_DATA_WIDTH (C_S_AXI_DATA_WIDTH),
    .C_S_AXI_ADDR_WIDTH (C_S_AXI_ADDR_WIDTH),
    .C_BASE_ADDRESS    (C_BASEADDR)
- ) arbiter_cpu_regs_inst
+ ) parser_cpu_regs_inst
  (
    // General ports
     .clk                    (axis_aclk),

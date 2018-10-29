@@ -228,13 +228,13 @@ source $::env(NF_DESIGN_DIR)/hw/tcl/$::env(NF_PROJECT_NAME)_defines.tcl
   set_property range $M01_SIZEADDR [get_bd_addr_segs {S00_AXI/SEG_M01_AXI_Reg}] 
 
 
-assign_bd_address [get_bd_addr_segs {M02_AXI/Reg }]  
-  set_property offset $M02_BASEADDR [get_bd_addr_segs {S00_AXI/SEG_M02_AXI_Reg}]
-  set_property range $M02_SIZEADDR [get_bd_addr_segs {S00_AXI/SEG_M02_AXI_Reg}] 
+#assign_bd_address [get_bd_addr_segs {M02_AXI/Reg }]  
+#  set_property offset $M02_BASEADDR [get_bd_addr_segs {S00_AXI/SEG_M02_AXI_Reg}]
+#  set_property range $M02_SIZEADDR [get_bd_addr_segs {S00_AXI/SEG_M02_AXI_Reg}] 
 
-assign_bd_address [get_bd_addr_segs {M03_AXI/Reg }]  
-  set_property offset $M03_BASEADDR [get_bd_addr_segs {S00_AXI/SEG_M03_AXI_Reg}]
-  set_property range $M03_SIZEADDR [get_bd_addr_segs {S00_AXI/SEG_M03_AXI_Reg}] 
+#assign_bd_address [get_bd_addr_segs {M03_AXI/Reg }]  
+#  set_property offset $M03_BASEADDR [get_bd_addr_segs {S00_AXI/SEG_M03_AXI_Reg}]
+#  set_property range $M03_SIZEADDR [get_bd_addr_segs {S00_AXI/SEG_M03_AXI_Reg}] 
 
  
   # Restore current instance

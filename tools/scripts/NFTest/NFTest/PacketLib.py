@@ -135,7 +135,7 @@ def make_IP_pkt(pkt_len = 60, **kwargs):
 def make_agg_pkt(pkt_len = 60, **kwargs):
   if pkt_len<60:
     pkt_len=60
-  pkt=make_MAC_hdr(**kwargs)/generate_load(pkt-len -14)
+  pkt=make_MAC_hdr(**kwargs)/generate_load(pkt_len -14)
   return pkt
 
 

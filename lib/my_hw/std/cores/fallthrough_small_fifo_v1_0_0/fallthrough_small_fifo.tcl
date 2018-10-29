@@ -47,7 +47,7 @@ set lib_name NetFPGA
 create_project -name ${design} -force -dir "./${proj_dir}" -part ${device} -ip
 set_property source_mgmt_mode All [current_project]
 set_property top ${top} [current_fileset]
-set_property ip_repo_paths $::env(SUME_FOLDER)/lib/hw/  [current_fileset]
+set_property ip_repo_paths $::env(SUME_FOLDER)/lib/my_hw/  [current_fileset]
 puts "Creating Fallthrough Small FIFO IP"
 #####################################
 # Project Structure & IP Build

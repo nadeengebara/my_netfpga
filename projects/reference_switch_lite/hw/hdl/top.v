@@ -149,14 +149,14 @@
   wire[C_TUSER_WIDTH-1:0]     axis_i_0_tuser;
  wire[(C_DATA_WIDTH/8)-1:0]       axis_i_0_tkeep;
  wire            axis_i_0_tready;
-/*
+
  wire[C_DATA_WIDTH-1:0]      axis_o_0_tdata;
 wire            axis_o_0_tvalid;
  wire            axis_o_0_tlast;
  wire [C_TUSER_WIDTH-1:0]         axis_o_0_tuser;
  wire[(C_DATA_WIDTH/8)-1:0]       axis_o_0_tkeep;
  wire            axis_o_0_tready;
-
+/*
   wire[C_DATA_WIDTH-1:0]      axis_i_1_tdata;
   wire            axis_i_1_tvalid;
   wire            axis_i_1_tlast;

@@ -82,7 +82,7 @@ def nftest_init(sim_loop = [], hw_config=None):
     if not isHW():
         sim = True
         simLib.init()
-        ifaceArray = ['nf0', 'nf1', 'nf2', 'nf3']
+        ifaceArray = ['nf0', 'nf1','nf2','nf3']
         for iface in ifaceArray:
             connections[iface] = 'phy_dummy'
             sent_phy[iface] = []

@@ -49,7 +49,7 @@ set_property source_mgmt_mode All [current_project]
 set_property top ${top_module_name} [current_fileset]
 
 # local IP repo
-set_property ip_repo_paths $::env(SUME_FOLDER)/lib/hw/  [current_fileset]
+set_property ip_repo_paths $::env(SUME_FOLDER)/lib/my_hw/  [current_fileset]
 update_ip_catalog
 
 # IP build.

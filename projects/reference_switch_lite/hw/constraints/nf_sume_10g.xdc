@@ -63,25 +63,25 @@ set_property LOC GTHE2_CHANNEL_X1Y38 [get_cells -hier -filter name=~*interface_1
 
 # XGE-SFP2 -- SUME
 
-set_property PACKAGE_PIN J38 [get_ports sfp2_tx_disable]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_disable]
-set_property PACKAGE_PIN E39 [get_ports sfp2_tx_fault]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_fault]
-set_property PACKAGE_PIN J37 [get_ports sfp2_tx_abs]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_abs]
+#set_property PACKAGE_PIN J38 [get_ports sfp2_tx_disable]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_disable]
+#set_property PACKAGE_PIN E39 [get_ports sfp2_tx_fault]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_fault]
+#set_property PACKAGE_PIN J37 [get_ports sfp2_tx_abs]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp2_tx_abs]
 
-set_property LOC GTHE2_CHANNEL_X1Y37 [get_cells -hier -filter name=~*interface_2*gthe2_i]
+#set_property LOC GTHE2_CHANNEL_X1Y37 [get_cells -hier -filter name=~*interface_2*gthe2_i]
 
 # XGE-SFP3 -- SUME -- FIRST FROM THE BOTTOM (to PCIe)
 
-set_property PACKAGE_PIN L21 [get_ports sfp3_tx_disable]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_disable]
-set_property PACKAGE_PIN J26 [get_ports sfp3_tx_fault]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_fault]
-set_property PACKAGE_PIN H36 [get_ports sfp3_tx_abs]
-set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_abs]
+#set_property PACKAGE_PIN L21 [get_ports sfp3_tx_disable]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_disable]
+#set_property PACKAGE_PIN J26 [get_ports sfp3_tx_fault]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_fault]
+#set_property PACKAGE_PIN H36 [get_ports sfp3_tx_abs]
+#set_property IOSTANDARD LVCMOS15 [get_ports sfp3_tx_abs]
 
-set_property LOC GTHE2_CHANNEL_X1Y36 [get_cells -hier -filter name=~*interface_3*gthe2_i]
+#set_property LOC GTHE2_CHANNEL_X1Y36 [get_cells -hier -filter name=~*interface_3*gthe2_i]
 #set_property LOC GTHE2_CHANNEL_X1Y36 [get_cells nf_10g_interface_3/inst/nf_10g_interface_block_i/axi_10g_ethernet_i/inst/ten_gig_eth_pcs_pma/inst/gt0_gtwizard_10gbaser_multi_gt_i/gt0_gtwizard_gth_10gbaser_i/gthe2_i]
 
 ## -- SFP clocks
@@ -98,13 +98,13 @@ create_clock -period 6.400 [get_ports xphy_refclk_p]
 #   YLW - RX
 set_property PACKAGE_PIN G13 [get_ports sfp0_tx_led]
 set_property PACKAGE_PIN AL22 [get_ports sfp1_tx_led]
-set_property PACKAGE_PIN AY18 [get_ports sfp2_tx_led]
-set_property PACKAGE_PIN P31 [get_ports sfp3_tx_led]
+#set_property PACKAGE_PIN AY18 [get_ports sfp2_tx_led]
+#set_property PACKAGE_PIN P31 [get_ports sfp3_tx_led]
 
 set_property PACKAGE_PIN L15 [get_ports sfp0_rx_led]
 set_property PACKAGE_PIN BA20 [get_ports sfp1_rx_led]
-set_property PACKAGE_PIN AY17 [get_ports sfp2_rx_led]
-set_property PACKAGE_PIN K32 [get_ports sfp3_rx_led]
+#set_property PACKAGE_PIN AY17 [get_ports sfp2_rx_led]
+#set_property PACKAGE_PIN K32 [get_ports sfp3_rx_led]
 
 set_property IOSTANDARD LVCMOS15 [get_ports sfp?_?x_led]
 
@@ -115,10 +115,10 @@ create_clock -period 3.103  [get_pins -hier -filter name=~*interface_0*gthe2_i/R
 create_clock -period 3.103  [get_pins -hier -filter name=~*interface_0*gthe2_i/TXOUTCLK]
 create_clock -period 3.103  [get_pins -hier -filter name=~*interface_1*gthe2_i/RXOUTCLK]
 create_clock -period 3.103  [get_pins -hier -filter name=~*interface_1*gthe2_i/TXOUTCLK]
-create_clock -period 3.103  [get_pins -hier -filter name=~*interface_2*gthe2_i/RXOUTCLK]
-create_clock -period 3.103  [get_pins -hier -filter name=~*interface_2*gthe2_i/TXOUTCLK]
-create_clock -period 3.103  [get_pins -hier -filter name=~*interface_3*gthe2_i/RXOUTCLK]
-create_clock -period 3.103  [get_pins -hier -filter name=~*interface_3*gthe2_i/TXOUTCLK]
+#create_clock -period 3.103  [get_pins -hier -filter name=~*interface_2*gthe2_i/RXOUTCLK]
+#create_clock -period 3.103  [get_pins -hier -filter name=~*interface_2*gthe2_i/TXOUTCLK]
+#create_clock -period 3.103  [get_pins -hier -filter name=~*interface_3*gthe2_i/RXOUTCLK]
+#create_clock -period 3.103  [get_pins -hier -filter name=~*interface_3*gthe2_i/TXOUTCLK]
 
 
 
