@@ -42,7 +42,7 @@ module parser
     parameter ETHER_TYPE_POS        = 96,   //16 Bits
     parameter APP_CODE_POS           = 112, 
     parameter ETHER_TYPE            = 16'h8888,
-    parameter APP_CODE           = 2'b01    
+    parameter APP_CODE           = 2'b00    
 )
 (
     // Part 1: System side signals
@@ -241,7 +241,7 @@ module parser
         agg_packet=0;
            if(!fifo_empty ) begin
                  state_next = PARSE_HEADER;
-                 fifo_rd_en= 1;
+                 //fifo_rd_en= 1;
            end
         end
 
@@ -250,7 +250,8 @@ module parser
 		            ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
                 appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
           
-          if(( ethertype==ETHER_TYPE) || (appcode==APP_CODE)) begin  //set to or to work with regular switch. Ideally &&
+          if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin  //set to or to work with regular switch. This should ideally be an AND and not an OR
+		     $display(" AGG PACKET");
                      agg_packet=1;      
            end
                   state_next=WRITE_FIRST_BEAT;
