@@ -1133,7 +1133,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>APP_CODE</spirit:name>
         <spirit:displayName>App Code</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.APP_CODE" spirit:bitStringLength="2">&quot;01&quot;</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.APP_CODE" spirit:bitStringLength="2">&quot;00&quot;</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -1159,7 +1159,7 @@
       <spirit:file>
         <spirit:name>hdl/parser.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_b9e885c5</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_f095c76f</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1283,7 +1283,7 @@
       <xilinx:vendorDisplayName>NetFPGA</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.netfpga.org</xilinx:vendorURL>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-10-29T21:59:13Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-10-30T20:00:44Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2016.4</xilinx:xilinxVersion>

@@ -1,4 +1,4 @@
-//-
+//
 // Copyright (C) 2010, 2011 The Board of Trustees of The Leland Stanford
 //
 /*******************************************************************************
@@ -112,13 +112,10 @@ module parser
    // ------------ Internal Params --------
 
     
-   localparam NUM_STATES = 3;
-   localparam IDLE = 0;
-   localparam PARSE_HEADER = 1;
-   localparam WRITE_FIRST_BEAT=2;
-   localparam WRITE=3;
-   localparam CONT_WRITE=4;
-   localparam MAX_PKT_SIZE = 2000; // In bytes
+   localparam NUM_STATES = 1;
+   localparam PARSE_HEADER = 0;
+   localparam WRITE_PACKET=1;
+  localparam MAX_PKT_SIZE = 2000; // In bytes
    localparam IN_FIFO_DEPTH_BIT = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
    localparam FIRST_BEAT_FIFO_DEPTH = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
 
@@ -154,6 +151,8 @@ module parser
    
    // Registers
    reg  fifo_rd_en;
+   reg  agg_valid;
+   reg  OQ_valid;
    reg  agg_packet;
    reg [NUM_STATES-1:0]                state;
    reg [NUM_STATES-1:0]                state_next;
@@ -213,82 +212,62 @@ module parser
    
    //output side
 
-   assign m_axis_agg_tdata = fifo_out_tdata;
-   assign m_axis_agg_tkeep = fifo_out_tkeep;
-   assign m_axis_agg_tuser = fifo_out_tuser;
-   assign m_axis_agg_tlast = fifo_out_tlast;
-   assign m_axis_agg_tvalid= agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE))) ;
-   assign in_agg_tready    = m_axis_agg_tready;
-   
+   assign m_axis_agg_tdata  = fifo_out_tdata;
+   assign m_axis_agg_tkeep  = fifo_out_tkeep;
+   assign m_axis_agg_tuser  = fifo_out_tuser;
+   assign m_axis_agg_tlast  = fifo_out_tlast;
+   assign in_agg_tready     = m_axis_agg_tready;
+   assign m_axis_agg_tvalid = agg_valid;
+
    assign m_axis_OQ_tdata = fifo_out_tdata;
    assign m_axis_OQ_tkeep = fifo_out_tkeep;
    assign m_axis_OQ_tuser = fifo_out_tuser;
    assign m_axis_OQ_tlast = fifo_out_tlast;
-   assign m_axis_OQ_tvalid= ~agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE)));
+   assign m_axis_OQ_tvalid = OQ_valid; 
+  // assign m_axis_OQ_tvalid= ~agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE)));
    assign in_OQ_tready    = m_axis_OQ_tready;
    
  
      
 
    always @(*) begin
-      state_next      = state;
-      fifo_rd_en      = 0;
-     
+      state_next         = state;
+      fifo_rd_en         = 0;
+      agg_valid  = 0;  
+      OQ_valid   = 0;
 
       case(state)
         /* cycle between input queues until one is not empty */
-        IDLE: begin
+        PARSE_HEADER: begin
         agg_packet=0;
            if(!fifo_empty ) begin
-                 state_next = PARSE_HEADER;
-                 //fifo_rd_en= 1;
-           end
-        end
-
-       PARSE_HEADER: begin
-           /* Determine type of packet */
-		            ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
+		ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
                 appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
-          
-          if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin  //set to or to work with regular switch. This should ideally be an AND and not an OR
+           if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin  //set to or to work with regular switch. This should ideally be an AND and not an OR
 		     $display(" AGG PACKET");
                      agg_packet=1;      
            end
-                  state_next=WRITE_FIRST_BEAT;
+             state_next = WRITE_PACKET;
+	   end       
+        end 
+	WRITE_PACKET: begin
+           /* Determine type of packet */
+           agg_valid = agg_packet & ~fifo_empty;
+	   OQ_valid  = ~agg_packet & ~fifo_empty;
+	   if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
+		fifo_rd_en=1;
+		if(fifo_out_tlast === 1) begin
+			state_next=PARSE_HEADER; 
+	       end
+	   end  
         end
         
-        WRITE_FIRST_BEAT: begin
-          if ( (agg_packet&&in_agg_tready) || (!agg_packet && in_OQ_tready)) begin
-                 state_next=WRITE;
-          end
-        end
-        
-        WRITE: begin
-        if(!fifo_empty) begin
-              if((agg_packet&&in_agg_tready) || (!agg_packet && in_OQ_tready)) begin
-                 state_next = CONT_WRITE;
-                 fifo_rd_en= 1;
-          end
-        end
-      end
-         CONT_WRITE: begin
-           /* if this is the last word then write it and get out */
-        if((agg_packet&&in_agg_tready&&m_axis_agg_tlast) || (!agg_packet&&in_OQ_tready&&m_axis_OQ_tlast)) begin
-              state_next = IDLE;
-	      fifo_rd_en= 1;
-         end
-           /* otherwise read and write as usual */
-           else if ( ((agg_packet&&in_agg_tready)||(!agg_packet&&in_OQ_tready))&& !fifo_empty) begin
-              fifo_rd_en= 1;
-           end  
-        end
-
       endcase // case(state)
    end // always @ (*)
 
    always @(posedge axis_aclk) begin
       if(~axis_resetn) begin
-         state <= IDLE;
+         state <= PARSE_HEADER;
       end
       else begin
          state <= state_next;
