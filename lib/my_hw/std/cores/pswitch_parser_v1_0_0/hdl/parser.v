@@ -112,12 +112,18 @@ module parser
    // ------------ Internal Params --------
 
     
-   localparam NUM_STATES = 1;
-   localparam PARSE_HEADER = 0;
-   localparam WRITE_PACKET=1;
-  localparam MAX_PKT_SIZE = 2000; // In bytes
-   localparam IN_FIFO_DEPTH_BIT = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
-   localparam FIRST_BEAT_FIFO_DEPTH = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam NUM_STATES              = 2;
+   localparam PARSE_HEADER            = 0;
+  // localparam WRITE_BUBBLE            = 1;
+   localparam WAIT_PACKET             = 1;
+   localparam IDLE                    = 0;
+  // localparam WRITE_BUBBLE            = 1;
+   localparam MAX_PKT_SIZE            = 2000; // In bytes
+   localparam IN_FIFO_DEPTH_BIT       = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam FIRST_BEAT_FIFO_DEPTH   = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam COUNT_REQUIRED          = ETHER_TYPE_POS/C_M_AXIS_DATA_WIDTH;
+   localparam RELATIVE_ETHER_TYPE_POS = ETHER_TYPE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
+   localparam RELATIVE_APP_CODE_POS   =APP_CODE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
 
    
 // ------------- Regs/ wires -----------
@@ -141,21 +147,31 @@ module parser
    wire fifo_out_tlast;
    
    
+   //Signals from agg_fifo
+   wire agg_fifo_empty;
+   wire agg_fifo_out;
+   wire agg_fifo_in;   
+  
+  
+
    // Signals from TX Queues
    wire in_OQ_tready;
    wire in_agg_tready;
 
-   //Signal I want
+   //Signals I want
    reg [15:0] ethertype;
    reg [1:0] appcode;  
-   
+   integer write_count=0;  
+   integer local_pos;
    // Registers
+   reg agg_fifo_wr_en;
+   reg agg_fifo_rd_en;
    reg  fifo_rd_en;
    reg  agg_valid;
    reg  OQ_valid;
    reg  agg_packet;
-   reg [NUM_STATES-1:0]                state;
-   reg [NUM_STATES-1:0]                state_next;
+   reg [NUM_STATES-1:0]                state_write,state_read;
+   reg [NUM_STATES-1:0]                state_write_next,state_read_next;
       
    
    //Slave register signals
@@ -196,9 +212,25 @@ module parser
          .rd_en                          (fifo_rd_en),
          .reset                          (~axis_resetn),
          .clk                            (axis_aclk));
+   //HOLDS WHETHER PACKET IS AN AGG PACKET
+   fallthrough_small_fifo
+        #( .WIDTH(1),
+           .MAX_DEPTH_BITS(3))
+      agg_fifo
+        (// Outputs
+         .dout                           (agg_fifo_out),
+         .full                           (),
+         .nearly_full                    (),
+	 .prog_full                      (),
+         .empty                          (agg_fifo_empty),
+         // Inputs
+         .din                            (agg_fifo_in),
+         .wr_en                          (agg_fifo_wr_en),
+         .rd_en                          (agg_fifo_rd_en),
+         .reset                          (~axis_resetn),
+         .clk                            (axis_aclk));
    
  
-
  //Logic signal assignments   -- As long as fifo is not almost full, continuously write to it
     
     // Input side
@@ -228,18 +260,63 @@ module parser
    assign in_OQ_tready    = m_axis_OQ_tready;
    
  
-     
+    assign agg_fifo_in=agg_packet; 
+
 
    always @(*) begin
-      state_next         = state;
-      fifo_rd_en         = 0;
-      agg_valid  = 0;  
-      OQ_valid   = 0;
+      state_write_next         = state_write;
+      agg_fifo_wr_en     =0;
 
-      case(state)
+      case(state_write)
         /* cycle between input queues until one is not empty */
         PARSE_HEADER: begin
-        agg_packet=0;
+	    if(in_rxq_tvalid&s_axis_rxq_tready==1) begin
+	       if(write_count==COUNT_REQUIRED) begin
+		        ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
+                        appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+	       	if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin
+                    $display(" AGG PACKET");
+                    agg_packet=1;
+                end
+            	else begin  
+	     	    agg_packet=0;
+	        end
+                 agg_fifo_wr_en=1;
+	         state_write_next=WAIT_PACKET;    
+                     
+           end      
+	  else begin
+		write_count=write_count+1;	
+	 end 
+        end
+        end
+
+    /*   WRITE_BUBBLE:begin
+		agg_fifo_wr_en=1;
+                count=0; 
+		if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
+                state_next=PARSE_HEADER
+                end
+                else begin
+		state_next=WAIT_PACKET;	
+                end
+              
+       end
+      */      
+	WAIT_PACKET: begin
+           /* Determine type of packet */
+	if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
+		  state_write_next=PARSE_HEADER; 
+	     end
+      end
+	endcase // case(state)
+   end // always @ (*)
+
+			
+					
+                    
+
+/*        agg_packet=0;
            if(!fifo_empty ) begin
 		ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
                 appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
@@ -250,27 +327,49 @@ module parser
              state_next = WRITE_PACKET;
 	   end       
         end 
-	WRITE_PACKET: begin
-           /* Determine type of packet */
-           agg_valid = agg_packet & ~fifo_empty;
-	   OQ_valid  = ~agg_packet & ~fifo_empty;
-	   if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
-		fifo_rd_en=1;
-		if(fifo_out_tlast === 1) begin
-			state_next=PARSE_HEADER; 
-	       end
-	   end  
-        end
-        
-      endcase // case(state)
-   end // always @ (*)
+*/
 
-   always @(posedge axis_aclk) begin
+       always @(*) begin
+	
+	agg_fifo_rd_en=0;
+	fifo_rd_en=0;
+        agg_valid=0;
+        OQ_valid=0;
+        state_read_next=state_read;
+
+	case(state_read) 
+
+        IDLE:begin 
+        agg_valid  = agg_fifo_out&~fifo_empty&~agg_fifo_empty;
+        OQ_valid   = ~agg_fifo_out&~fifo_empty&~agg_fifo_empty;
+	if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
+		fifo_rd_en=1;
+            if(fifo_out_tlast == 1) begin
+        //        state_read_next=READ_BUBBLE; 
+                  agg_fifo_rd_en=1;
+                  end
+          end
+        end
+/*
+         READ_BUBBLE:begin
+		agg_fifo_ed_en<=1;
+		fifo_rd_en<=1;
+		state_read_next<=IDLE;
+*/
+      endcase
+     end
+   
+  always @(posedge axis_aclk) begin
       if(~axis_resetn) begin
-         state <= PARSE_HEADER;
+        write_count<=0; 
+	agg_valid<=0;
+	OQ_valid<=0;
+	state_write <= PARSE_HEADER;
+        state_read <= IDLE;
       end
       else begin
-         state <= state_next;
+         state_write <= state_write_next;
+	 state_read <= state_read_next;
       end
    end
 
