@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Mon Oct 29 22:06:30 2018
-# Process ID: 23521
+# Start of session at: Thu Nov  1 13:16:13 2018
+# Process ID: 4540
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test
 # Command line: vivado -mode batch -source ../../../projects/reference_switch_lite/hw/tcl/reference_switch_lite_sim.tcl -tclargs both_parser_test
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/vivado.log
@@ -96,7 +96,7 @@ INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'pswitch_parser_ip'
 INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'pswitch_parser_ip'...
 # create_ip -name blk_mem_gen -vendor xilinx.com -library ip -version 8.3 -module_name identifier_ip
 INFO: [Device 21-403] Loading part xc7vx690tffg1761-3
-create_ip: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1401.426 ; gain = 325.852 ; free physical = 58466 ; free virtual = 128070
+create_ip: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1401.430 ; gain = 324.852 ; free physical = 58024 ; free virtual = 128037
 # set_property -dict [list CONFIG.Interface_Type {AXI4} CONFIG.AXI_Type {AXI4_Lite} CONFIG.AXI_Slave_Type {Memory_Slave} CONFIG.Use_AXI_ID {false} CONFIG.Load_Init_File {true} CONFIG.Coe_File {/../../../../../../create_ip/id_rom16x32.coe} CONFIG.Fill_Remaining_Memory_Locations {true} CONFIG.Remaining_Memory_Locations {DEADDEAD} CONFIG.Memory_Type {Simple_Dual_Port_RAM} CONFIG.Use_Byte_Write_Enable {true} CONFIG.Byte_Size {8} CONFIG.Assume_Synchronous_Clk {true} CONFIG.Write_Width_A {32} CONFIG.Write_Depth_A {1024} CONFIG.Read_Width_A {32} CONFIG.Operating_Mode_A {READ_FIRST} CONFIG.Write_Width_B {32} CONFIG.Read_Width_B {32} CONFIG.Operating_Mode_B {READ_FIRST} CONFIG.Enable_B {Use_ENB_Pin} CONFIG.Register_PortA_Output_of_Memory_Primitives {false} CONFIG.Register_PortB_Output_of_Memory_Primitives {false} CONFIG.Use_RSTB_Pin {true} CONFIG.Reset_Type {ASYNC} CONFIG.Port_A_Write_Rate {50} CONFIG.Port_B_Clock {100} CONFIG.Port_B_Enable_Rate {100}] [get_ips identifier_ip]
 # set_property generate_synth_checkpoint false [get_files identifier_ip.xci]
 # reset_target all [get_ips identifier_ip]
@@ -496,6 +496,17 @@ INFO: [USF-XSim-101] Fetching design files from 'sim_1'...
 INFO: [USF-XSim-2] XSim::Compile design
 INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav'
 xvlog -m64 --relax -prj top_tb_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/small_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module small_fifo
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/fallthrough_small_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fallthrough_small_fifo
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module parser_cpu_regs
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module parser
+INFO: [VRFC 10-2458] undeclared symbol resetn_sync, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser.v:429]
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/sim/pswitch_parser_ip.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pswitch_parser_ip
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/clk_wiz_ip/clk_wiz_ip_clk_wiz.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module clk_wiz_ip_clk_wiz
 INFO: [VRFC 10-2458] undeclared symbol clk_out1_clk_wiz_ip_en_clk, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/clk_wiz_ip/clk_wiz_ip_clk_wiz.v:202]
@@ -576,18 +587,19 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/
 INFO: [VRFC 10-311] analyzing module nf_datapath
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top_sim
-INFO: [VRFC 10-2458] undeclared symbol ctivity_rec3, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:1030]
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/small_fifo.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module small_fifo
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/fallthrough_small_fifo.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module fallthrough_small_fifo
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module parser_cpu_regs
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module parser
-INFO: [VRFC 10-2458] undeclared symbol resetn_sync, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser.v:349]
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/sim/pswitch_parser_ip.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module pswitch_parser_ip
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tdata, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:706]
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tkeep, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:707]
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tuser, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:708]
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tvalid, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:709]
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tready, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:710]
+INFO: [VRFC 10-2458] undeclared symbol axis_i_4_tlast, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:711]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tdata, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:795]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tkeep, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:796]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tuser, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:797]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tvalid, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:798]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tready, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:799]
+INFO: [VRFC 10-2458] undeclared symbol axis_o_4_tlast, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:800]
+INFO: [VRFC 10-2458] undeclared symbol ctivity_rec3, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:1033]
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module top_tb
 INFO: [VRFC 10-2458] undeclared symbol pcie_7x_mgt_rxn, assumed default net type wire [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:115]
@@ -649,22 +661,35 @@ INFO: [USF-XSim-3] XSim::Elaborate design
 INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav'
 Vivado Simulator 2016.4
 Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
-Running: /opt/Xilinx/Vivado/2016.4/bin/unwrapped/lnx64.o/xelab -wto f41a49a43c3d49b5955f0af6fbe5eddd --debug typical --relax --mt 8 -d SIMULATION=1 -L xil_defaultlib -L blk_mem_gen_v8_3_5 -L lib_pkg_v1_0_2 -L lib_srl_fifo_v1_0_2 -L generic_baseblocks_v2_1_0 -L axi_infrastructure_v1_1_0 -L axi_register_slice_v2_1_11 -L fifo_generator_v13_1_3 -L axi_data_fifo_v2_1_10 -L axi_crossbar_v2_1_12 -L axi_clock_converter_v2_1_10 -L axi_protocol_converter_v2_1_11 -L axi_mmu_v2_1_9 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
+Running: /opt/Xilinx/Vivado/2016.4/bin/unwrapped/lnx64.o/xelab -wto 7e1a675ff34a49039bd2486b2a396b14 --debug typical --relax --mt 8 -d SIMULATION=1 -L xil_defaultlib -L blk_mem_gen_v8_3_5 -L lib_pkg_v1_0_2 -L lib_srl_fifo_v1_0_2 -L generic_baseblocks_v2_1_0 -L axi_infrastructure_v1_1_0 -L axi_register_slice_v2_1_11 -L fifo_generator_v13_1_3 -L axi_data_fifo_v2_1_10 -L axi_crossbar_v2_1_12 -L axi_clock_converter_v2_1_10 -L axi_protocol_converter_v2_1_11 -L axi_mmu_v2_1_9 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
-WARNING: [VRFC 10-1374] size mismatch in mixed language port association, vhdl port m_axis_tready [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:638]
+WARNING: [VRFC 10-1374] size mismatch in mixed language port association, vhdl port m_axis_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:700]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_rxn [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:115]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_rxp [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:116]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_txn [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:117]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_txp [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:118]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 2 for port i2c_reset [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:139]
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_AWADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:226]
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_ARADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:232]
+WARNING: [VRFC 10-278] actual bit length 256 differs from formal bit length 64 for port s_axis_4_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:489]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 8 for port s_axis_4_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:490]
+WARNING: [VRFC 10-278] actual bit length 256 differs from formal bit length 64 for port m_axis_4_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:524]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 8 for port m_axis_4_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:525]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_AWADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:227]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_ARADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:233]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 64 for port s_axis_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:795]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port s_axis_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:796]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 128 for port s_axis_tuser [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:797]
 WARNING: [VRFC 10-1783] select index 62 into current_contents is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_3/simulation/blk_mem_gen_v8_3.v:2420]
 WARNING: [VRFC 10-597] element index -1 into num_read_words_dc is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/fifo_generator_v13_1/simulation/fifo_generator_vlog_beh.v:5490]
 WARNING: [VRFC 10-597] element index -1 into num_write_words_dc is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/fifo_generator_v13_1/simulation/fifo_generator_vlog_beh.v:5540]
 Completed static elaboration
 Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 Completed simulation data flow analysis
@@ -689,10 +714,13 @@ Compiling module unisims_ver.BUFH
 Compiling module xil_defaultlib.clk_wiz_ip_clk_wiz
 Compiling module xil_defaultlib.clk_wiz_ip
 Compiling module xil_defaultlib.axi_clocking
-Compiling module xil_defaultlib.small_fifo(WIDTH=417,MAX_DEPTH_B...
-Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=417...
+Compiling module xil_defaultlib.small_fifo(WIDTH=201,MAX_DEPTH_B...
+Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=201...
+Compiling module xil_defaultlib.small_fifo(WIDTH=1,MAX_DEPTH_BIT...
+Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=1)
 Compiling module xil_defaultlib.parser_cpu_regs(C_BASE_ADDRESS=3...
 Compiling module xil_defaultlib.parser_default
+Compiling module xil_defaultlib.pswitch_parser_ip
 Compiling module xil_defaultlib.nf_datapath(C_M_AXIS_DATA_WIDTH=...
 Compiling module blk_mem_gen_v8_3_5.beh_vlog_ff_clr_v8_3(INIT=1'b0)
 Compiling module blk_mem_gen_v8_3_5.beh_vlog_ff_pre_v8_3(INIT=1'b1)
@@ -883,10 +911,10 @@ Built simulation snapshot top_tb_behav
     ** Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 
 source /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav/xsim.dir/top_tb_behav/webtalk/xsim_webtalk.tcl -notrace
-INFO: [Common 17-186] '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Mon Oct 29 22:06:59 2018. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2016.4/doc/webtalk_introduction.html.
-INFO: [Common 17-206] Exiting Webtalk at Mon Oct 29 22:06:59 2018...
-run_program: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 1525.816 ; gain = 0.000 ; free physical = 58301 ; free virtual = 127942
-INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds
+INFO: [Common 17-186] '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav/xsim.dir/top_tb_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Thu Nov  1 13:16:43 2018. For additional details about this file, please refer to the WebTalk help file at /opt/Xilinx/Vivado/2016.4/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Nov  1 13:16:43 2018...
+run_program: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 1526.617 ; gain = 0.000 ; free physical = 57853 ; free virtual = 127909
+INFO: [USF-XSim-69] 'elaborate' step finished in '6' seconds
 INFO: [USF-XSim-4] XSim::Simulate design
 INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.sim/sim_1/behav'
 INFO: [USF-XSim-98] *** Running xsim
@@ -897,8 +925,8 @@ Time resolution is 100 fs
 source top_tb.tcl
 ## current_wave_config
 INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_tb_behav' loaded.
-launch_simulation: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1576.949 ; gain = 89.062 ; free physical = 58288 ; free virtual = 127934
-launch_xsim: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1576.949 ; gain = 90.320 ; free physical = 58288 ; free virtual = 127934
+launch_simulation: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1576.750 ; gain = 88.859 ; free physical = 57833 ; free virtual = 127899
+launch_xsim: Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1576.750 ; gain = 91.117 ; free physical = 57833 ; free virtual = 127899
 # run 10us
  Block Memory Generator module loading initial data...
  Block Memory Generator data initialization complete.
@@ -995,6 +1023,9 @@ Info: Input file contains:
 Info: 2 barriers
 1017 ns.Info: barrier complete transactor
 Note: Time is 1025 ns.
+Time: 1025 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 0 ingress packets
+Note: Time is 1025 ns.
 Time: 1025 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Info: 0 ingress packets
 Note: Time is 1025 ns.
@@ -1005,7 +1036,7 @@ Time: 1025 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__9
 Info: 0 ingress packets
 Note: Time is 1030 ns.
 Time: 1030 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Info: 0 ingress packets
+Info: barrier request: expecting 2 pkts
 Note: Time is 1030 ns.
 Time: 1030 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Info: barrier request: expecting 0 pkts
@@ -1015,50 +1046,178 @@ Info: barrier request: expecting 0 pkts
 Note: Time is 1030 ns.
 Time: 1030 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Info: barrier request: expecting 0 pkts
-Note: Time is 1035 ns.
-Time: 1035 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Info: barrier request: expecting 10 pkts
 1120 ns. Info: barrier request transactor
-Note: Time is 3035 ns.
-Time: 3035500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+ AGG PACKET
+Note: Time is 3130 ns.
+Time: 3130500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Sending next ingress packet
-Note: Time is 3060 ns.
-Time: 3060500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+ AGG PACKET
+ AGG PACKET
+Note: Time is 3195 ns.
+Time: 3195500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Sending next ingress packet
-Note: Time is 3090 ns.
-Time: 3090500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3120 ns.
-Time: 3120500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3150 ns.
-Time: 3150500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3180 ns.
-Time: 3180500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3205 ns.
-Time: 3205500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3235 ns.
-Time: 3235500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3265 ns.
-Time: 3265500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3295 ns.
-Time: 3295500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Sending next ingress packet
-Note: Time is 3300 ns.
-Time: 3300 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Note: Time is 3200 ns.
+Time: 3200 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Info: Input file contains:
 Info: 2 barriers
-Note: Time is 3310 ns.
-Time: 3310 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
-Info: 10 ingress packets
-Note: Time is 3320 ns.
-Time: 3320 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Note: Time is 3210 ns.
+Time: 3210 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 2 ingress packets
+Note: Time is 3215 ns.
+Time: 3215 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
 Info: barrier request: expecting 0 pkts
-                7340 top_tb.top_sim.barrier_i.inst Error: timeout exceeded waiting for barrier
-$finish called at time : 7340 ns : File "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/barrier_ip/hdl/barrier.v" Line 100
-INFO: [Common 17-206] Exiting Vivado at Mon Oct 29 22:07:03 2018...
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: Input file contains:
+Info: 3 barriers
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: Input file contains:
+Info: 3 barriers
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_3/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_3/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: Input file contains:
+Info: 3 barriers
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+Note: Time is 3221 ns.
+Time: 3221 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: Input file contains:
+Info: 3 barriers
+3221 ns.Info: barrier complete transactor
+Note: Time is 3230 ns.
+Time: 3230 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 0 ingress packets
+Note: Time is 3230 ns.
+Time: 3230 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_3/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 0 ingress packets
+Note: Time is 3230 ns.
+Time: 3230 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 0 ingress packets
+Note: Time is 3235 ns.
+Time: 3235 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier request: expecting 0 pkts
+Note: Time is 3235 ns.
+Time: 3235 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_3/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier request: expecting 0 pkts
+Note: Time is 3235 ns.
+Time: 3235 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier request: expecting 0 pkts
+Note: Time is 3240 ns.
+Time: 3240 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 0 ingress packets
+Note: Time is 3245 ns.
+Time: 3245 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier request: expecting 15 pkts
+3330 ns. Info: barrier request transactor
+Note: Time is 5285 ns.
+Time: 5285500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5350 ns.
+Time: 5350500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5415 ns.
+Time: 5415500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5480 ns.
+Time: 5480500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5545 ns.
+Time: 5545500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5610 ns.
+Time: 5610500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5675 ns.
+Time: 5675500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5740 ns.
+Time: 5740500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5805 ns.
+Time: 5805500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5870 ns.
+Time: 5870500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 5935 ns.
+Time: 5935500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 6000 ns.
+Time: 6000500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 6065 ns.
+Time: 6065500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 6130 ns.
+Time: 6130500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+ AGG PACKET
+Note: Time is 6195 ns.
+Time: 6195500 ps  Iteration: 0  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Sending next ingress packet
+Note: Time is 6200 ns.
+Time: 6200 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: Input file contains:
+Info: 3 barriers
+Note: Time is 6210 ns.
+Time: 6210 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: 15 ingress packets
+Note: Time is 6225 ns.
+Time: 6225 ns  Iteration: 6  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier request: expecting 2 pkts
+Note: Time is 6227 ns.
+Time: 6227 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_0/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/nf_interface_0_stim.axi: end of stimuli @ 6227 ns.
+Note: Time is 6227 ns.
+Time: 6227 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_1/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/nf_interface_1_stim.axi: end of stimuli @ 6227 ns.
+Note: Time is 6227 ns.
+Time: 6227 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_2/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/nf_interface_2_stim.axi: end of stimuli @ 6227 ns.
+Note: Time is 6227 ns.
+Time: 6227 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_3/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/nf_interface_3_stim.axi: end of stimuli @ 6227 ns.
+Note: Time is 6227 ns.
+Time: 6227 ns  Iteration: 2  Process: /top_tb/top_sim/axis_sim_stim_4/U0/line__90  File: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/axis_sim_stim_ip0/hdl/axis_sim_stim.vhd
+Info: barrier complete
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/dma_0_stim.axi: end of stimuli @ 6227 ns.
+6227 ns.Info: barrier complete transactor
+
+/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/reg_stim.axi: end of stimuli @ 6340 ns.
+INFO: [Common 17-206] Exiting Vivado at Thu Nov  1 13:16:46 2018...

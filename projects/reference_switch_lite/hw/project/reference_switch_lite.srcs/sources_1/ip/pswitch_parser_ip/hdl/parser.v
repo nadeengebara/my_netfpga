@@ -1,4 +1,4 @@
-//-
+//
 // Copyright (C) 2010, 2011 The Board of Trustees of The Leland Stanford
 //
 /*******************************************************************************
@@ -27,8 +27,8 @@
 module parser
 #(
     // Master AXI Stream Data Width
-    parameter C_M_AXIS_DATA_WIDTH=256,
-    parameter C_S_AXIS_DATA_WIDTH=256,
+    parameter C_M_AXIS_DATA_WIDTH=64,
+    parameter C_S_AXIS_DATA_WIDTH=64,
     parameter C_M_AXIS_TUSER_WIDTH=128,
     parameter C_S_AXIS_TUSER_WIDTH=128,
   
@@ -42,7 +42,7 @@ module parser
     parameter ETHER_TYPE_POS        = 96,   //16 Bits
     parameter APP_CODE_POS           = 112, 
     parameter ETHER_TYPE            = 16'h8888,
-    parameter APP_CODE           = 2'b01    
+    parameter APP_CODE           = 2'b00    
 )
 (
     // Part 1: System side signals
@@ -52,6 +52,7 @@ module parser
 
     // Master Stream Ports to AGGREGATOR 
     output [C_M_AXIS_DATA_WIDTH - 1:0] m_axis_agg_tdata,
+
     output [((C_M_AXIS_DATA_WIDTH / 8)) - 1:0] m_axis_agg_tkeep,
     output [C_M_AXIS_TUSER_WIDTH-1:0] m_axis_agg_tuser,
     output m_axis_agg_tvalid,
@@ -112,15 +113,18 @@ module parser
    // ------------ Internal Params --------
 
     
-   localparam NUM_STATES = 3;
-   localparam IDLE = 0;
-   localparam PARSE_HEADER = 1;
-   localparam WRITE_FIRST_BEAT=2;
-   localparam WRITE=3;
-   localparam CONT_WRITE=4;
-   localparam MAX_PKT_SIZE = 2000; // In bytes
-   localparam IN_FIFO_DEPTH_BIT = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
-   localparam FIRST_BEAT_FIFO_DEPTH = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam NUM_STATES              = 2;
+   localparam PARSE_HEADER            = 0;
+  // localparam WRITE_BUBBLE            = 1;
+   localparam WAIT_PACKET             = 1;
+   localparam IDLE                    = 0;
+  // localparam WRITE_BUBBLE            = 1;
+   localparam MAX_PKT_SIZE            = 2000; // In bytes
+   localparam IN_FIFO_DEPTH_BIT       = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam FIRST_BEAT_FIFO_DEPTH   = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
+   localparam COUNT_REQUIRED          = ETHER_TYPE_POS/C_M_AXIS_DATA_WIDTH;
+   localparam RELATIVE_ETHER_TYPE_POS = ETHER_TYPE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
+   localparam RELATIVE_APP_CODE_POS   =APP_CODE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
 
    
 // ------------- Regs/ wires -----------
@@ -144,19 +148,31 @@ module parser
    wire fifo_out_tlast;
    
    
+   //Signals from agg_fifo
+   wire agg_fifo_empty;
+   wire agg_fifo_out;
+   wire agg_fifo_in;   
+  
+  
+
    // Signals from TX Queues
    wire in_OQ_tready;
    wire in_agg_tready;
 
-   //Signal I want
+   //Signals I want
    reg [15:0] ethertype;
    reg [1:0] appcode;  
-   
+   integer write_count=0;  
+   integer local_pos;
    // Registers
+   reg agg_fifo_wr_en;
+   reg agg_fifo_rd_en;
    reg  fifo_rd_en;
+   reg  agg_valid;
+   reg  OQ_valid;
    reg  agg_packet;
-   reg [NUM_STATES-1:0]                state;
-   reg [NUM_STATES-1:0]                state_next;
+   reg [NUM_STATES-1:0]                state_write,state_read;
+   reg [NUM_STATES-1:0]                state_write_next,state_read_next;
       
    
    //Slave register signals
@@ -197,9 +213,25 @@ module parser
          .rd_en                          (fifo_rd_en),
          .reset                          (~axis_resetn),
          .clk                            (axis_aclk));
+   //HOLDS WHETHER PACKET IS AN AGG PACKET
+   fallthrough_small_fifo
+        #( .WIDTH(1),
+           .MAX_DEPTH_BITS(3))
+      agg_fifo
+        (// Outputs
+         .dout                           (agg_fifo_out),
+         .full                           (),
+         .nearly_full                    (),
+	 .prog_full                      (),
+         .empty                          (agg_fifo_empty),
+         // Inputs
+         .din                            (agg_fifo_in),
+         .wr_en                          (agg_fifo_wr_en),
+         .rd_en                          (agg_fifo_rd_en),
+         .reset                          (~axis_resetn),
+         .clk                            (axis_aclk));
    
  
-
  //Logic signal assignments   -- As long as fifo is not almost full, continuously write to it
     
     // Input side
@@ -213,84 +245,132 @@ module parser
    
    //output side
 
-   assign m_axis_agg_tdata = fifo_out_tdata;
-   assign m_axis_agg_tkeep = fifo_out_tkeep;
-   assign m_axis_agg_tuser = fifo_out_tuser;
-   assign m_axis_agg_tlast = fifo_out_tlast;
-   assign m_axis_agg_tvalid= agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE))) ;
-   assign in_agg_tready    = m_axis_agg_tready;
-   
+   assign m_axis_agg_tdata  = fifo_out_tdata;
+   assign m_axis_agg_tkeep  = fifo_out_tkeep;
+   assign m_axis_agg_tuser  = fifo_out_tuser;
+   assign m_axis_agg_tlast  = fifo_out_tlast;
+   assign in_agg_tready     = m_axis_agg_tready;
+   assign m_axis_agg_tvalid = agg_valid;
+
    assign m_axis_OQ_tdata = fifo_out_tdata;
    assign m_axis_OQ_tkeep = fifo_out_tkeep;
    assign m_axis_OQ_tuser = fifo_out_tuser;
    assign m_axis_OQ_tlast = fifo_out_tlast;
-   assign m_axis_OQ_tvalid= ~agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE)));
+   assign m_axis_OQ_tvalid = OQ_valid; 
+  // assign m_axis_OQ_tvalid= ~agg_packet & ((state==WRITE_FIRST_BEAT) | (~fifo_empty&(state==WRITE | state==CONT_WRITE)));
    assign in_OQ_tready    = m_axis_OQ_tready;
    
  
-     
+    assign agg_fifo_in=agg_packet; 
+
 
    always @(*) begin
-      state_next      = state;
-      fifo_rd_en      = 0;
-     
+      state_write_next         = state_write;
+      agg_fifo_wr_en     =0;
 
-      case(state)
+      case(state_write)
         /* cycle between input queues until one is not empty */
-        IDLE: begin
-        agg_packet=0;
-           if(!fifo_empty ) begin
-                 state_next = PARSE_HEADER;
-                 fifo_rd_en= 1;
-           end
+        PARSE_HEADER: begin
+	    if(in_rxq_tvalid&s_axis_rxq_tready==1) begin
+	       if(write_count==COUNT_REQUIRED) begin
+		        ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
+                        appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+	       	if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin
+                    $display(" AGG PACKET");
+                    agg_packet=1;
+                end
+            	else begin  
+	     	    agg_packet=0;
+	        end
+                 agg_fifo_wr_en=1;
+	         state_write_next=WAIT_PACKET;    
+                     
+           end      
+	  else begin
+		write_count=write_count+1;	
+	 end 
+        end
         end
 
-       PARSE_HEADER: begin
+    /*   WRITE_BUBBLE:begin
+		agg_fifo_wr_en=1;
+                count=0; 
+		if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
+                state_next=PARSE_HEADER
+                end
+                else begin
+		state_next=WAIT_PACKET;	
+                end
+              
+       end
+      */      
+	WAIT_PACKET: begin
            /* Determine type of packet */
-		            ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
-                appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
-          
-          if(( ethertype==ETHER_TYPE) || (appcode==APP_CODE)) begin  //set to or to work with regular switch. Ideally &&
-                     agg_packet=1;      
-           end
-                  state_next=WRITE_FIRST_BEAT;
-        end
-        
-        WRITE_FIRST_BEAT: begin
-          if ( (agg_packet&&in_agg_tready) || (!agg_packet && in_OQ_tready)) begin
-                 state_next=WRITE;
-          end
-        end
-        
-        WRITE: begin
-        if(!fifo_empty) begin
-              if((agg_packet&&in_agg_tready) || (!agg_packet && in_OQ_tready)) begin
-                 state_next = CONT_WRITE;
-                 fifo_rd_en= 1;
-          end
-        end
+	if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
+		  state_write_next=PARSE_HEADER; 
+	     end
       end
-         CONT_WRITE: begin
-           /* if this is the last word then write it and get out */
-        if((agg_packet&&in_agg_tready&&m_axis_agg_tlast) || (!agg_packet&&in_OQ_tready&&m_axis_OQ_tlast)) begin
-              state_next = IDLE;
-	      fifo_rd_en= 1;
-         end
-           /* otherwise read and write as usual */
-           else if ( ((agg_packet&&in_agg_tready)||(!agg_packet&&in_OQ_tready))&& !fifo_empty) begin
-              fifo_rd_en= 1;
-           end  
-        end
-
-      endcase // case(state)
+	endcase // case(state)
    end // always @ (*)
 
-   always @(posedge axis_aclk) begin
+			
+					
+                    
+
+/*        agg_packet=0;
+           if(!fifo_empty ) begin
+		ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
+                appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
+           if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin  //set to or to work with regular switch. This should ideally be an AND and not an OR
+		     $display(" AGG PACKET");
+                     agg_packet=1;      
+           end
+             state_next = WRITE_PACKET;
+	   end       
+        end 
+*/
+
+       always @(*) begin
+	
+	agg_fifo_rd_en=0;
+	fifo_rd_en=0;
+        agg_valid=0;
+        OQ_valid=0;
+        state_read_next=state_read;
+
+	case(state_read) 
+
+        IDLE:begin 
+        agg_valid  = agg_fifo_out&~fifo_empty&~agg_fifo_empty;
+        OQ_valid   = ~agg_fifo_out&~fifo_empty&~agg_fifo_empty;
+	if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
+		fifo_rd_en=1;
+            if(fifo_out_tlast == 1) begin
+        //        state_read_next=READ_BUBBLE; 
+                  agg_fifo_rd_en=1;
+                  end
+          end
+        end
+/*
+         READ_BUBBLE:begin
+		agg_fifo_ed_en<=1;
+		fifo_rd_en<=1;
+		state_read_next<=IDLE;
+*/
+      endcase
+     end
+   
+  always @(posedge axis_aclk) begin
       if(~axis_resetn) begin
-         state <= IDLE;
+        write_count<=0; 
+	agg_valid<=0;
+	OQ_valid<=0;
+	state_write <= PARSE_HEADER;
+        state_read <= IDLE;
       end
       else begin
-         state <= state_next;
+         state_write <= state_write_next;
+	 state_read <= state_read_next;
       end
    end
 

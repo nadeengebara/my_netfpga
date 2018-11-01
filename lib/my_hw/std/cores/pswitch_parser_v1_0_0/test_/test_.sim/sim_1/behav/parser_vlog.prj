@@ -1,0 +1,11 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  "../../../../../fallthrough_small_fifo_v1_0_0/hdl/small_fifo.v"
+verilog xil_defaultlib  "../../../../hdl/parser_cpu_regs.v"
+verilog xil_defaultlib  "../../../../../fallthrough_small_fifo_v1_0_0/hdl/fallthrough_small_fifo.v"
+verilog xil_defaultlib  "../../../../hdl/parser.v"
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

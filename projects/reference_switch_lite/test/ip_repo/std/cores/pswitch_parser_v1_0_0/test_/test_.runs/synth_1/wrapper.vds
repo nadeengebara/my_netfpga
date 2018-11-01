@@ -1,0 +1,495 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Wed Aug  1 11:19:42 2018
+# Process ID: 23348
+# Current directory: /home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1
+# Command line: vivado -log wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source wrapper.tcl
+# Log file: /home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/wrapper.vds
+# Journal file: /home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source wrapper.tcl -notrace
+Command: synth_design -top wrapper -part xc7vx690tffg1761-3
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7vx690t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7vx690t'
+INFO: [Common 17-1223] The version limit for your license is '2017.09' and will expire in -305 days. A version limit expiration means that, although you may be able to continue to use the current version of tools or IP with this license, you will not be eligible for any updates or new releases.
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 23355 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1125.402 ; gain = 194.934 ; free physical = 59637 ; free virtual = 127801
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'wrapper' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter CNT bound to: 10 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'voq' [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter CNT bound to: 10 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'fifo' [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/realtime/fifo_stub.v:6]
+INFO: [Synth 8-256] done synthesizing module 'fifo' (1#1) [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/realtime/fifo_stub.v:6]
+INFO: [Synth 8-638] synthesizing module 'mux' [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mux' (2#1) [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+INFO: [Synth 8-256] done synthesizing module 'voq' (3#1) [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:1]
+INFO: [Synth 8-638] synthesizing module 'scheduler' [/home/nadeen/Vivado/proj/iSLIP_test/scheduler.sv:1]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'arbiter' [/home/nadeen/Vivado/proj/iSLIP_test/arbiter.v:1]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'pp_enc' [/home/nadeen/Vivado/proj/iSLIP_test/pp_enc.v:1]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'thermal_dec' [/home/nadeen/Vivado/proj/iSLIP_test/thermal_dec.v:2]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'thermal_dec' (4#1) [/home/nadeen/Vivado/proj/iSLIP_test/thermal_dec.v:2]
+INFO: [Synth 8-638] synthesizing module 'p_trans' [/home/nadeen/Vivado/proj/iSLIP_test/p_trans.v:2]
+	Parameter N bound to: 4 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'p_trans' (5#1) [/home/nadeen/Vivado/proj/iSLIP_test/p_trans.v:2]
+INFO: [Synth 8-256] done synthesizing module 'pp_enc' (6#1) [/home/nadeen/Vivado/proj/iSLIP_test/pp_enc.v:1]
+INFO: [Synth 8-256] done synthesizing module 'arbiter' (7#1) [/home/nadeen/Vivado/proj/iSLIP_test/arbiter.v:1]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nadeen/Vivado/proj/iSLIP_test/file4.txt:8]
+INFO: [Synth 8-256] done synthesizing module 'scheduler' (8#1) [/home/nadeen/Vivado/proj/iSLIP_test/scheduler.sv:1]
+INFO: [Synth 8-638] synthesizing module 'fabric' [/home/nadeen/Vivado/proj/iSLIP_test/fabric.sv:8]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'mux__parameterized0' [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mux__parameterized0' (8#1) [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+INFO: [Synth 8-638] synthesizing module 'mux__parameterized1' [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mux__parameterized1' (8#1) [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+INFO: [Synth 8-638] synthesizing module 'mux__parameterized2' [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mux__parameterized2' (8#1) [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+INFO: [Synth 8-638] synthesizing module 'mux__parameterized3' [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+	Parameter N bound to: 4 - type: integer 
+	Parameter SEL bound to: 2 - type: integer 
+	Parameter PKT bound to: 8 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'mux__parameterized3' (8#1) [/home/nadeen/Vivado/proj/iSLIP_test/mux.sv:1]
+INFO: [Synth 8-256] done synthesizing module 'fabric' (9#1) [/home/nadeen/Vivado/proj/iSLIP_test/fabric.sv:8]
+INFO: [Synth 8-256] done synthesizing module 'wrapper' (10#1) [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:1]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1165.871 ; gain = 235.402 ; free physical = 59595 ; free virtual = 127759
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1165.871 ; gain = 235.402 ; free physical = 59595 ; free virtual = 127759
+---------------------------------------------------------------------------------
+WARNING: [Project 1-560] Could not resolve non-primitive black box cell 'fifo' instantiated as 'gen_voq[0].voq_w/gen_fifo[0].fifo'. 16 instances of this cell are unresolved black boxes. [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:63]
+INFO: [Device 21-403] Loading part xc7vx690tffg1761-3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[0].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[0].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[1].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[1].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[2].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[2].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[3].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[0].voq_w/gen_fifo[3].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[0].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[0].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[1].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[1].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[2].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[2].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[3].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[1].voq_w/gen_fifo[3].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[0].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[0].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[1].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[1].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[2].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[2].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[3].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[2].voq_w/gen_fifo[3].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[0].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[0].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[1].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[1].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[2].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[2].fifo'
+Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[3].fifo'
+Finished Parsing XDC File [/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/.Xil/Vivado-23348-PRIME/dcp/fifo_in_context.xdc] for cell 'gen_voq[3].voq_w/gen_fifo[3].fifo'
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1654.434 ; gain = 0.000 ; free physical = 59269 ; free virtual = 127433
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59269 ; free virtual = 127433
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7vx690tffg1761-3
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59269 ; free virtual = 127433
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59269 ; free virtual = 127433
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'scheduler'
+INFO: [Synth 8-5545] ROM "next" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "first_iteration" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5544] ROM "mid_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "mid_reg[2]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "mid_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "mid_reg[0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[2]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[2]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[3]" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[3]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[2]" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[2]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[1]" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[1]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "fab_sel_reg[0]" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              000 | 00000000000000000000000000000000
+                      I1 |                              001 | 00000000000000000000000000000001
+                      I2 |                              010 | 00000000000000000000000000000010
+                      I3 |                              011 | 00000000000000000000000000000011
+                      I4 |                              100 | 00000000000000000000000000000100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'scheduler'
+WARNING: [Synth 8-327] inferring latch for variable 'mid_reg[0]' [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:54]
+WARNING: [Synth 8-327] inferring latch for variable 'mid_reg[1]' [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:54]
+WARNING: [Synth 8-327] inferring latch for variable 'mid_reg[2]' [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:54]
+WARNING: [Synth 8-327] inferring latch for variable 'mid_reg[3]' [/home/nadeen/Vivado/proj/iSLIP_test/voq.sv:54]
+WARNING: [Synth 8-327] inferring latch for variable 'fab_sel_reg[3]' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:78]
+WARNING: [Synth 8-327] inferring latch for variable 'fab_sel_reg[2]' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:78]
+WARNING: [Synth 8-327] inferring latch for variable 'fab_sel_reg[1]' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:78]
+WARNING: [Synth 8-327] inferring latch for variable 'fab_sel_reg[0]' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:78]
+WARNING: [Synth 8-327] inferring latch for variable 'voq_sel_reg[0]' [/home/nadeen/Vivado/proj/iSLIP_test/wrapper.sv:59]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:17 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59261 ; free virtual = 127425
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 8     
+	   2 Input      2 Bit       Adders := 8     
++---Registers : 
+	                4 Bit    Registers := 8     
+	                2 Bit    Registers := 8     
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 8     
+	   5 Input      4 Bit        Muxes := 16    
+	   2 Input      4 Bit        Muxes := 16    
+	   6 Input      3 Bit        Muxes := 1     
+	   5 Input      2 Bit        Muxes := 11    
+	   2 Input      2 Bit        Muxes := 9     
+	  16 Input      2 Bit        Muxes := 1     
+	   5 Input      1 Bit        Muxes := 7     
+	   2 Input      1 Bit        Muxes := 19    
+	  16 Input      1 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module wrapper 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 4     
+	   5 Input      2 Bit        Muxes := 3     
+	   2 Input      2 Bit        Muxes := 9     
+	  16 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 3     
+	   5 Input      1 Bit        Muxes := 4     
+	  16 Input      1 Bit        Muxes := 1     
+Module thermal_dec 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+Module p_trans 
+Detailed RTL Component Info : 
++---Muxes : 
+	   5 Input      4 Bit        Muxes := 1     
+Module pp_enc 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 1     
+Module arbiter 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	                2 Bit    Registers := 1     
++---Muxes : 
+	   5 Input      2 Bit        Muxes := 1     
+Module scheduler 
+Detailed RTL Component Info : 
++---Registers : 
+	                4 Bit    Registers := 8     
++---Muxes : 
+	   2 Input      4 Bit        Muxes := 4     
+	   6 Input      3 Bit        Muxes := 1     
+	   5 Input      1 Bit        Muxes := 3     
+Module mux__parameterized0 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+Module mux__parameterized1 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+Module mux__parameterized2 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+Module mux__parameterized3 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+Module mux 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input      8 Bit        Muxes := 1     
+Module voq 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 4     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 3600 (col length:200)
+BRAMs: 2940 (col length: RAMB18 200 RAMB36 100)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59232 ; free virtual = 127396
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59185 ; free virtual = 127350
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59185 ; free virtual = 127349
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59163 ; free virtual = 127327
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+--------------+----------+
+|      |BlackBox name |Instances |
++------+--------------+----------+
+|1     |fifo          |        16|
++------+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |fifo     |     1|
+|2     |fifo__10 |     1|
+|3     |fifo__11 |     1|
+|4     |fifo__12 |     1|
+|5     |fifo__13 |     1|
+|6     |fifo__14 |     1|
+|7     |fifo__15 |     1|
+|8     |fifo__16 |     1|
+|9     |fifo__17 |     1|
+|10    |fifo__18 |     1|
+|11    |fifo__4  |     1|
+|12    |fifo__5  |     1|
+|13    |fifo__6  |     1|
+|14    |fifo__7  |     1|
+|15    |fifo__8  |     1|
+|16    |fifo__9  |     1|
+|17    |BUFG     |     1|
+|18    |LUT1     |     2|
+|19    |LUT2     |    26|
+|20    |LUT3     |    11|
+|21    |LUT4     |    62|
+|22    |LUT5     |    79|
+|23    |LUT6     |   148|
+|24    |FDRE     |    51|
+|25    |LD       |   138|
+|26    |IBUF     |    67|
+|27    |OBUF     |    32|
++------+---------+------+
+
+Report Instance Areas: 
++------+------------------------------+----------+------+
+|      |Instance                      |Module    |Cells |
++------+------------------------------+----------+------+
+|1     |top                           |          |   777|
+|2     |  \gen_voq[0].voq_w           |voq       |    96|
+|3     |  \gen_voq[1].voq_w           |voq_0     |    96|
+|4     |  \gen_voq[2].voq_w           |voq_1     |    96|
+|5     |  \gen_voq[3].voq_w           |voq_2     |   128|
+|6     |  scheduler_w                 |scheduler |   251|
+|7     |    \gen_i[0].grant_arbiter   |arbiter   |    21|
+|8     |    \gen_i[1].grant_arbiter   |arbiter_3 |    25|
+|9     |    \gen_i[2].grant_arbiter   |arbiter_4 |    19|
+|10    |    \gen_i[3].grant_arbiter   |arbiter_5 |    21|
+|11    |    \gen_j[0].accept_arbiter  |arbiter_6 |    18|
+|12    |    \gen_j[1].accept_arbiter  |arbiter_7 |    16|
+|13    |    \gen_j[2].accept_arbiter  |arbiter_8 |    17|
+|14    |    \gen_j[3].accept_arbiter  |arbiter_9 |    20|
++------+------------------------------+----------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59162 ; free virtual = 127326
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 9 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1654.434 ; gain = 109.469 ; free physical = 59162 ; free virtual = 127326
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1654.434 ; gain = 723.965 ; free physical = 59162 ; free virtual = 127326
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 205 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 1 inverter(s) to 2 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 138 instances were transformed.
+  LD => LDCE: 136 instances
+  LD => LDCE (inverted pins: G): 2 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+73 Infos, 10 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:23 ; elapsed = 00:00:23 . Memory (MB): peak = 1674.449 ; gain = 676.477 ; free physical = 59153 ; free virtual = 127317
+INFO: [Common 17-1381] The checkpoint '/home/nadeen/Vivado/proj/iSLIP_test/test/test.runs/synth_1/wrapper.dcp' has been generated.
+report_utilization: Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.08 . Memory (MB): peak = 1698.461 ; gain = 0.000 ; free physical = 59151 ; free virtual = 127315
+INFO: [Common 17-206] Exiting Vivado at Wed Aug  1 11:20:10 2018...

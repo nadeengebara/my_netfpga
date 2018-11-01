@@ -271,7 +271,8 @@ def nftest_send_phy(ifaceName, pkt):
         for i in range(len(pkt)):
             simPkt.pktSendPHY(int(ifaceName[2:3])+1, pkt)
 	f = simLib.fPort(int(ifaceName[2]) + 1)
-	axitools.axis_dump( pkt, f, 256, 1e-9 )
+	#axitools.axis_dump( pkt, f, 256, 1e-9 )
+        axitools.axis_dump(pkt,f,64,1e-9)
     else:
         hwPktLib.send(iface_map[connections[ifaceName]], pkt)
 

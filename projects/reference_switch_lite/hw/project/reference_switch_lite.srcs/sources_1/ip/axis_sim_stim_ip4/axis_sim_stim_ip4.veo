@@ -57,8 +57,8 @@
 axis_sim_stim_ip4 your_instance_name (
   .ACLK(ACLK),                        // input wire ACLK
   .ARESETN(ARESETN),                  // input wire ARESETN
-  .M_AXIS_TDATA(M_AXIS_TDATA),        // output wire [255 : 0] M_AXIS_TDATA
-  .M_AXIS_TKEEP(M_AXIS_TKEEP),        // output wire [31 : 0] M_AXIS_TKEEP
+  .M_AXIS_TDATA(M_AXIS_TDATA),        // output wire [63 : 0] M_AXIS_TDATA
+  .M_AXIS_TKEEP(M_AXIS_TKEEP),        // output wire [7 : 0] M_AXIS_TKEEP
   .M_AXIS_TUSER(M_AXIS_TUSER),        // output wire [127 : 0] M_AXIS_TUSER
   .M_AXIS_TVALID(M_AXIS_TVALID),      // output wire M_AXIS_TVALID
   .M_AXIS_TREADY(M_AXIS_TREADY),      // input wire M_AXIS_TREADY

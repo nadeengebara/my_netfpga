@@ -42,7 +42,7 @@
 
  module top_sim # (
   parameter          PL_SIM_FAST_LINK_TRAINING           = "FALSE",      // Simulation Speedup
-  parameter          C_DATA_WIDTH                        = 256,         // RX/TX interface data width
+  parameter          C_DATA_WIDTH                        = 64,         // RX/TX interface data width
   parameter          C_TUSER_WIDTH                       = 128,         // RX/TX interface data width  
   parameter          KEEP_WIDTH                          = C_DATA_WIDTH / 32,
   parameter  integer USER_CLK2_FREQ                 = 4,
@@ -76,7 +76,7 @@
   output sfp1_tx_p,
   output sfp1_tx_n,
      
-/*  input sfp2_rx_p,
+  input sfp2_rx_p,
   input sfp2_rx_n,
   output sfp2_tx_p,
   output sfp2_tx_n,
@@ -85,7 +85,7 @@
   input sfp3_rx_n,
   output sfp3_tx_p,
   output sfp3_tx_n,
-*/  
+  
 // PCIe Clock
   input       sys_clkp,
   input       sys_clkn,
@@ -148,21 +148,21 @@
   wire [C_TUSER_WIDTH-1:0]         axis_o_0_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_o_0_tkeep;
   wire            axis_o_0_tready;
-/*
+
   wire[C_DATA_WIDTH-1:0]      axis_i_1_tdata;
   wire            axis_i_1_tvalid;
   wire            axis_i_1_tlast;
   wire[C_TUSER_WIDTH-1:0]            axis_i_1_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_i_1_tkeep;
   wire            axis_i_1_tready;
-*/
+
   wire[C_DATA_WIDTH-1:0]      axis_o_1_tdata;
   wire            axis_o_1_tvalid;
   wire            axis_o_1_tlast;
   wire [C_TUSER_WIDTH-1:0]           axis_o_1_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_o_1_tkeep;
   wire            axis_o_1_tready;
-/*
+
   wire[C_DATA_WIDTH-1:0]      axis_i_2_tdata;
   wire            axis_i_2_tvalid;
   wire            axis_i_2_tlast;
@@ -190,7 +190,7 @@
   wire [C_TUSER_WIDTH-1:0]         axis_o_3_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_o_3_tkeep;
   wire            axis_o_3_tready;
-*/
+
   // AXIS DMA interfaces
   wire [255:0]   axis_dma_i_tdata ;
   wire [31:0]    axis_dma_i_tkeep ;
@@ -358,7 +358,7 @@
   wire sfp1_tx_disable;
   wire sfp1_resetdone;
   wire sfp1_txclk322;
-/*
+
   wire port2_ready;
   wire block2_lock; 
   wire sfp2_tx_disable;
@@ -370,7 +370,7 @@
   wire sfp3_tx_disable;
   wire sfp3_resetdone;
   wire sfp3_txclk322;
-  */
+  
   wire axi_aresetn;
   wire tx_dcm_locked;
   wire axi_clk;
@@ -467,7 +467,7 @@ nf_datapath_0
     .s_axis_0_tvalid                (axis_i_0_tvalid), 
     .s_axis_0_tready                (axis_i_0_tready), 
     .s_axis_0_tlast                 (axis_i_0_tlast),  
-   /* .s_axis_1_tdata                 (axis_i_1_tdata),  
+    .s_axis_1_tdata                 (axis_i_1_tdata),  
     .s_axis_1_tkeep                 (axis_i_1_tkeep),  
     .s_axis_1_tuser                 (axis_i_1_tuser),  
     .s_axis_1_tvalid                (axis_i_1_tvalid), 
@@ -492,7 +492,7 @@ nf_datapath_0
     .s_axis_4_tvalid                (axis_dma_i_tvalid), 
     .s_axis_4_tready                (axis_dma_i_tready ), 
     .s_axis_4_tlast                 (axis_dma_i_tlast),  
-*/
+
 
     // Master Stream Ports (interface to TX queues)
     .m_axis_0_tdata                (axis_o_0_tdata),
@@ -507,7 +507,7 @@ nf_datapath_0
     .m_axis_1_tvalid               (axis_o_1_tvalid),
     .m_axis_1_tready               (axis_o_1_tready),
     .m_axis_1_tlast                (axis_o_1_tlast), 
-  /*
+  
     .m_axis_2_tdata                (axis_o_2_tdata), 
     .m_axis_2_tkeep                (axis_o_2_tkeep), 
     .m_axis_2_tuser                (axis_o_2_tuser), 
@@ -527,7 +527,7 @@ nf_datapath_0
     .m_axis_4_tvalid               (axis_dma_o_tvalid),
     .m_axis_4_tready               (axis_dma_o_tready ),
     .m_axis_4_tlast                (axis_dma_o_tlast),
-    */  
+      
    //AXI-Lite interface  
  
     .S0_AXI_AWADDR                    (M01_AXI_awaddr),  
@@ -641,12 +641,12 @@ nf_datapath_0
         .ARESETN (sys_rst_n_c),
 
         //axi streaming data interface
-        .M_AXIS_TDATA (),
-        .M_AXIS_TKEEP (),
-        .M_AXIS_TUSER (),
-        .M_AXIS_TVALID (),
-        .M_AXIS_TREADY (1),
-        .M_AXIS_TLAST (),
+        .M_AXIS_TDATA (axis_i_1_tdata),
+        .M_AXIS_TKEEP (axis_i_1_tkeep),
+        .M_AXIS_TUSER (axis_i_1_tuser),
+        .M_AXIS_TVALID (axis_i_1_tvalid),
+        .M_AXIS_TREADY (axis_i_1_tready),
+        .M_AXIS_TLAST (axis_i_1_tlast),
 
 	.counter (counter1),
 	.activity_stim (activity_stim1),
@@ -661,13 +661,14 @@ nf_datapath_0
         .ARESETN (sys_rst_n_c),
 
         //axi streaming data interface
-        .M_AXIS_TDATA (),
-        .M_AXIS_TKEEP (),
-        .M_AXIS_TUSER (),
-        .M_AXIS_TVALID (),
-        .M_AXIS_TREADY (),
-        .M_AXIS_TLAST (),
-
+        
+        .M_AXIS_TDATA (axis_i_2_tdata),
+        .M_AXIS_TKEEP (axis_i_2_tkeep),
+        .M_AXIS_TUSER (axis_i_2_tuser),
+        .M_AXIS_TVALID (axis_i_2_tvalid),
+        .M_AXIS_TREADY (axis_i_2_tready),
+        .M_AXIS_TLAST (axis_i_2_tlast),
+	
 	.counter (counter2),
 	.activity_stim (activity_stim2),
         .barrier_req (barrier_req2),
@@ -681,13 +682,14 @@ nf_datapath_0
         .ARESETN (sys_rst_n_c),
 
         //axi streaming data interface
-        .M_AXIS_TDATA (),
-        .M_AXIS_TKEEP (),
-        .M_AXIS_TUSER (),
-        .M_AXIS_TVALID (),
-        .M_AXIS_TREADY (),
-        .M_AXIS_TLAST (),
-
+        
+        .M_AXIS_TDATA (axis_i_3_tdata),
+        .M_AXIS_TKEEP (axis_i_3_tkeep),
+        .M_AXIS_TUSER (axis_i_3_tuser),
+        .M_AXIS_TVALID (axis_i_3_tvalid),
+        .M_AXIS_TREADY (axis_i_3_tready),
+        .M_AXIS_TLAST (axis_i_3_tlast),
+	
 	.counter (counter3),
 	.activity_stim (activity_stim3),
         .barrier_req (barrier_req3),
@@ -701,13 +703,13 @@ nf_datapath_0
         .ARESETN (sys_rst_n_c),
 
         //axi streaming data interface
-        .M_AXIS_TDATA (),
-        .M_AXIS_TKEEP (),
-        .M_AXIS_TUSER (),
-        .M_AXIS_TVALID (),
-        .M_AXIS_TREADY (),
-        .M_AXIS_TLAST (),
-
+        .M_AXIS_TDATA (axis_i_4_tdata),
+        .M_AXIS_TKEEP (axis_i_4_tkeep),
+        .M_AXIS_TUSER (axis_i_4_tuser),
+        .M_AXIS_TVALID (axis_i_4_tvalid),
+        .M_AXIS_TREADY (axis_i_4_tready),
+        .M_AXIS_TLAST (axis_i_4_tlast),
+	
 	.counter (counter4),
 	.activity_stim (activity_stim4),
         .barrier_req (barrier_req4),
@@ -755,14 +757,15 @@ nf_datapath_0
 	.axi_aclk (clk_200),
 
     	// Slave Stream Ports (interface to data path)
-    	.s_axis_tdata (),
-    	.s_axis_tkeep (),
-    	.s_axis_tuser (),
-    	.s_axis_tvalid (),
-    	.s_axis_tready (),
-    	.s_axis_tlast (),
+    	
+    	.s_axis_tdata (axis_o_2_tdata),
+    	.s_axis_tkeep (axis_o_2_tkeep),
+    	.s_axis_tuser (axis_o_2_tuser),
+    	.s_axis_tvalid (axis_o_2_tvalid),
+    	.s_axis_tready (axis_o_2_tready),
+    	.s_axis_tlast (axis_o_2_tlast),
 
-    	.counter (counter2),
+   	.counter (counter2),
     	.activity_rec(activity_rec2)
 	);
 
@@ -772,14 +775,14 @@ nf_datapath_0
 	.axi_aclk (clk_200),
 
     	// Slave Stream Ports (interface to data path)
-    	.s_axis_tdata (),
-    	.s_axis_tkeep (),
-    	.s_axis_tuser (),
-    	.s_axis_tvalid (),
-    	.s_axis_tready (),
-    	.s_axis_tlast (),
-
-    	.counter (counter3),
+    	.s_axis_tdata (axis_o_3_tdata),
+    	.s_axis_tkeep (axis_o_3_tkeep),
+    	.s_axis_tuser (axis_o_3_tuser),
+    	.s_axis_tvalid (axis_o_3_tvalid),
+    	.s_axis_tready (axis_o_3_tready),
+    	.s_axis_tlast (axis_o_3_tlast),
+    	
+	.counter (counter3),
     	.activity_rec(activity_rec3)
 	);
 
@@ -789,14 +792,14 @@ nf_datapath_0
 	.axi_aclk (clk_200),
 
     	// Slave Stream Ports (interface to data path)
-    	.s_axis_tdata (),
-    	.s_axis_tkeep (),
-    	.s_axis_tuser (),
-    	.s_axis_tvalid (),
-    	.s_axis_tready (),
-    	.s_axis_tlast (),
-
-    	.counter (counter4),
+    	.s_axis_tdata (axis_o_4_tdata),
+    	.s_axis_tkeep (axis_o_4_tkeep),
+    	.s_axis_tuser (axis_o_4_tuser),
+    	.s_axis_tvalid (axis_o_4_tvalid),
+    	.s_axis_tready (axis_o_4_tready),
+    	.s_axis_tlast (axis_o_4_tlast),
+    	
+        .counter (counter4),
     	.activity_rec(activity_rec4)
 	);
 

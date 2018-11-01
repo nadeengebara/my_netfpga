@@ -27,8 +27,8 @@
 module parser
 #(
     // Master AXI Stream Data Width
-    parameter C_M_AXIS_DATA_WIDTH=256,
-    parameter C_S_AXIS_DATA_WIDTH=256,
+    parameter C_M_AXIS_DATA_WIDTH=64,
+    parameter C_S_AXIS_DATA_WIDTH=64,
     parameter C_M_AXIS_TUSER_WIDTH=128,
     parameter C_S_AXIS_TUSER_WIDTH=128,
   
@@ -52,6 +52,7 @@ module parser
 
     // Master Stream Ports to AGGREGATOR 
     output [C_M_AXIS_DATA_WIDTH - 1:0] m_axis_agg_tdata,
+
     output [((C_M_AXIS_DATA_WIDTH / 8)) - 1:0] m_axis_agg_tkeep,
     output [C_M_AXIS_TUSER_WIDTH-1:0] m_axis_agg_tuser,
     output m_axis_agg_tvalid,

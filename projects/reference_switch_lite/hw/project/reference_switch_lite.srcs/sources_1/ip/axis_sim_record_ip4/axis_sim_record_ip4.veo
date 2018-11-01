@@ -56,8 +56,8 @@
 //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
 axis_sim_record_ip4 your_instance_name (
   .axi_aclk(axi_aclk),            // input wire axi_aclk
-  .s_axis_tdata(s_axis_tdata),    // input wire [255 : 0] s_axis_tdata
-  .s_axis_tkeep(s_axis_tkeep),    // input wire [31 : 0] s_axis_tkeep
+  .s_axis_tdata(s_axis_tdata),    // input wire [63 : 0] s_axis_tdata
+  .s_axis_tkeep(s_axis_tkeep),    // input wire [7 : 0] s_axis_tkeep
   .s_axis_tuser(s_axis_tuser),    // input wire [127 : 0] s_axis_tuser
   .s_axis_tvalid(s_axis_tvalid),  // input wire s_axis_tvalid
   .s_axis_tready(s_axis_tready),  // output wire s_axis_tready

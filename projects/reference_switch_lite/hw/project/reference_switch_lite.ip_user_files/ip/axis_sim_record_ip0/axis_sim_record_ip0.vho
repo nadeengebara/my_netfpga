@@ -55,8 +55,8 @@
 COMPONENT axis_sim_record_ip0
   PORT (
     axi_aclk : IN STD_LOGIC;
-    s_axis_tdata : IN STD_LOGIC_VECTOR(255 DOWNTO 0);
-    s_axis_tkeep : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    s_axis_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+    s_axis_tkeep : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     s_axis_tuser : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
     s_axis_tvalid : IN STD_LOGIC;
     s_axis_tready : OUT STD_LOGIC;

@@ -1,21 +1,34 @@
 Vivado Simulator 2016.4
 Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
-Running: /opt/Xilinx/Vivado/2016.4/bin/unwrapped/lnx64.o/xelab -wto f41a49a43c3d49b5955f0af6fbe5eddd --debug typical --relax --mt 8 -d SIMULATION=1 -L xil_defaultlib -L blk_mem_gen_v8_3_5 -L lib_pkg_v1_0_2 -L lib_srl_fifo_v1_0_2 -L generic_baseblocks_v2_1_0 -L axi_infrastructure_v1_1_0 -L axi_register_slice_v2_1_11 -L fifo_generator_v13_1_3 -L axi_data_fifo_v2_1_10 -L axi_crossbar_v2_1_12 -L axi_clock_converter_v2_1_10 -L axi_protocol_converter_v2_1_11 -L axi_mmu_v2_1_9 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
+Running: /opt/Xilinx/Vivado/2016.4/bin/unwrapped/lnx64.o/xelab -wto 7e1a675ff34a49039bd2486b2a396b14 --debug typical --relax --mt 8 -d SIMULATION=1 -L xil_defaultlib -L blk_mem_gen_v8_3_5 -L lib_pkg_v1_0_2 -L lib_srl_fifo_v1_0_2 -L generic_baseblocks_v2_1_0 -L axi_infrastructure_v1_1_0 -L axi_register_slice_v2_1_11 -L fifo_generator_v13_1_3 -L axi_data_fifo_v2_1_10 -L axi_crossbar_v2_1_12 -L axi_clock_converter_v2_1_10 -L axi_protocol_converter_v2_1_11 -L axi_mmu_v2_1_9 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_tb_behav xil_defaultlib.top_tb xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
-WARNING: [VRFC 10-1374] size mismatch in mixed language port association, vhdl port m_axis_tready [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:638]
+WARNING: [VRFC 10-1374] size mismatch in mixed language port association, vhdl port m_axis_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:700]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_rxn [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:115]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_rxp [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:116]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_txn [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:117]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port pcie_7x_mgt_txp [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:118]
 WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 2 for port i2c_reset [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_tb.v:139]
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_AWADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:226]
-WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_ARADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:232]
+WARNING: [VRFC 10-278] actual bit length 256 differs from formal bit length 64 for port s_axis_4_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:489]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 8 for port s_axis_4_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:490]
+WARNING: [VRFC 10-278] actual bit length 256 differs from formal bit length 64 for port m_axis_4_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:524]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 8 for port m_axis_4_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:525]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_AWADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:227]
+WARNING: [VRFC 10-278] actual bit length 32 differs from formal bit length 12 for port S_AXI_ARADDR [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/nf_datapath.v:233]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 64 for port s_axis_tdata [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:795]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 8 for port s_axis_tkeep [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:796]
+WARNING: [VRFC 10-278] actual bit length 1 differs from formal bit length 128 for port s_axis_tuser [/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/hdl/top_sim.v:797]
 WARNING: [VRFC 10-1783] select index 62 into current_contents is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/blk_mem_gen_v8_3/simulation/blk_mem_gen_v8_3.v:2420]
 WARNING: [VRFC 10-597] element index -1 into num_read_words_dc is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/fifo_generator_v13_1/simulation/fifo_generator_vlog_beh.v:5490]
 WARNING: [VRFC 10-597] element index -1 into num_write_words_dc is out of bounds [/wrk/2016.4/nightly/2017_01_23_1756540/packages/customer/vivado/data/ip/xilinx/fifo_generator_v13_1/simulation/fifo_generator_vlog_beh.v:5540]
 Completed static elaboration
 Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 WARNING: [XSIM 43-4099] "/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/hw/project/reference_switch_lite.srcs/sources_1/ip/pswitch_parser_ip/hdl/parser_cpu_regs.v" Line 42. Module parser_cpu_regs(C_BASE_ADDRESS=32'b0,C_S_AXI_DATA_WIDTH=32,C_S_AXI_ADDR_WIDTH=12) doesn't have a timescale but at least one module in design has a timescale.
 Completed simulation data flow analysis
@@ -40,10 +53,13 @@ Compiling module unisims_ver.BUFH
 Compiling module xil_defaultlib.clk_wiz_ip_clk_wiz
 Compiling module xil_defaultlib.clk_wiz_ip
 Compiling module xil_defaultlib.axi_clocking
-Compiling module xil_defaultlib.small_fifo(WIDTH=417,MAX_DEPTH_B...
-Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=417...
+Compiling module xil_defaultlib.small_fifo(WIDTH=201,MAX_DEPTH_B...
+Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=201...
+Compiling module xil_defaultlib.small_fifo(WIDTH=1,MAX_DEPTH_BIT...
+Compiling module xil_defaultlib.fallthrough_small_fifo(WIDTH=1)
 Compiling module xil_defaultlib.parser_cpu_regs(C_BASE_ADDRESS=3...
 Compiling module xil_defaultlib.parser_default
+Compiling module xil_defaultlib.pswitch_parser_ip
 Compiling module xil_defaultlib.nf_datapath(C_M_AXIS_DATA_WIDTH=...
 Compiling module blk_mem_gen_v8_3_5.beh_vlog_ff_clr_v8_3(INIT=1'b0)
 Compiling module blk_mem_gen_v8_3_5.beh_vlog_ff_pre_v8_3(INIT=1'b1)

@@ -56,20 +56,20 @@ COMPONENT pswitch_parser_ip
   PORT (
     axis_aclk : IN STD_LOGIC;
     axis_resetn : IN STD_LOGIC;
-    m_axis_agg_tdata : OUT STD_LOGIC_VECTOR(255 DOWNTO 0);
-    m_axis_agg_tkeep : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    m_axis_agg_tdata : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+    m_axis_agg_tkeep : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     m_axis_agg_tuser : OUT STD_LOGIC_VECTOR(127 DOWNTO 0);
     m_axis_agg_tvalid : OUT STD_LOGIC;
     m_axis_agg_tready : IN STD_LOGIC;
     m_axis_agg_tlast : OUT STD_LOGIC;
-    m_axis_OQ_tdata : OUT STD_LOGIC_VECTOR(255 DOWNTO 0);
-    m_axis_OQ_tkeep : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    m_axis_OQ_tdata : OUT STD_LOGIC_VECTOR(63 DOWNTO 0);
+    m_axis_OQ_tkeep : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
     m_axis_OQ_tuser : OUT STD_LOGIC_VECTOR(127 DOWNTO 0);
     m_axis_OQ_tvalid : OUT STD_LOGIC;
     m_axis_OQ_tready : IN STD_LOGIC;
     m_axis_OQ_tlast : OUT STD_LOGIC;
-    s_axis_rxq_tdata : IN STD_LOGIC_VECTOR(255 DOWNTO 0);
-    s_axis_rxq_tkeep : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    s_axis_rxq_tdata : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+    s_axis_rxq_tkeep : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
     s_axis_rxq_tuser : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
     s_axis_rxq_tvalid : IN STD_LOGIC;
     s_axis_rxq_tready : OUT STD_LOGIC;

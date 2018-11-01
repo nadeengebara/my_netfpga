@@ -68,7 +68,7 @@
   input  sfp1_tx_abs,   
   output sfp1_tx_disable,  
   
-/*     
+     
   input sfp2_rx_p,
   input sfp2_rx_n,
   output sfp2_tx_p,
@@ -85,7 +85,7 @@
   input  sfp3_tx_fault,  
   input  sfp3_tx_abs,   
   output sfp3_tx_disable,  
-  */
+  
   // 100MHz PCIe Clock
   input       sys_clkp,
   input       sys_clkn,
@@ -106,13 +106,13 @@
   
   output sfp0_tx_led,
   output sfp1_tx_led,
-  //output sfp2_tx_led,
-  //output sfp3_tx_led,
+  output sfp2_tx_led,
+  output sfp3_tx_led,
            
   output sfp0_rx_led,
   output sfp1_rx_led,
-  //output sfp2_rx_led,
-  //output sfp3_rx_led,
+  output sfp2_rx_led,
+  output sfp3_rx_led,
 
   //-SI5324 I2C programming interface 
   inout i2c_clk,
@@ -156,21 +156,21 @@ wire            axis_o_0_tvalid;
  wire [C_TUSER_WIDTH-1:0]         axis_o_0_tuser;
  wire[(C_DATA_WIDTH/8)-1:0]       axis_o_0_tkeep;
  wire            axis_o_0_tready;
-/*
+
   wire[C_DATA_WIDTH-1:0]      axis_i_1_tdata;
   wire            axis_i_1_tvalid;
   wire            axis_i_1_tlast;
   wire[C_TUSER_WIDTH-1:0]            axis_i_1_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_i_1_tkeep;
   wire            axis_i_1_tready;
-*/
+
   wire[C_DATA_WIDTH-1:0]      axis_o_1_tdata;
   wire            axis_o_1_tvalid;
   wire            axis_o_1_tlast;
   wire [C_TUSER_WIDTH-1:0]           axis_o_1_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_o_1_tkeep;
   wire            axis_o_1_tready;
-/*
+
   wire[C_DATA_WIDTH-1:0]      axis_i_2_tdata;
   wire            axis_i_2_tvalid;
   wire            axis_i_2_tlast;
@@ -198,7 +198,7 @@ wire            axis_o_0_tvalid;
   wire [C_TUSER_WIDTH-1:0]         axis_o_3_tuser;
   wire[C_DATA_WIDTH/8-1:0]       axis_o_3_tkeep;
   wire            axis_o_3_tready;
-*/
+
   // AXIS DMA interfaces
   wire [255:0]   axis_dma_i_tdata ;
   wire [31:0]    axis_dma_i_tkeep ;
@@ -296,7 +296,7 @@ wire            axis_o_0_tvalid;
   wire [0:0]    M03_AXI_wready;
   wire [3:0]    M03_AXI_wstrb;
   wire [0:0]    M03_AXI_wvalid;
-/*  
+
   wire [11:0]   M04_AXI_araddr;
   wire [2:0]    M04_AXI_arprot;
   wire [0:0]    M04_AXI_arready;
@@ -336,7 +336,7 @@ wire            axis_o_0_tvalid;
   wire [0:0]    M05_AXI_wready;
   wire [3:0]    M05_AXI_wstrb;
   wire [0:0]    M05_AXI_wvalid;
-  
+/*  
   wire [11:0]   M06_AXI_araddr;
   wire [2:0]    M06_AXI_arprot;
   wire [0:0]    M06_AXI_arready;
@@ -405,7 +405,7 @@ wire            axis_o_0_tvalid;
   wire sfp1_tx_resetdone;
   wire sfp1_rx_resetdone;
   wire sfp1_txclk322;
-/*
+
   wire port2_ready;
   wire block2_lock; 
   wire sfp2_tx_resetdone;
@@ -417,7 +417,7 @@ wire            axis_o_0_tvalid;
   wire sfp3_tx_resetdone;
   wire sfp3_rx_resetdone;
   wire sfp3_txclk322;
- */
+ 
   wire i2c_scl_o;
   wire i2c_scl_i;
   wire i2c_scl_t;
@@ -439,8 +439,8 @@ wire            axis_o_0_tvalid;
   // Odd bits are ports and even bits are DMA
   localparam IF_SFP0 = 8'b00000001;
   localparam IF_SFP1 = 8'b00000100;
- // localparam IF_SFP2 = 8'b00010000;
-//  localparam IF_SFP3 = 8'b01000000;
+  localparam IF_SFP2 = 8'b00010000;
+  localparam IF_SFP3 = 8'b01000000;
   
   ///////////////////////////// DEBUG ONLY ///////////////////////////
   // system clk heartbeat 
@@ -576,7 +576,7 @@ nf_datapath_0
     .s_axis_0_tvalid                (axis_i_0_tvalid), 
     .s_axis_0_tready                (axis_i_0_tready), 
     .s_axis_0_tlast                 (axis_i_0_tlast),  
-/*    .s_axis_1_tdata                 (axis_i_1_tdata),  
+    .s_axis_1_tdata                 (axis_i_1_tdata),  
     .s_axis_1_tkeep                 (axis_i_1_tkeep),  
     .s_axis_1_tuser                 (axis_i_1_tuser),  
     .s_axis_1_tvalid                (axis_i_1_tvalid), 
@@ -601,7 +601,7 @@ nf_datapath_0
     .s_axis_4_tready                (axis_dma_i_tready ), 
     .s_axis_4_tlast                 (axis_dma_i_tlast),  
 
-*/
+
     // Master Stream Ports (interface to TX queues)
     .m_axis_0_tdata                (axis_o_0_tdata),
     .m_axis_0_tkeep                (axis_o_0_tkeep),
@@ -615,7 +615,7 @@ nf_datapath_0
     .m_axis_1_tvalid               (axis_o_1_tvalid),
     .m_axis_1_tready               (axis_o_1_tready),
     .m_axis_1_tlast                (axis_o_1_tlast), 
-  /*  .m_axis_2_tdata                (axis_o_2_tdata), 
+    .m_axis_2_tdata                (axis_o_2_tdata), 
     .m_axis_2_tkeep                (axis_o_2_tkeep), 
     .m_axis_2_tuser                (axis_o_2_tuser), 
     .m_axis_2_tvalid               (axis_o_2_tvalid),
@@ -633,7 +633,7 @@ nf_datapath_0
     .m_axis_4_tvalid               (axis_dma_o_tvalid),
     .m_axis_4_tready               (axis_dma_o_tready ),
     .m_axis_4_tlast                (axis_dma_o_tlast),
-   */
+   
    //AXI-Lite interface  
  
     .S0_AXI_AWADDR                    (M01_AXI_awaddr), 
@@ -776,45 +776,45 @@ control_sub control_sub_i
            .M03_AXI_wstrb   (M03_AXI_wstrb  ),
            .M03_AXI_wvalid  (M03_AXI_wvalid ), 
 
-           .M04_AXI_araddr  ( ),
-           .M04_AXI_arprot  ( ),
-           .M04_AXI_arready (),
-           .M04_AXI_arvalid (),
-           .M04_AXI_awaddr  ( ),
-           .M04_AXI_awprot  ( ),
-           .M04_AXI_awready (),
-           .M04_AXI_awvalid (),
-           .M04_AXI_bready  ( ),
-           .M04_AXI_bresp   (  ),
-           .M04_AXI_bvalid  ( ),
-           .M04_AXI_rdata   (  ),
-           .M04_AXI_rready  ( ),
-           .M04_AXI_rresp   (  ),
-           .M04_AXI_rvalid  ( ),
-           .M04_AXI_wdata   ( ),
-           .M04_AXI_wready  ( ),
-           .M04_AXI_wstrb   (  ),
-           .M04_AXI_wvalid  ( ),
+           .M04_AXI_araddr  (M04_AXI_araddr ),
+           .M04_AXI_arprot  (M04_AXI_arprot ),
+           .M04_AXI_arready (M04_AXI_arready),
+           .M04_AXI_arvalid (M04_AXI_arready),
+           .M04_AXI_awaddr  (M04_AXI_awaddr ),
+           .M04_AXI_awprot  (M04_AXI_awprot ),
+           .M04_AXI_awready (M04_AXI_awready ),
+           .M04_AXI_awvalid (M04_AXI_awvalid),
+           .M04_AXI_bready  (M04_AXI_bready  ),
+           .M04_AXI_bresp   (M04_AXI_bresp ),
+           .M04_AXI_bvalid  (M04_AXI_bvalid ),
+           .M04_AXI_rdata   (M04_AXI_rdata ),
+           .M04_AXI_rready  (M04_AXI_rready ),
+           .M04_AXI_rresp   (M04_AXI_rresp ),
+           .M04_AXI_rvalid  (M04_AXI_rvalid),
+           .M04_AXI_wdata   (M04_AXI_wdata ),
+           .M04_AXI_wready  (M04_AXI_wready ),
+           .M04_AXI_wstrb   (M04_AXI_wstrb  ),
+           .M04_AXI_wvalid  (M04_AXI_wvalid ),
 
-           .M05_AXI_araddr  ( ),
-           .M05_AXI_arprot  ( ),
-           .M05_AXI_arready (),
-           .M05_AXI_arvalid (),
-           .M05_AXI_awaddr  ( ),
-           .M05_AXI_awprot  ( ),
-           .M05_AXI_awready (),
-           .M05_AXI_awvalid (),
-           .M05_AXI_bready  ( ),
-           .M05_AXI_bresp   (  ),
-           .M05_AXI_bvalid  ( ),
-           .M05_AXI_rdata   (  ),
-           .M05_AXI_rready  ( ),
-           .M05_AXI_rresp   ( ),
-           .M05_AXI_rvalid  (),
-           .M05_AXI_wdata   ( ),
-           .M05_AXI_wready  ( ),
-           .M05_AXI_wstrb   (  ),
-           .M05_AXI_wvalid  ( ),  
+           .M05_AXI_araddr  (M05_AXI_araddr  ),
+           .M05_AXI_arprot  (M05_AXI_arprot ),
+           .M05_AXI_arready (M05_AXI_arready),
+           .M05_AXI_arvalid (M05_AXI_arvalid),
+           .M05_AXI_awaddr  (M05_AXI_awaddr ),
+           .M05_AXI_awprot  (M05_AXI_awprot ),
+           .M05_AXI_awready (M05_AXI_awready),
+           .M05_AXI_awvalid (M05_AXI_awvalid),
+           .M05_AXI_bready  (M05_AXI_bready ),
+           .M05_AXI_bresp   (M05_AXI_bresp),
+           .M05_AXI_bvalid  (M05_AXI_bvalid),
+           .M05_AXI_rdata   (M05_AXI_rdata ),
+           .M05_AXI_rready  (M05_AXI_rready ),
+           .M05_AXI_rresp   (M05_AXI_rresp),
+           .M05_AXI_rvalid  (M05_AXI_rvalid ),
+           .M05_AXI_wdata   (M05_AXI_wdata  ),
+           .M05_AXI_wready  (M05_AXI_wready  ),
+           .M05_AXI_wstrb   (M05_AXI_wstrb ),
+           .M05_AXI_wvalid  (M05_AXI_wvalid ),  
 
            .M06_AXI_araddr  ( ),
            .M06_AXI_arprot  ( ),
@@ -1065,7 +1065,7 @@ nf_10g_interface_ip nf_10g_interface_1
   assign sfp1_rx_led = sfp1_rx_resetdone ;
   
 //SFP Port 2
-/*
+
 nf_10g_interface_ip nf_10g_interface_2
        (
        //Clocks and resets
@@ -1111,23 +1111,23 @@ nf_10g_interface_ip nf_10g_interface_2
         
         .S_AXI_ACLK           (clk_200     ),
         .S_AXI_ARESETN        (axi_datapath_resetn),
-        .S_AXI_AWADDR         (M06_AXI_awaddr),        
-        .S_AXI_AWVALID        (M06_AXI_awvalid),       
-        .S_AXI_WDATA          (M06_AXI_wdata),         
-        .S_AXI_WSTRB          (M06_AXI_wstrb),         
-        .S_AXI_WVALID         (M06_AXI_wvalid),        
-        .S_AXI_BREADY         (M06_AXI_bready),        
-        .S_AXI_ARADDR         (M06_AXI_araddr),        
-        .S_AXI_ARVALID        (M06_AXI_arvalid),       
-        .S_AXI_RREADY         (M06_AXI_rready),        
-        .S_AXI_ARREADY        (M06_AXI_arready),       
-        .S_AXI_RDATA          (M06_AXI_rdata),         
-        .S_AXI_RRESP          (M06_AXI_rresp),         
-        .S_AXI_RVALID         (M06_AXI_rvalid),        
-        .S_AXI_WREADY         (M06_AXI_wready),        
-        .S_AXI_BRESP          (M06_AXI_bresp),         
-        .S_AXI_BVALID         (M06_AXI_bvalid),        
-        .S_AXI_AWREADY        (M06_AXI_awready),           
+        .S_AXI_AWADDR         (M04_AXI_awaddr),        
+        .S_AXI_AWVALID        (M04_AXI_awvalid),       
+        .S_AXI_WDATA          (M04_AXI_wdata),         
+        .S_AXI_WSTRB          (M04_AXI_wstrb),         
+        .S_AXI_WVALID         (M04_AXI_wvalid),        
+        .S_AXI_BREADY         (M04_AXI_bready),        
+        .S_AXI_ARADDR         (M04_AXI_araddr),        
+        .S_AXI_ARVALID        (M04_AXI_arvalid),       
+        .S_AXI_RREADY         (M04_AXI_rready),        
+        .S_AXI_ARREADY        (M04_AXI_arready),       
+        .S_AXI_RDATA          (M04_AXI_rdata),         
+        .S_AXI_RRESP          (M04_AXI_rresp),         
+        .S_AXI_RVALID         (M04_AXI_rvalid),        
+        .S_AXI_WREADY         (M04_AXI_wready),        
+        .S_AXI_BRESP          (M04_AXI_bresp),         
+        .S_AXI_BVALID         (M04_AXI_bvalid),        
+        .S_AXI_AWREADY        (M04_AXI_awready),           
         
         //Serial I/O from/to transceiver  
         .txp              (sfp2_tx_p),
@@ -1191,23 +1191,23 @@ nf_10g_interface_ip nf_10g_interface_3
         
         .S_AXI_ACLK           (clk_200     ),
         .S_AXI_ARESETN        (axi_datapath_resetn),
-        .S_AXI_AWADDR         (M07_AXI_awaddr),        
-        .S_AXI_AWVALID        (M07_AXI_awvalid),       
-        .S_AXI_WDATA          (M07_AXI_wdata),         
-        .S_AXI_WSTRB          (M07_AXI_wstrb),         
-        .S_AXI_WVALID         (M07_AXI_wvalid),        
-        .S_AXI_BREADY         (M07_AXI_bready),        
-        .S_AXI_ARADDR         (M07_AXI_araddr),        
-        .S_AXI_ARVALID        (M07_AXI_arvalid),       
-        .S_AXI_RREADY         (M07_AXI_rready),        
-        .S_AXI_ARREADY        (M07_AXI_arready),       
-        .S_AXI_RDATA          (M07_AXI_rdata),         
-        .S_AXI_RRESP          (M07_AXI_rresp),         
-        .S_AXI_RVALID         (M07_AXI_rvalid),        
-        .S_AXI_WREADY         (M07_AXI_wready),        
-        .S_AXI_BRESP          (M07_AXI_bresp),         
-        .S_AXI_BVALID         (M07_AXI_bvalid),        
-        .S_AXI_AWREADY        (M07_AXI_awready),           
+        .S_AXI_AWADDR         (M05_AXI_awaddr),        
+        .S_AXI_AWVALID        (M05_AXI_awvalid),       
+        .S_AXI_WDATA          (M05_AXI_wdata),         
+        .S_AXI_WSTRB          (M05_AXI_wstrb),         
+        .S_AXI_WVALID         (M05_AXI_wvalid),        
+        .S_AXI_BREADY         (M05_AXI_bready),        
+        .S_AXI_ARADDR         (M05_AXI_araddr),        
+        .S_AXI_ARVALID        (M05_AXI_arvalid),       
+        .S_AXI_RREADY         (M05_AXI_rready),        
+        .S_AXI_ARREADY        (M05_AXI_arready),       
+        .S_AXI_RDATA          (M05_AXI_rdata),         
+        .S_AXI_RRESP          (M05_AXI_rresp),         
+        .S_AXI_RVALID         (M05_AXI_rvalid),        
+        .S_AXI_WREADY         (M05_AXI_wready),        
+        .S_AXI_BRESP          (M05_AXI_bresp),         
+        .S_AXI_BVALID         (M05_AXI_bvalid),        
+        .S_AXI_AWREADY        (M05_AXI_awready),           
         
         //Serial I/O from/to transceiver  
         .txp              (sfp3_tx_p),
@@ -1222,7 +1222,7 @@ nf_10g_interface_ip nf_10g_interface_3
 
   assign sfp3_tx_led = sfp3_tx_resetdone ;
   assign sfp3_rx_led = sfp3_rx_resetdone ;
-*/
+
 //Identifier Block
 identifier_ip identifier (
   .s_aclk       (clk_200),                

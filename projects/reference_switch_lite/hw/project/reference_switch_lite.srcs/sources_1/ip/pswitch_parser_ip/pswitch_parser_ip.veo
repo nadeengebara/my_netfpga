@@ -57,20 +57,20 @@
 pswitch_parser_ip your_instance_name (
   .axis_aclk(axis_aclk),                  // input wire axis_aclk
   .axis_resetn(axis_resetn),              // input wire axis_resetn
-  .m_axis_agg_tdata(m_axis_agg_tdata),    // output wire [255 : 0] m_axis_agg_tdata
-  .m_axis_agg_tkeep(m_axis_agg_tkeep),    // output wire [31 : 0] m_axis_agg_tkeep
+  .m_axis_agg_tdata(m_axis_agg_tdata),    // output wire [63 : 0] m_axis_agg_tdata
+  .m_axis_agg_tkeep(m_axis_agg_tkeep),    // output wire [7 : 0] m_axis_agg_tkeep
   .m_axis_agg_tuser(m_axis_agg_tuser),    // output wire [127 : 0] m_axis_agg_tuser
   .m_axis_agg_tvalid(m_axis_agg_tvalid),  // output wire m_axis_agg_tvalid
   .m_axis_agg_tready(m_axis_agg_tready),  // input wire m_axis_agg_tready
   .m_axis_agg_tlast(m_axis_agg_tlast),    // output wire m_axis_agg_tlast
-  .m_axis_OQ_tdata(m_axis_OQ_tdata),      // output wire [255 : 0] m_axis_OQ_tdata
-  .m_axis_OQ_tkeep(m_axis_OQ_tkeep),      // output wire [31 : 0] m_axis_OQ_tkeep
+  .m_axis_OQ_tdata(m_axis_OQ_tdata),      // output wire [63 : 0] m_axis_OQ_tdata
+  .m_axis_OQ_tkeep(m_axis_OQ_tkeep),      // output wire [7 : 0] m_axis_OQ_tkeep
   .m_axis_OQ_tuser(m_axis_OQ_tuser),      // output wire [127 : 0] m_axis_OQ_tuser
   .m_axis_OQ_tvalid(m_axis_OQ_tvalid),    // output wire m_axis_OQ_tvalid
   .m_axis_OQ_tready(m_axis_OQ_tready),    // input wire m_axis_OQ_tready
   .m_axis_OQ_tlast(m_axis_OQ_tlast),      // output wire m_axis_OQ_tlast
-  .s_axis_rxq_tdata(s_axis_rxq_tdata),    // input wire [255 : 0] s_axis_rxq_tdata
-  .s_axis_rxq_tkeep(s_axis_rxq_tkeep),    // input wire [31 : 0] s_axis_rxq_tkeep
+  .s_axis_rxq_tdata(s_axis_rxq_tdata),    // input wire [63 : 0] s_axis_rxq_tdata
+  .s_axis_rxq_tkeep(s_axis_rxq_tkeep),    // input wire [7 : 0] s_axis_rxq_tkeep
   .s_axis_rxq_tuser(s_axis_rxq_tuser),    // input wire [127 : 0] s_axis_rxq_tuser
   .s_axis_rxq_tvalid(s_axis_rxq_tvalid),  // input wire s_axis_rxq_tvalid
   .s_axis_rxq_tready(s_axis_rxq_tready),  // output wire s_axis_rxq_tready

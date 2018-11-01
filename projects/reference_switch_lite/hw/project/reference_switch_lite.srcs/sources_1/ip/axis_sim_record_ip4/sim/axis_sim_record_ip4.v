@@ -68,9 +68,9 @@ module axis_sim_record_ip4 (
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 axi_aclk CLK" *)
 input wire axi_aclk;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TDATA" *)
-input wire [255 : 0] s_axis_tdata;
+input wire [63 : 0] s_axis_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TKEEP" *)
-input wire [31 : 0] s_axis_tkeep;
+input wire [7 : 0] s_axis_tkeep;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TUSER" *)
 input wire [127 : 0] s_axis_tuser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TVALID" *)
@@ -83,7 +83,7 @@ output wire [10 : 0] counter;
 output wire activity_rec;
 
   axis_sim_record #(
-    .C_S_AXIS_DATA_WIDTH(256),
+    .C_S_AXIS_DATA_WIDTH(64),
     .C_S_AXIS_TUSER_WIDTH(128),
     .OUTPUT_FILE("/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test/dma_0_log.axi")
   ) inst (
