@@ -266,41 +266,55 @@ module parser
    always @(*) begin
       state_write_next         = state_write;
       agg_fifo_wr_en     =0;
-
+      agg_packet=0;
       case(state_write)
         /* cycle between input queues until one is not empty */
         PARSE_HEADER: begin
 	    if(in_rxq_tvalid&s_axis_rxq_tready==1) begin
-	       if(write_count==COUNT_REQUIRED_ETH) begin
-		        ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
-	       	if( ethertype===ETHER_TYPE ) begin
+              if(COUNT_REQUIRED_ETH==COUNT_REQUIRED_APP && COUNT_REQUIRED_ETH==write_count) begin
+	       ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
+               appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+	        if(ethertype===ETHER_TYPE || appcode===APP_CODE) begin	
                     $display(" AGG PACKET");
                     agg_packet=1;
+		    end
                     agg_fifo_wr_en=1;
 	            state_write_next=WAIT_PACKET;    
-           end
-                else begin
-		write_count=write_count+1;
                 end
-           end      
-              else if (write_count==COUNT_REQUIRED_APP) begin     
-          appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
-                if(appcode===APP_CODE) begin 
-	         agg_packet=1;
+
+                else if (COUNT_REQUIRED_ETH<COUNT_REQUIRED_APP && write_count==COUNT_REQUIRED_APP) begin
+                     appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+                     if(appcode==APP_CODE) begin
+			agg_packet=1;
+                      end 
+                    agg_fifo_wr_en=1;
+	            state_write_next=WAIT_PACKET;    
                 end
-                 agg_fifo_wr_en=1;
-	         state_write_next=WAIT_PACKET;    
-           end   
+
+                else if (write_count==COUNT_REQUIRED_ETH) begin
+	             ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
+                     if(ethertype==ETHER_TYPE) begin
+			agg_packet=1;
+                        agg_fifo_wr_en=1;
+	                state_write_next=WAIT_PACKET;    
+                        end
+		
+		     else begin
+			write_count=write_count+1;
+                      end
+		end
 	else begin
-		write_count=write_count+1;	
-	 end 
-        end
-        end
+		write_count=write_count+1;
+               end
+           end
+         end
 
 	WAIT_PACKET: begin
            /* Determine type of packet */
 	if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
-		  state_write_next=PARSE_HEADER; 
+		  agg_packet=0;
+                  write_count=0;
+                  state_write_next=PARSE_HEADER; 
 	     end
       end
 	endcase // case(state)

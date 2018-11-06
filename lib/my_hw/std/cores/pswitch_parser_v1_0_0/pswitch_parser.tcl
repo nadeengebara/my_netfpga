@@ -117,7 +117,7 @@ set_property value_format {long} [ipx::get_user_parameters ETHER_TYPE_POS]
 ipx::add_user_parameter {APP_CODE_POS} [ipx::current_core]
 set_property value_resolve_type {user} [ipx::get_user_parameters APP_CODE_POS]
 set_property display_name {APP_CODE_POS} [ipx::get_user_parameters APP_CODE_POS]
-set_property value {112} [ipx::get_user_parameters APP_CODE_POS]
+set_property value {272} [ipx::get_user_parameters APP_CODE_POS]
 set_property value_format {long} [ipx::get_user_parameters APP_CODE_POS]
 
 ipx::add_user_parameter {ETHER_TYPE} [ipx::current_core]
