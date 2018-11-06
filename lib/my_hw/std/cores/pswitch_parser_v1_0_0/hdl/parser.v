@@ -27,8 +27,8 @@
 module parser
 #(
     // Master AXI Stream Data Width
-    parameter C_M_AXIS_DATA_WIDTH=64,
-    parameter C_S_AXIS_DATA_WIDTH=64,
+    parameter C_M_AXIS_DATA_WIDTH=256,
+    parameter C_S_AXIS_DATA_WIDTH=256,
     parameter C_M_AXIS_TUSER_WIDTH=128,
     parameter C_S_AXIS_TUSER_WIDTH=128,
   
@@ -40,7 +40,7 @@ module parser
     
     // PARSING OFFSETS
     parameter ETHER_TYPE_POS        = 96,   //16 Bits
-    parameter APP_CODE_POS           = 112, 
+    parameter APP_CODE_POS           = 272, 
     parameter ETHER_TYPE            = 16'h8888,
     parameter APP_CODE           = 2'b00    
 )
@@ -115,16 +115,15 @@ module parser
     
    localparam NUM_STATES              = 2;
    localparam PARSE_HEADER            = 0;
-  // localparam WRITE_BUBBLE            = 1;
    localparam WAIT_PACKET             = 1;
    localparam IDLE                    = 0;
-  // localparam WRITE_BUBBLE            = 1;
    localparam MAX_PKT_SIZE            = 2000; // In bytes
    localparam IN_FIFO_DEPTH_BIT       = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
    localparam FIRST_BEAT_FIFO_DEPTH   = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
-   localparam COUNT_REQUIRED          = ETHER_TYPE_POS/C_M_AXIS_DATA_WIDTH;
-   localparam RELATIVE_ETHER_TYPE_POS = ETHER_TYPE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
-   localparam RELATIVE_APP_CODE_POS   =APP_CODE_POS-(COUNT_REQUIRED*C_M_AXIS_DATA_WIDTH);
+   localparam COUNT_REQUIRED_APP      = APP_CODE_POS/C_M_AXIS_DATA_WIDTH;
+   localparam COUNT_REQUIRED_ETH      = ETHER_TYPE_POS/C_M_AXIS_DATA_WIDTH;
+   localparam RELATIVE_ETHER_TYPE_POS = ETHER_TYPE_POS-(COUNT_REQUIRED_ETH*C_M_AXIS_DATA_WIDTH);
+   localparam RELATIVE_APP_CODE_POS   = APP_CODE_POS-(COUNT_REQUIRED_APP*C_M_AXIS_DATA_WIDTH);
 
    
 // ------------- Regs/ wires -----------
@@ -134,8 +133,8 @@ module parser
    //Signals from nf_10g interface
    wire in_rxq_tvalid;
    wire in_rxq_tlast;
-   wire [C_M_AXIS_DATA_WIDTH - 1:0]  in_rxq_tdata;
-   wire [((C_M_AXIS_DATA_WIDTH / 8)) - 1:0] in_rxq_tkeep;
+   wire [C_S_AXIS_DATA_WIDTH - 1:0]  in_rxq_tdata;
+   wire [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] in_rxq_tkeep;
    wire [C_S_AXIS_TUSER_WIDTH-1:0] in_rxq_tuser;
   
    
@@ -272,38 +271,32 @@ module parser
         /* cycle between input queues until one is not empty */
         PARSE_HEADER: begin
 	    if(in_rxq_tvalid&s_axis_rxq_tready==1) begin
-	       if(write_count==COUNT_REQUIRED) begin
+	       if(write_count==COUNT_REQUIRED_ETH) begin
 		        ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
-                        appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
-	       	if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin
+	       	if( ethertype===ETHER_TYPE ) begin
                     $display(" AGG PACKET");
                     agg_packet=1;
+                    agg_fifo_wr_en=1;
+	            state_write_next=WAIT_PACKET;    
+           end
+                else begin
+		write_count=write_count+1;
                 end
-            	else begin  
-	     	    agg_packet=0;
-	        end
+           end      
+              else if (write_count==COUNT_REQUIRED_APP) begin     
+          appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+                if(appcode===APP_CODE) begin 
+	         agg_packet=1;
+                end
                  agg_fifo_wr_en=1;
 	         state_write_next=WAIT_PACKET;    
-                     
-           end      
-	  else begin
+           end   
+	else begin
 		write_count=write_count+1;	
 	 end 
         end
         end
 
-    /*   WRITE_BUBBLE:begin
-		agg_fifo_wr_en=1;
-                count=0; 
-		if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
-                state_next=PARSE_HEADER
-                end
-                else begin
-		state_next=WAIT_PACKET;	
-                end
-              
-       end
-      */      
 	WAIT_PACKET: begin
            /* Determine type of packet */
 	if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
@@ -312,23 +305,7 @@ module parser
       end
 	endcase // case(state)
    end // always @ (*)
-
-			
-					
-                    
-
-/*        agg_packet=0;
-           if(!fifo_empty ) begin
-		ethertype=fifo_out_tdata[ETHER_TYPE_POS+15:ETHER_TYPE_POS];
-                appcode=fifo_out_tdata[APP_CODE_POS+1:APP_CODE_POS];
-           if(( ethertype===ETHER_TYPE) || (appcode===APP_CODE)) begin  //set to or to work with regular switch. This should ideally be an AND and not an OR
-		     $display(" AGG PACKET");
-                     agg_packet=1;      
-           end
-             state_next = WRITE_PACKET;
-	   end       
-        end 
-*/
+                
 
        always @(*) begin
 	
@@ -346,18 +323,11 @@ module parser
 	if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
 		fifo_rd_en=1;
             if(fifo_out_tlast == 1) begin
-        //        state_read_next=READ_BUBBLE; 
                   agg_fifo_rd_en=1;
                   end
           end
         end
-/*
-         READ_BUBBLE:begin
-		agg_fifo_ed_en<=1;
-		fifo_rd_en<=1;
-		state_read_next<=IDLE;
-*/
-      endcase
+       endcase
      end
    
   always @(posedge axis_aclk) begin
@@ -450,6 +420,17 @@ always @(posedge axis_aclk)
                 version_reg <= #1    `REG_VERSION_DEFAULT;
                 ip2cpu_flip_reg <= #1    ~cpu2ip_flip_reg;
 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
                 pktin_reg[`REG_PKTIN_WIDTH -2: 0] <= #1  clear_counters | pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) ;
 
         pktin_reg[`REG_PKTIN_WIDTH-1] <= #1 clear_counters | pktin_reg_clear ? 1'h0 : pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) > {(`REG_PKTIN_WIDTH-1){1'b1}} ? 1'b1 : pktin_reg[`REG_PKTIN_WIDTH-1];
