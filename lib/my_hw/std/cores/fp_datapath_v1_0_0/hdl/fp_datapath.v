@@ -268,7 +268,7 @@ Width    FIFO Index:bits     //Indexing starts at 1
 
 
 // Signals to fp_unit
-   reg [NUM_QUEUES-1:0]     fp_unit_valid         = {NUM_QEUES{1'b0}};
+   reg [NUM_QUEUES-1:0]    fp_unit_valid         = {NUM_QEUES{1'b0}};
    reg fp_queue_rd_en        			  = 0;
    wire[FP_DATA_WIDTH-1:0] fp_result [NUM_FP_UNITS-1:0];
    wire[NUM_FP_UNITS-1:0]  fp_queue_empty;
@@ -454,7 +454,6 @@ endgenerate;
 		
 
 	SEND_HEADERS: begin
-			
 		for (l = 0; l < NUM_QUEUES; l = l + 1) begin									if(PORTS_BITMAP[l]==1) begin
 	   		out_tdata[l]=data_reg_out[l];
 			out_tkeep[l]=tkeep_reg_out;
@@ -463,7 +462,7 @@ endgenerate;
 			if(output_write_count[l]<DATA_OFFSET_INDEX-1) begin
 				out_tvalid[l]=1;
 				if(out_tready[l]==1) begin
-					output_write_count[l]=output_write_count[l+1];
+					output_write_count[l]=output_write_count[l]+1;
 					data_reg[l]=data_reg[l]>>C_M_AXIS_DATA_WIDTH;
 					tkeep_reg[l]=tkeep_reg[l]>>C_M_AXIS_DATA_WIDTH/8;
 					tlast_reg[l]=tlast_reg[l]>>1;
@@ -471,21 +470,49 @@ endgenerate;
 				end
 			end
 			else begin
-				out_tvalid=0;				
+				out_tvalid[l]=0;				
 				done[l]=1;
 			end
 		   end
 		end
 		if(PORTS_BITMAP==done) begin
 			done={NUM_QUEUES{4'b0}};
-			state_next=
-		
+			state_next=WRITE_OUT_RESULT;
+		end
 
-// wire                                  fifo_tvalid;
-// wire                                  fifo_tlast;
   
+	WRITE_OUT_RESULT: begin
+/*8 NOTE: FIFO FROM    8*/
+		for (l = 0; l < NUM_QUEUES; l = l + 1) begin									if(PORTS_BITMAP[l]==1) begin
+	   		out_tdata[l]=;
+			out_tkeep[l]=meta_fifo_out_tkeep[l];
+			out_tuser[l]=meta_fifo_out_tuser[l];
+			out_tlast[l]=meta_fifo_out_tlast[l];
 
+/*
+		for (l = 0; l < NUM_QUEUES; l = l + 1) begin									if(PORTS_BITMAP[l]==1) begin
+	   		out_tdata[l]=data_reg_out[l];
+			out_tkeep[l]=tkeep_reg_out;
+			out_tuser[l]=tuser_reg_out;
+			out_tlast[l]=tlast_reg_out;
+			if(output_write_count[l]<DATA_OFFSET_INDEX-1) begin
+				out_tvalid[l]=1;
+				if(out_tready[l]==1) begin
+					output_write_count[l]=output_write_count[l]+1;
+					data_reg[l]=data_reg[l]>>C_M_AXIS_DATA_WIDTH;
+					tkeep_reg[l]=tkeep_reg[l]>>C_M_AXIS_DATA_WIDTH/8;
+					tlast_reg[l]=tlast_reg[l]>>1;
+					tuser_reg[l]=tuser_reg[l]>>C_M_AXIS_TUSER_WIDTH;
+				end
+			end
+			else begin
+				out_tvalid[l]=0;				
+				done[l]=1;
+			end
+		   end
+		end
 
+*/
  /*  
 
   generate
