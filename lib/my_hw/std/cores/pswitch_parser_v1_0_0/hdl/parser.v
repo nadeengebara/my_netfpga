@@ -15,7 +15,7 @@
  *        Nadeen Gebara
  * 		
  *  Description:
-   Parses bit from HOP to determine whether it should be forwarded to Aggregation pipeline or  Output Queues
+    Parser that determines the appropriate datapath to which packets are to be forwarded based on the EtherType and/or APPCODE
         
  *
  */
