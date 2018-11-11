@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Wed Oct 31 17:43:32 2018
-# Process ID: 14893
+# Start of session at: Thu Nov  1 13:33:09 2018
+# Process ID: 7291
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/barrier_v1_0_0
 # Command line: vivado -mode batch -source barrier.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/barrier_v1_0_0/vivado.log
@@ -54,4 +54,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 # update_ip_catalog
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
-INFO: [Common 17-206] Exiting Vivado at Wed Oct 31 17:43:37 2018...
+INFO: [Common 17-206] Exiting Vivado at Thu Nov  1 13:33:15 2018...

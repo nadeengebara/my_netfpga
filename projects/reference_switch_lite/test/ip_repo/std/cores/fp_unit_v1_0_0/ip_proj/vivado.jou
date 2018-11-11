@@ -1,0 +1,20 @@
+#-----------------------------------------------------------
+# Vivado v2016.4 (64-bit)
+# SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
+# IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
+# Start of session at: Sun Nov 11 13:43:52 2018
+# Process ID: 14558
+# Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_unit_v1_0_0/ip_proj
+# Command line: vivado fp_unit.xpr
+# Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_unit_v1_0_0/ip_proj/vivado.log
+# Journal file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_unit_v1_0_0/ip_proj/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project fp_unit.xpr
+create_ip -name fp_unit -vendor NetFPGA -library NetFPGA -version 1.00 -module_name fp_unit_0
+generate_target {instantiation_template} [get_files /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_unit_v1_0_0/ip_proj/fp_unit.srcs/sources_1/ip/fp_unit_0/fp_unit_0.xci]
+open_bd_design {/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_unit_v1_0_0/ip_proj/fp_unit.srcs/sources_1/bd/fp_unit/fp_unit.bd}
+startgroup
+create_bd_cell -type ip -vlnv NetFPGA:NetFPGA:fp_unit:1.00 fp_unit_0
+endgroup
+delete_bd_objs [get_bd_cells fp_unit_0]

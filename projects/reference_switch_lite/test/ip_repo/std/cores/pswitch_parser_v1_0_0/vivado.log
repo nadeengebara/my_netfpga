@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Wed Oct 31 17:42:38 2018
-# Process ID: 14543
+# Start of session at: Sat Nov 10 19:15:30 2018
+# Process ID: 31720
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/pswitch_parser_v1_0_0
 # Command line: vivado -mode batch -source pswitch_parser.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/pswitch_parser_v1_0_0/vivado.log
@@ -69,7 +69,7 @@ WARNING: [IP_Flow 19-3656] If you move the project, the path for repository '/ho
 # ipx::add_user_parameter {C_M_AXIS_DATA_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
 # set_property display_name {C_M_AXIS_DATA_WIDTH} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
-# set_property value {256} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
+# set_property value {64} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
 # set_property value_format {long} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
 # ipx::add_user_parameter {C_S_AXIS_DATA_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
@@ -104,7 +104,7 @@ WARNING: [IP_Flow 19-3656] If you move the project, the path for repository '/ho
 # ipx::add_user_parameter {APP_CODE_POS} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters APP_CODE_POS]
 # set_property display_name {APP_CODE_POS} [ipx::get_user_parameters APP_CODE_POS]
-# set_property value {112} [ipx::get_user_parameters APP_CODE_POS]
+# set_property value {272} [ipx::get_user_parameters APP_CODE_POS]
 # set_property value_format {long} [ipx::get_user_parameters APP_CODE_POS]
 # ipx::add_user_parameter {ETHER_TYPE} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters ETHER_TYPE]
@@ -135,8 +135,6 @@ INFO: [IP_Flow 19-3479] User Parameter 'C_S_AXI_DATA_WIDTH': The long integer pa
 INFO: [IP_Flow 19-3479] User Parameter 'C_S_AXI_ADDR_WIDTH': The long integer parameter is not bounded by any range or validation values.
 INFO: [IP_Flow 19-3479] User Parameter 'ETHER_TYPE_POS': The long integer parameter is not bounded by any range or validation values.
 INFO: [IP_Flow 19-3479] User Parameter 'APP_CODE_POS': The long integer parameter is not bounded by any range or validation values.
-CRITICAL WARNING: [IP_Flow 19-2976] File Group 'xilinx_anylanguagesynthesis (Synthesis)': The referenced subcore "NetFPGA:NetFPGA:fallthrough_small_fifo:1.00" is not found in the IP catalog.
-CRITICAL WARNING: [IP_Flow 19-2976] File Group 'xilinx_anylanguagebehavioralsimulation (Simulation)': The referenced subcore "NetFPGA:NetFPGA:fallthrough_small_fifo:1.00" is not found in the IP catalog.
 WARNING: [IP_Flow 19-3153] Bus Interface 'axis_aclk': ASSOCIATED_BUSIF bus parameter is missing.
 INFO: [IP_Flow 19-2181] Payment Required is not set for this core.
 INFO: [IP_Flow 19-2187] The Product Guide file is missing.
@@ -144,4 +142,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 # update_ip_catalog
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
-INFO: [Common 17-206] Exiting Vivado at Wed Oct 31 17:42:44 2018...
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 10 19:15:36 2018...

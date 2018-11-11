@@ -38,6 +38,8 @@ logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from NFTest import *
 import sys
 import os
+import struct
+import binascii
 from scapy.layers.all import Ether, IP, TCP
 from reg_defines_reference_switch_lite import *
 
@@ -70,20 +72,24 @@ for i in range(4):
     routerMAC.append("00:ca:fe:00:00:0%d"%(i+1))
     routerIP.append("192.168.%s.40"%i)
 
-num_oq = 15
+num_agg =0
+num_agg_test=1
 
-pkts = []
+pkts0 = []
+pkts1= []
+pkts0_result=[]
+pkts1_result=[]
 pkta = []
 
 
-num_agg =2 
 
-a=3.5
+#=3.5
 
 for i in range(num_agg):
     pkt = make_agg_pkt(dst_MAC="aa:bb:cc:dd:ee:ff", src_MAC=routerMAC[1],
                      EtherType=0x8888, pkt_len=100)
  #   pkt=Ether(src="aa:bb:cc:dd:ee:ff",dst="ff:ff:ff:ff:ff:ff")/'\x00\x01'
+ 
     pkt.time = (((i+5)*(1e-8)) + (2e-6))
     pkta.append(pkt)
 #    if isHW():
@@ -91,26 +97,50 @@ for i in range(num_agg):
 #    	nftest_expect_phy('nf0', pkt)
 
 if not isHW():
-    nftest_send_phy('nf0', pkta)
-    nftest_expect_phy('nf1', pkta)
+    nftest_send_phy('nf1', pkta)
+    nftest_expect_phy('nf3', pkta)
 
 nftest_barrier()
 
+val_0=0.5                     #  '?\x00\x00\x00'  ?=0x3F  
+val_1=1.0                     #  '?\x80\x00\x00'
+val_result=val_0+val_1        #  '?\xc0\x00\x00
+payload_0=''
+payload_1=''
+result=''
+num_vars=4
+for i in range(num_vars):
+    payload_0+=struct.pack('!f',val_0)
+    payload_1+=struct.pack('!f',val_1)
+    result+=struct.pack('!f',val_result)
+
+for i in range(num_agg_test):
+  #  pkt = make_IP_pkt(src_MAC="aa:bb:cc:dd:ee:ff", dst_MAC=routerMAC[0],src_IP="192.168.0.1", dst_IP="192.168.1.1", pkt_len=100)
+    pkt0=Ether(src="aa:bb:aa:bb:aa:bb",dst="00:00:ff:00:00:00",type=0x8888)/IP(src="0.0.0.1",dst="127.0.0.1")/payload_0
+    pkt1=Ether(src="cc:dd:cc:dd:cc:dd",dst="00:00:ff:00:00:00",type=0x8888)/IP(src="0.0.0.2",dst="127.0.0.1")/payload_1
+    pkt0_result=Ether(src="aa:bb:aa:bb:aa:bb",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.1",dst="127.0.0.1")/result
+    pkt1_result=Ether(src="cc:dd:cc:dd:cc:dd",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.2",dst="127.0.0.1")/result
+
+    pkt0.time = ((i*(1e-8)) + (2e-6))
+    pkt1.time = ((i*(1e-8)) + (2e-6))
+    pkt0_result.time = ((i*(1e-8)) + (2e-6))
+    pkt1_result.time = ((i*(1e-8)) + (2e-6))
 
 
-for i in range(num_oq):
-    pkt = make_IP_pkt(src_MAC="aa:bb:cc:dd:ee:ff", dst_MAC=routerMAC[0],
-                      src_IP="192.168.0.1", dst_IP="192.168.1.1", pkt_len=100)
+    pkts0.append(pkt0)
+    pkts1.append(pkt1)
+    pkts0_result.append(pkt0_result)
+    pkts1_result.append(pkt1_result)	
 
-    pkt.time = ((i*(1e-8)) + (2e-6))
-    pkts.append(pkt)
 #    if isHW():
 #      nftest_send_phy('nf0', pkt)
 #        nftest_expect_phy('nf1', pkt)
    
 if not isHW():
-    nftest_send_phy('nf1', pkts)
-    nftest_expect_phy('nf2', pkts)
+    nftest_send_phy('nf0', pkts0)
+    nftest_send_phy('nf1',pkts1)
+    nftest_expect_phy('nf0', pkts0_result)
+    nftest_expect_phy('nf1', pkts1_result)
   #  nftest_expect_phy('nf2', pkts)
   #  nftest_expect_phy('nf3', pkts)
 

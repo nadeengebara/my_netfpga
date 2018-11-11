@@ -1123,7 +1123,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>APP_CODE_POS</spirit:name>
         <spirit:displayName>App Code Pos</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.APP_CODE_POS">112</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.APP_CODE_POS">272</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>ETHER_TYPE</spirit:name>
@@ -1159,7 +1159,7 @@
       <spirit:file>
         <spirit:name>hdl/parser.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_14c8e049</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_101fe5ab</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1213,7 +1213,7 @@
     <spirit:parameter>
       <spirit:name>C_M_AXIS_DATA_WIDTH</spirit:name>
       <spirit:displayName>C_M_AXIS_DATA_WIDTH</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M_AXIS_DATA_WIDTH">256</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M_AXIS_DATA_WIDTH">64</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_S_AXIS_DATA_WIDTH</spirit:name>
@@ -1253,7 +1253,7 @@
     <spirit:parameter>
       <spirit:name>APP_CODE_POS</spirit:name>
       <spirit:displayName>APP_CODE_POS</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.APP_CODE_POS">112</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.APP_CODE_POS">272</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>ETHER_TYPE</spirit:name>
@@ -1283,7 +1283,7 @@
       <xilinx:vendorDisplayName>NetFPGA</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.netfpga.org</xilinx:vendorURL>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-10-31T17:42:43Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-11-10T19:15:36Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2016.4</xilinx:xilinxVersion>
