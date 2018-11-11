@@ -18,7 +18,10 @@
  */
 
 //`include "input_arbiter_cpu_regs_defines.v"
-module fp_datapath
+
+`timescale 1ns/1ps
+
+module simple_agg
 #(
     // Master AXI Stream Data Width
     parameter C_M_AXIS_DATA_WIDTH=64,
@@ -43,7 +46,7 @@ module fp_datapath
     parameter OPP_CODE_POS          = 274,          //2  Bits
     parameter VECTOR_INDEX_POS      = 276,          //32 Bits
     parameter FIN_POS		    = 308,          //1  Bit
-    parameter NUM_VARIABLES	    = 309,          //12 Bits
+    parameter NUM_VARIABLES_POS     = 309,          //12 Bits
     parameter DATA_POS		    = 320,
 
     parameter MASTER		    =0
@@ -75,6 +78,13 @@ module fp_datapath
     input  s_axis_1_tvalid,
     output s_axis_1_tready,
     input  s_axis_1_tlast,
+
+    input [C_S_AXIS_DATA_WIDTH - 1:0] s_axis_2_tdata,
+    input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_2_tkeep,
+    input [C_S_AXIS_TUSER_WIDTH-1:0] s_axis_2_tuser,
+    input  s_axis_2_tvalid,
+    output s_axis_2_tready,
+    input  s_axis_2_tlast,
 
     input [C_S_AXIS_DATA_WIDTH - 1:0] s_axis_3_tdata,
     input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_3_tkeep,
@@ -155,7 +165,7 @@ No register interface for now
    // ------------ Internal Params --------
 
    //computation states
-  );
+ 
 
  
 //   localparam HEADER_REG_SIZE= C_M_AXIS_DATA_WIDTH+C_M_AXIS_TUSER_WIDTH+C_M_AXIS_DATA_WIDTH/8+1;
@@ -173,7 +183,7 @@ Width    FIFO Index:bits     //Indexing starts at 1
 ********************************************************8
 */
   
-   localparam MAX_PKT_SIZE            = 1600   
+   localparam MAX_PKT_SIZE            = 1600  ;
    localparam NUM_QUEUES_WIDTH        = log2(NUM_QUEUES);
    localparam IN_FIFO_DEPTH_BIT       = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
    localparam DATA_OFFSET_INDEX       = DATA_POS/C_M_AXIS_DATA_WIDTH;
@@ -182,8 +192,8 @@ Width    FIFO Index:bits     //Indexing starts at 1
    localparam  NUM_INPUT_STATES         = 2;
    localparam  IDLE                     = 0;
    localparam  INSPECT_MODIFY_HEADER    = 1;
-   localparam  START_AGG                = 2;
-   localparam  BUBBLE_AGG	        = 3;
+   localparam  FSM_START_AGG            = 2;
+   localparam  BUBBLE_AGG	            = 3;
 
 // OUTPUT SIDE FSM
 
@@ -239,9 +249,9 @@ Width    FIFO Index:bits     //Indexing starts at 1
    reg [31:0] 						    current_vector_index=0;          //keeps track of vector count
    reg [31:0]                                               input_vector_index[NUM_QUEUES-1:0];
    
-   reg [3:0] input_write_count [NUM_QUEUES-1:0]  = {NUM_QUEUES{4'b0000}};
-   reg [NUM_QUEUES-1:0] start_agg		 = {NUM_QEUES{1'b0}};
-   reg [3:0] output_write_count [NUM_QUEUES-1:0]  = {NUM_QUEUES{4'b0000}};
+   reg [3:0] input_write_count [NUM_QUEUES-1:0]  = {{4'b0000},{4'b0000},{4'b0000},{4'b0000}};
+   reg [NUM_QUEUES-1:0] start_agg		 = 0;
+   reg [3:0] output_write_count [NUM_QUEUES-1:0]  = {{4'b0000},{4'b0000},{4'b0000},{4'b0000}};
 
 
 //FP UNIT
@@ -287,7 +297,7 @@ Width    FIFO Index:bits     //Indexing starts at 1
   .S_AXIS_3_tvalid(fp_valid[3]),      // input wire S_AXIS_B_tvalid
   .aclk(axis_aclk),                          // input wire clock
   .dout(fp_dout[j]),                            // output wire [31 : 0] dout
-  .empty_0(fp_empty[j]),                          // output wire empty
+  .empty(fp_empty[j]),                          // output wire empty
   .rd_en(!(PORTS_BITMAP&~fp_rd_en)),                          // input wire rd_en
   .srst(~axis_resetn)                  // input wire fifo_srst
 );
@@ -347,12 +357,12 @@ endgenerate
 	  if(PORTS_BITMAP[i]==1) begin
 	   if (!(in_fifo_empty&PORTS_BITMAP)) begin
         	//write values to header_reg whenever input data is valid
-                data_reg_next[i][(input_write_count+1)*(C_M_AXIS_DATA_WIDTH)-1:(input_write_count*C_M_AXIS_DATA_WIDTH)]=in_fifo_out_tdata[i];                    
-                tuser_reg_next[i][(input_write_count+1)*(C_M_AXIS_TUSER_WIDTH)-1:(input_write_count*C_M_AXIS_TUSER_WIDTH)]=in_fifo_out_tuser[i];                    
-                tkeep_reg_next[i][(input_write_count+1)*(C_M_AXIS_DATA_WIDTH/8)-1:(input_write_count*C_M_AXIS_DATA_WIDTH/8)]=in_fifo_out_tkeep[i];                    
-                tlast_reg_next[i][(input_write_count+1:input_wite_count]=in_tlast[i];                    
+                data_reg_next[i]={in_fifo_out_tdata[i],data_reg[i]>>C_M_AXIS_DATA_WIDTH};                    
+                tuser_reg_next[i]={in_fifo_out_tuser[i],tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH};                    
+                tkeep_reg_next[i]={in_fifo_out_tkeep[i],tkeep_reg[i]>>(C_M_AXIS_DATA_WIDTH/8)};                    
+                tlast_reg_next[i]={in_tlast[i],tlast_reg[i]>>1};                    
 		if(input_write_count[i]===DATA_OFFSET_INDEX-1) begin
-			input_state_next[i]=INSPECT_HEADER;
+			input_state_next[i]=INSPECT_MODIFY_HEADER;
 			input_write_count[i]=4'b0000;   //will reset write count here for now
 		end
 		else begin
@@ -366,9 +376,9 @@ endgenerate
 //only come here when  everyone else comes
 	INSPECT_MODIFY_HEADER: begin
 	       if(PORTS_BITMAP[i]==1) begin
-	       data_reg_next[i][DEST_MAC_OFFSET+48-1:DEST_MAC_OFFSET]=NEW_DEST_MAC;
+	       data_reg_next[i][DEST_MAC_POS+48-1:DEST_MAC_POS]=NEW_DEST_MAC;
 	       start_agg[i]=1;
-	       input_state_next[i]=START_AGG;
+	       input_state_next[i]=FSM_START_AGG;
 	       if(i==MASTER) begin
 		 if(data_reg[i][FIN_POS]==1) begin
 			current_vector_index=0;
@@ -376,16 +386,17 @@ endgenerate
 		else begin
 			current_vector_index=current_vector_index+1;
 		end
-	       end
-		
+		end
+	   end
+	end
 	
-	START_AGG: begin
+	FSM_START_AGG: begin
 	if (!(in_fifo_empty&PORTS_BITMAP) && !(PORTS_BITMAP&meta_nearly_full)) begin          //come here only if PORTS_BITMAP=1
 		  meta_fifo_wr_en[i]=1;
 		  fp_valid[i]=1;
 			if(in_tlast[i]) begin
  				if(!start_agg[i]) begin
-				  input_state_next=IDLE;
+				  input_state_next[i]=IDLE;
 			        end
 				else begin
 				input_state_next[i]=BUBBLE_AGG;
@@ -428,13 +439,13 @@ endgenerate
 		   data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
 		   tkeep_reg_next[i]=tkeep_reg[i]>>C_M_AXIS_DATA_WIDTH/8;
 		   tlast_reg_next[i]=tlast_reg[i]>>1;
-		   tuser_reg_next[l]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;
+		   tuser_reg_next[i]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;
 		  end
 	       end
                else begin
 			output_write_count[i]=0;
 			start_agg[i]=0;
-			output_agg_state_next[i]=WRITE_OUT_RESULTS;
+			output_agg_state_next[i]=WRITE_OUT_RESULT;
 			
 		end           	   
 	  end
@@ -460,37 +471,35 @@ endgenerate
 		   endcase
 		end //always
 
-   endgenerate
 
 
 //what signals will impact me header_verified,message_handled
 
 
-  always @(posedge axis_clk) begin
+  always @(posedge axis_aclk) begin
 	if(~axis_resetn) begin
 		input_state[i]<=IDLE;
 		output_agg_state[i]<=SEND_HEADER;		
-                input_write_count<=0;
-		output_write_count<=0;
-                current_vector_index<=0; 
-		out_tvalid<=0;
-                fp_valid<=0;
-		fp_rd_en<=0;
+        input_write_count[i]<=0;
+		output_write_count[i]<=0; 
+		out_tvalid[i]<=0;
+        fp_valid[i]<=0;
+        fp_rd_en[i]<=0;
 		in_fifo_rd_en<=0;
 		in_tready<=0;  		
                 
 	//must reset kel regs here
-                end
-		else begin
+     end
+  else begin
      		data_reg[i]        <=data_reg_next[i];
     		tkeep_reg[i]       <=tkeep_reg_next[i];
     		tlast_reg[i]       <=tlast_reg_next[i];
-                tuser_reg[i]       <=tuser_reg_next[i];
-                input_state[i]     <=input_state_next[i];
-		output_agg_state[i]<=output_state_next[i];
+            tuser_reg[i]       <=tuser_reg_next[i];
+            input_state[i]     <=input_state_next[i];
+		    output_agg_state[i]<=output_agg_state_next[i];
            end
 	end
- end generate
+ endgenerate
 
 
 // -----------------------Logic Assignment --------------------
@@ -547,4 +556,4 @@ endgenerate
   assign tkeep_reg_out[3]    = tkeep_reg[3][C_M_AXIS_DATA_WIDTH/8-1:0];
   assign tlast_reg_out[3]    = tlast_reg[3][0];
 
-
+endmodule
