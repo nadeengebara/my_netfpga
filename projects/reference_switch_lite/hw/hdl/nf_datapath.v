@@ -52,7 +52,7 @@ module nf_datapath #(
     parameter C_S_AXIS_DATA_WIDTH=64,
     parameter C_M_AXIS_TUSER_WIDTH=128,
     parameter C_S_AXIS_TUSER_WIDTH=128,
-    parameter NUM_QUEUES=5
+    parameter NUM_QUEUES=4
 )
 (
     //Datapath clock
@@ -138,12 +138,14 @@ module nf_datapath #(
     input                                     s_axis_2_tvalid,
     output                                    s_axis_2_tready,
     input                                     s_axis_2_tlast,
+
     input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_3_tdata,
     input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_3_tkeep,
     input [C_S_AXIS_TUSER_WIDTH-1:0]          s_axis_3_tuser,
     input                                     s_axis_3_tvalid,
     output                                    s_axis_3_tready,
     input                                     s_axis_3_tlast,
+
     input [C_S_AXIS_DATA_WIDTH - 1:0]         s_axis_4_tdata,
     input [((C_S_AXIS_DATA_WIDTH / 8)) - 1:0] s_axis_4_tkeep,
     input [C_S_AXIS_TUSER_WIDTH-1:0]          s_axis_4_tuser,
@@ -184,7 +186,6 @@ module nf_datapath #(
     input                                      m_axis_4_tready,
     output                                     m_axis_4_tlast
 
-
     );
     
     //My required internal connectivity : DATAPATH INPUTS --> PARSERS -->DATAPATH OUTPUTS
@@ -192,29 +193,54 @@ module nf_datapath #(
     //don't need anything for now since only one module in datapath 
 
 
+   wire [C_M_AXIS_DATA_WIDTH-1:0]   s_axis_agg_0_tdata;
+   wire [C_M_AXIS_DATA_WIDTH/8-1:0] s_axis_agg_0_tkeep;
+   wire [C_M_AXIS_TUSER_WIDTH-1:0]  s_axis_agg_0_tuser;
+   wire				    s_axis_agg_0_tlast;
+   wire				    s_axis_agg_0_tvalid;
+   wire				    s_axis_agg_0_tready;
 
+   wire [C_M_AXIS_DATA_WIDTH-1:0]   s_axis_agg_1_tdata;
+   wire [C_M_AXIS_DATA_WIDTH/8-1:0] s_axis_agg_1_tkeep;
+   wire [C_M_AXIS_TUSER_WIDTH-1:0]  s_axis_agg_1_tuser;
+   wire				    s_axis_agg_1_tlast;
+   wire				    s_axis_agg_1_tvalid;
+   wire				    s_axis_agg_1_tready;
+
+   wire [C_M_AXIS_DATA_WIDTH-1:0]   s_axis_agg_2_tdata;
+   wire [C_M_AXIS_DATA_WIDTH/8-1:0] s_axis_agg_2_tkeep;
+   wire [C_M_AXIS_TUSER_WIDTH-1:0]  s_axis_agg_2_tuser;
+   wire				    s_axis_agg_2_tlast;
+   wire				    s_axis_agg_2_tvalid;
+   wire				    s_axis_agg_2_tready;
+
+   wire [C_M_AXIS_DATA_WIDTH-1:0]   s_axis_agg_3_tdata;
+   wire [C_M_AXIS_DATA_WIDTH/8-1:0] s_axis_agg_3_tkeep;
+   wire [C_M_AXIS_TUSER_WIDTH-1:0]  s_axis_agg_3_tuser;
+   wire				    s_axis_agg_3_tlast;
+   wire				    s_axis_agg_3_tvalid;
+   wire				    s_axis_agg_3_tready;
 
 
    pswitch_parser_ip parser_0
 
    (
 
-
     .axis_aclk(axis_aclk),
     .axis_resetn(axis_resetn),
-    .m_axis_agg_tdata(m_axis_1_tdata),
-    .m_axis_agg_tkeep(m_axis_1_tkeep),
-    .m_axis_agg_tuser(m_axis_1_tuser),
-    .m_axis_agg_tvalid(m_axis_1_tvalid),
-    .m_axis_agg_tready(m_axis_1_tready),
-    .m_axis_agg_tlast(m_axis_1_tlast),
+    .m_axis_agg_tdata(s_axis_agg_0_tdata),
+    .m_axis_agg_tkeep(s_axis_0_agg_tkeep),
+    .m_axis_agg_tuser(s_axis_agg_0_tuser),
+    .m_axis_agg_tvalid(s_axis_agg_0_tvalid),
+    .m_axis_agg_tready(s_axis_agg_0_tready),
+    .m_axis_agg_tlast(s_axis_agg_0_tlast),
 
-    .m_axis_OQ_tdata(m_axis_0_tdata),
-    .m_axis_OQ_tkeep(m_axis_0_tkeep),
-    .m_axis_OQ_tuser(m_axis_0_tuser),
-    .m_axis_OQ_tvalid(m_axis_0_tvalid),
-    .m_axis_OQ_tready(m_axis_0_tready),
-    .m_axis_OQ_tlast(m_axis_0_tlast),
+    .m_axis_OQ_tdata(),
+    .m_axis_OQ_tkeep(),
+    .m_axis_OQ_tuser(),
+    .m_axis_OQ_tvalid(),
+    .m_axis_OQ_tready(),
+    .m_axis_OQ_tlast(),
 
     .s_axis_rxq_tdata(s_axis_0_tdata),
     .s_axis_rxq_tkeep(s_axis_0_tkeep),
@@ -253,19 +279,20 @@ module nf_datapath #(
 
     .axis_aclk(axis_aclk),
     .axis_resetn(axis_resetn),
-    .m_axis_agg_tdata(m_axis_3_tdata),
-    .m_axis_agg_tkeep(m_axis_3_tkeep),
-    .m_axis_agg_tuser(m_axis_3_tuser),
-    .m_axis_agg_tvalid(m_axis_3_tvalid),
-    .m_axis_agg_tready(m_axis_3_tready),
-    .m_axis_agg_tlast(m_axis_3_tlast),
 
-    .m_axis_OQ_tdata(m_axis_2_tdata),
-    .m_axis_OQ_tkeep(m_axis_2_tkeep),
-    .m_axis_OQ_tuser(m_axis_2_tuser),
-    .m_axis_OQ_tvalid(m_axis_2_tvalid),
-    .m_axis_OQ_tready(m_axis_2_tready),
-    .m_axis_OQ_tlast(m_axis_2_tlast),
+    .m_axis_agg_tdata(s_axis_agg_1_tdata),
+    .m_axis_agg_tkeep(s_axis_agg_1_tkeep),
+    .m_axis_agg_tuser(s_axis_agg_1_tuser),
+    .m_axis_agg_tvalid(s_axis_agg_1_tvalid),
+    .m_axis_agg_tready(s_axis_agg_1_tready),
+    .m_axis_agg_tlast(s_axis_agg_1_tlast),
+
+    .m_axis_OQ_tdata(),
+    .m_axis_OQ_tkeep(),
+    .m_axis_OQ_tuser(),
+    .m_axis_OQ_tvalid(),
+    .m_axis_OQ_tready(),
+    .m_axis_OQ_tlast(),
 
     .s_axis_rxq_tdata(s_axis_1_tdata),
     .s_axis_rxq_tkeep(s_axis_1_tkeep),
@@ -303,12 +330,12 @@ module nf_datapath #(
 
     .axis_aclk(axis_aclk),
     .axis_resetn(axis_resetn),
-    .m_axis_agg_tdata(),
-    .m_axis_agg_tkeep(),
-    .m_axis_agg_tuser(),
-    .m_axis_agg_tvalid(),
-    .m_axis_agg_tready(),
-    .m_axis_agg_tlast(),
+    .m_axis_agg_tdata(s_axis_agg_2_tdata),
+    .m_axis_agg_tkeep(s_axis_agg_2_tkeep),
+    .m_axis_agg_tuser(s_axis_agg_2_tuser),
+    .m_axis_agg_tvalid(s_axis_agg_2_tvalid),
+    .m_axis_agg_tready(s_axis_agg_2_tready),
+    .m_axis_agg_tlast(s_axis_agg_2_tlast),
 
     .m_axis_OQ_tdata(),
     .m_axis_OQ_tkeep(),
@@ -354,12 +381,13 @@ module nf_datapath #(
 
     .axis_aclk(axis_aclk),
     .axis_resetn(axis_resetn),
-    .m_axis_agg_tdata(),
-    .m_axis_agg_tkeep(),
-    .m_axis_agg_tuser(),
-    .m_axis_agg_tvalid(),
-    .m_axis_agg_tready(),
-    .m_axis_agg_tlast(),
+
+    .m_axis_agg_tdata(s_axis_agg_3_tdata),
+    .m_axis_agg_tkeep(s_axis_agg_3_tkeep),
+    .m_axis_agg_tuser(s_axis_agg_3_tuser),
+    .m_axis_agg_tvalid(s_axis_agg_3_tvalid),
+    .m_axis_agg_tready(s_axis_agg_3_tready),
+    .m_axis_agg_tlast(s_axis_agg_3_tlast),
 
     .m_axis_OQ_tdata(),
     .m_axis_OQ_tkeep(),
@@ -397,6 +425,61 @@ module nf_datapath #(
       .S_AXI_ARESETN(axi_resetn)
 
       );
+
+
+simple_agg_ip fp_datapath (
+  .axis_aclk(axis_aclk),              // input wire axis_aclk
+  .axis_resetn(axis_resetn),          // input wire axis_resetn
+  .s_axis_0_tdata(s_axis_agg_0_tdata),    // input wire [63 : 0] s_axis_0_tdata
+  .s_axis_0_tkeep(s_axis_agg_0_tkeep),    // input wire [7 : 0] s_axis_0_tkeep
+  .s_axis_0_tuser(s_axis_agg_0_tuser),    // input wire [127 : 0] s_axis_0_tuser
+  .s_axis_0_tvalid(s_axis_agg_0_tvalid),  // input wire s_axis_0_tvalid
+  .s_axis_0_tready(s_axis_agg_0_tready),  // output wire s_axis_0_tready
+  .s_axis_0_tlast(s_axis_agg_0_tlast),    // input wire s_axis_0_tlast
+  .s_axis_1_tdata(s_axis_agg_1_tdata),    // input wire [63 : 0] s_axis_1_tdata
+  .s_axis_1_tkeep(s_axis_agg_1_tkeep),    // input wire [7 : 0] s_axis_1_tkeep
+  .s_axis_1_tuser(s_axis_agg_1_tuser),    // input wire [127 : 0] s_axis_1_tuser
+  .s_axis_1_tvalid(s_axis_agg_1_tvalid),  // input wire s_axis_1_tvalid
+  .s_axis_1_tready(s_axis_agg_1_tready),  // output wire s_axis_1_tready
+  .s_axis_1_tlast(s_axis_agg_1_tlast),    // input wire s_axis_1_tlast
+  .s_axis_2_tdata(s_axis_agg_2_tdata),    // input wire [63 : 0] s_axis_2_tdata
+  .s_axis_2_tkeep(s_axis_agg_2_tkeep),    // input wire [7 : 0] s_axis_2_tkeep
+  .s_axis_2_tuser(s_axis_agg_2_tuser),    // input wire [127 : 0] s_axis_2_tuser
+  .s_axis_2_tvalid(s_axis_agg_2_tvalid),  // input wire s_axis_2_tvalid
+  .s_axis_2_tready(s_axis_agg_2_tready),  // output wire s_axis_2_tready
+  .s_axis_2_tlast(s_axis_agg_2_tlast),    // input wire s_axis_2_tlast
+  .s_axis_3_tdata(s_axis_agg_3_tdata),    // input wire [63 : 0] s_axis_3_tdata
+  .s_axis_3_tkeep(s_axis_agg_3_tkeep),    // input wire [7 : 0] s_axis_3_tkeep
+  .s_axis_3_tuser(s_axis_agg_3_tuser),    // input wire [127 : 0] s_axis_3_tuser
+  .s_axis_3_tvalid(s_axis_agg_3_tvalid),  // input wire s_axis_3_tvalid
+  .s_axis_3_tready(s_axis_agg_3_tready),  // output wire s_axis_3_tready
+  .s_axis_3_tlast(s_axis_agg_3_tlast),    // input wire s_axis_3_tlast
+  .m_axis_0_tdata(m_axis_0_tdata),    // output wire [63 : 0] m_axis_0_tdata
+  .m_axis_0_tkeep(m_axis_0_tkeep),    // output wire [7 : 0] m_axis_0_tkeep
+  .m_axis_0_tuser(m_axis_0_tuser),    // output wire [127 : 0] m_axis_0_tuser
+  .m_axis_0_tvalid(m_axis_0_tvalid),  // output wire m_axis_0_tvalid
+  .m_axis_0_tready(m_axis_0_tready),  // input wire m_axis_0_tready
+  .m_axis_0_tlast(m_axis_0_tlast),    // output wire m_axis_0_tlast
+  .m_axis_1_tdata(m_axis_1_tdata),    // output wire [63 : 0] m_axis_1_tdata
+  .m_axis_1_tkeep(m_axis_1_tkeep),    // output wire [7 : 0] m_axis_1_tkeep
+  .m_axis_1_tuser(m_axis_1_tuser),    // output wire [127 : 0] m_axis_1_tuser
+  .m_axis_1_tvalid(m_axis_1_tvalid),  // output wire m_axis_1_tvalid
+  .m_axis_1_tready(m_axis_1_tready),  // input wire m_axis_1_tready
+  .m_axis_1_tlast(m_axis_1_tlast),    // output wire m_axis_1_tlast
+  .m_axis_2_tdata(m_axis_2_tdata),    // output wire [63 : 0] m_axis_2_tdata
+  .m_axis_2_tkeep(m_axis_2_tkeep),    // output wire [7 : 0] m_axis_2_tkeep
+  .m_axis_2_tuser(m_axis_2_tuser),    // output wire [127 : 0] m_axis_2_tuser
+  .m_axis_2_tvalid(m_axis_2_tvalid),  // output wire m_axis_2_tvalid
+  .m_axis_2_tready(m_axis_2_tready),  // input wire m_axis_2_tready
+  .m_axis_2_tlast(m_axis_2_tlast),    // output wire m_axis_2_tlast
+  .m_axis_3_tdata(m_axis_3_tdata),    // output wire [63 : 0] m_axis_3_tdata
+  .m_axis_3_tkeep(m_axis_3_tkeep),    // output wire [7 : 0] m_axis_3_tkeep
+  .m_axis_3_tuser(m_axis_3_tuser),    // output wire [127 : 0] m_axis_3_tuser
+  .m_axis_3_tvalid(m_axis_3_tvalid),  // output wire m_axis_3_tvalid
+  .m_axis_3_tready(m_axis_3_tready),  // input wire m_axis_3_tready
+  .m_axis_3_tlast(m_axis_3_tlast)    // output wire m_axis_3_tlast
+);
+
 /*
     
   //Input Arbiter
