@@ -41,8 +41,9 @@ set DEF_LIST {
 	{PARSER 0 1 pswitch_parser_v1_0_0/data/parser_regs_defines.txt} \
 	{NF_10G_INTERFACE0 0 1 nf_10ge_interface_shared_v1_0_0/data/nf_10g_interface_shared_regs_defines.txt} \
 	{NF_10G_INTERFACE1 1 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
+        {NF_10G_INTERFACE2 2 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
+        {NF_10G_INTERFACE3 3 1 nf_10ge_interface_v1_0_0/data/nf_10g_interface_regs_defines.txt} \
 	{NF_RIFFA_DMA 0 1 nf_riffa_dma_v1_0_0/data/nf_riffa_dma_regs_defines.txt} \
-
 
 }
 

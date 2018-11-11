@@ -701,8 +701,8 @@ proc create_root_design { parentCell } {
   create_bd_addr_seg -range $M01_SIZEADDR -offset $M01_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M01_AXI/Reg] SEG_M01_AXI_Reg
   create_bd_addr_seg -range $M02_SIZEADDR -offset $M02_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M02_AXI/Reg] SEG_M02_AXI_Reg
   create_bd_addr_seg -range $M03_SIZEADDR -offset $M03_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M03_AXI/Reg] SEG_M03_AXI_Reg
-  #create_bd_addr_seg -range $M04_SIZEADDR -offset $M04_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M04_AXI/Reg] SEG_M04_AXI_Reg
- # create_bd_addr_seg -range $M05_SIZEADDR -offset $M05_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M05_AXI/Reg] SEG_M05_AXI_Reg
+  create_bd_addr_seg -range $M04_SIZEADDR -offset $M04_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M04_AXI/Reg] SEG_M04_AXI_Reg
+  create_bd_addr_seg -range $M05_SIZEADDR -offset $M05_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M05_AXI/Reg] SEG_M05_AXI_Reg
   #create_bd_addr_seg -range $M06_SIZEADDR -offset $M06_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M06_AXI/Reg] SEG_M06_AXI_Reg
   #create_bd_addr_seg -range $M07_SIZEADDR -offset $M07_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs M07_AXI/Reg] SEG_M07_AXI_Reg
   create_bd_addr_seg -range $M08_SIZEADDR -offset $M08_BASEADDR [get_bd_addr_spaces dma_sub/nf_riffa_dma_1/m_axi_lite] [get_bd_addr_segs  dma_sub/nf_riffa_dma_1/s_axi_lite/reg0] SEG_nf_riffa_dma_1_reg0

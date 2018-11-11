@@ -100,9 +100,9 @@ input wire axis_aclk;
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 axis_resetn RST" *)
 input wire axis_resetn;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_agg TDATA" *)
-output wire [255 : 0] m_axis_agg_tdata;
+output wire [63 : 0] m_axis_agg_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_agg TKEEP" *)
-output wire [31 : 0] m_axis_agg_tkeep;
+output wire [7 : 0] m_axis_agg_tkeep;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_agg TUSER" *)
 output wire [127 : 0] m_axis_agg_tuser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_agg TVALID" *)
@@ -112,9 +112,9 @@ input wire m_axis_agg_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_agg TLAST" *)
 output wire m_axis_agg_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_OQ TDATA" *)
-output wire [255 : 0] m_axis_OQ_tdata;
+output wire [63 : 0] m_axis_OQ_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_OQ TKEEP" *)
-output wire [31 : 0] m_axis_OQ_tkeep;
+output wire [7 : 0] m_axis_OQ_tkeep;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_OQ TUSER" *)
 output wire [127 : 0] m_axis_OQ_tuser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_OQ TVALID" *)
@@ -124,9 +124,9 @@ input wire m_axis_OQ_tready;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis_OQ TLAST" *)
 output wire m_axis_OQ_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rxq TDATA" *)
-input wire [255 : 0] s_axis_rxq_tdata;
+input wire [63 : 0] s_axis_rxq_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rxq TKEEP" *)
-input wire [31 : 0] s_axis_rxq_tkeep;
+input wire [7 : 0] s_axis_rxq_tkeep;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rxq TUSER" *)
 input wire [127 : 0] s_axis_rxq_tuser;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis_rxq TVALID" *)
@@ -175,15 +175,15 @@ output wire S_AXI_BVALID;
 output wire S_AXI_AWREADY;
 
   parser #(
-    .C_M_AXIS_DATA_WIDTH(256),
-    .C_S_AXIS_DATA_WIDTH(256),
+    .C_M_AXIS_DATA_WIDTH(64),
+    .C_S_AXIS_DATA_WIDTH(64),
     .C_M_AXIS_TUSER_WIDTH(128),
     .C_S_AXIS_TUSER_WIDTH(128),
     .C_S_AXI_DATA_WIDTH(32),
     .C_S_AXI_ADDR_WIDTH(12),
     .C_BASEADDR(32'H00000000),
     .ETHER_TYPE_POS(96),
-    .APP_CODE_POS(112),
+    .APP_CODE_POS(272),
     .ETHER_TYPE(16'H8888),
     .APP_CODE(2'B00)
   ) inst (
