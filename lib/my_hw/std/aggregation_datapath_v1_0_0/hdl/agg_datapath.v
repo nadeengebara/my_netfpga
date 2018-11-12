@@ -38,8 +38,12 @@ module agg_datapath
     parameter C_S_AXI_ADDR_WIDTH    = 12,          
     parameter C_BASEADDR            = 32'h00000000,
     
-    parameter ports_bitmap          = 4'hF,
-      
+    parameter PORTS_BITMAP          = 4'hF,
+    parameter MAC_0                 = 48'h0253554d4500,
+    parameter MAC_1                 = 48'h0253554d4501,
+    parameter MAC_2                 = 48'h0253554d4502,
+    parameter MAC_3		    = 48'h0253554d4500
+          
 
   // PARSING OFFSETS
 /*    parameter ETHER_TYPE_POS        = 96,   //16 Bits

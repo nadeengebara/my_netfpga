@@ -55,7 +55,7 @@
 module axis_sim_record
 #(
     // Master AXI Stream Data Width
-    parameter C_S_AXIS_DATA_WIDTH = 256,
+    parameter C_S_AXIS_DATA_WIDTH = 64,
     parameter C_S_AXIS_TUSER_WIDTH = 128,
     parameter OUTPUT_FILE = "../../stream_data_out.axi"
 )

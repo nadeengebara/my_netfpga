@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Thu Nov  1 13:32:56 2018
-# Process ID: 7213
+# Start of session at: Sun Nov 11 22:17:21 2018
+# Process ID: 12889
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/nf_axis_converter_v1_0_0
 # Command line: vivado -mode batch -source nf_axis_converter.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/nf_axis_converter_v1_0_0/vivado.log
@@ -133,4 +133,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
 # file delete -force ${proj_dir} 
-INFO: [Common 17-206] Exiting Vivado at Thu Nov  1 13:33:02 2018...
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 11 22:17:27 2018...

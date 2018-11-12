@@ -308,7 +308,9 @@ def nftest_expect_phy(ifaceName, pkt, mask = None):
         for i in range(len(pkt)):
 	    simPkt.pktExpectPHY(int(ifaceName[2:3])+1, pkt, mask)
 	f = simLib.fExpectPHY(int(ifaceName[2]) + 1)
-        axitools.axis_dump( pkt, f, 256, 1e-9 )
+        #axitools.axis_dump( pkt, f, 256, 1e-9 )
+        axitools.axis_dump(pkt,f,64,1e-9)
+
     else:
         hwPktLib.expect(iface_map[connections[ifaceName]], pkt, mask)
 

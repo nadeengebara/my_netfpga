@@ -1,0 +1,58 @@
+Script started on Sat 10 Nov 2018 19:42:40 GMT
+]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/toolsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools$ clear
+[3;J[H[2J]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/toolsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools$ ls
+[0m[01;34minfrastructure[0m  Makefile  README  [01;34mscripts[0m  settings.sh  typescript
+]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/toolsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools$ cd scripts/
+]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scriptsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scripts$ ls
+[0m[01;32maxitools.py[0m   [01;32mformat_coe.py[0m                 [01;32mnf_sim_registers_axi_logs.py[0m  [01;34mreconfigure[0m
+axitools.pyc  [01;34minterface_config[0m              [01;34mNFTest[0m                        run_load_image.sh
+download.tcl  [01;32mload_bitfile.py[0m               [01;32mnf_test.py[0m                    run_xmd.tcl
+epoch.sh      [01;32mnf_sim_reconcile_axi_logs.py[0m  [01;32mpython_parser.py[0m              [01;32mxparam2regdefines.py[0m
+]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scriptsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scripts$ ls
+[0m[01;32maxitools.py[0m   [01;32mformat_coe.py[0m                 [01;32mnf_sim_registers_axi_logs.py[0m  [01;34mreconfigure[0m
+axitools.pyc  [01;34minterface_config[0m              [01;34mNFTest[0m                        run_load_image.sh
+download.tcl  [01;32mload_bitfile.py[0m               [01;32mnf_test.py[0m                    run_xmd.tcl
+epoch.sh      [01;32mnf_sim_reconcile_axi_logs.py[0m  [01;32mpython_parser.py[0m              [01;32mxparam2regdefines.py[0m
+]0;nadeen@PRIME: ~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scriptsnadeen@PRIME:~/SIGCOMM/PANAMA/Vivado/my_netfpga/tools/scripts$ vim NFTest/NFTest/pa[K[KPacketLib.py
+[?1049h[?1h=[2;1H▽[6n[2;1H  [1;1H]11;?[1;37r[?12;25h[?12l[?25h[27m[23m[m[H[2J[?25l[37;1H"NFTest/NFTest/PacketLib.py" 256L, 8312C[>c[1;1H[34m#!/usr/bin/env python
+
+#
+# Copyright (c) 2015 University of Cambridge
+# All rights reserved.
+#
+# This software was developed by Stanford University and the University of Cambridge Computer Laboratory 
+# under National Science Foundation under Grant No. CNS-0855268,
+# the University of Cambridge Computer Laboratory under EPSRC INTERNET Project EP/H040536/1 and
+# by the University of Cambridge Computer Laboratory under DARPA/AFRL contract FA8750-11-C-0249 ("MRC2"), 
+# as part of the DARPA MRC research programme.
+#
+# @NETFPGA_LICENSE_HEADER_START@
+#
+# Licensed to NetFPGA C.I.C. (NetFPGA) under one or more contributor
+# license agreements.  See the NOTICE file distributed with this work for
+# additional information regarding copyright ownership.  NetFPGA licenses this
+# file to you under the NetFPGA Hardware-Software License, Version 1.0 (the
+# "License"); you may not use this file except in compliance with the
+# License.  You may obtain a copy of the License at:
+#
+#   http://www.netfpga-cic.org
+#
+# Unless required by applicable law or agreed to in writing, Work distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations under the License.
+#
+# @NETFPGA_LICENSE_HEADER_END@
+#[m
+
+[35mimport[m sys
+[35mimport[m os
+[35mfrom[m random [35mimport[m randint
+[35mfrom[m random [35mimport[m seed[37;92H1,1[11CTop[1;1H[?12l[?25h[?25l[37;1H[K[37;1H/[?12l[?25hg[?25l[?12l[?25he[?25l[?12l[?25hn[?25l[?12l[?25he[?25l[?12l[?25hr[?25l[?12l[?25ha[?25l[?12l[?25ht[?25l[?12l[?25he[?25l[?12l[?25h[?25l[27m[23m[m[H[2J[1;9Hhdr.id = [36mid[m
+    [33mif[m prio:[3;9Hhdr.prio = prio
+    [33mreturn[m hdr
+
+
+[34m############################
+# Function: make_IP_pkt
+# Keyword Arguments: src_MAC, dst_MAC, EtherTyp

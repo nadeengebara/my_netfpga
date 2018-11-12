@@ -225,8 +225,9 @@ def make_ARP_reply_pkt(**kwargs):
 ############################
 def generate_load(length):
     load = ''
-    for i in range(length):
+    for i in range(length-1):
         load += chr(randint(0,255))
+    load+=chr(0)
     return load
 
 ############################

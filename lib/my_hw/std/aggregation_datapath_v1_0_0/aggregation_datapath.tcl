@@ -48,8 +48,8 @@ puts "Creating Parser IP"
 #####################################
 # Project Structure & IP Build
 #####################################
-read_verilog "./hdl/.v"
-read_verilog "./hdl/.v"
+read_verilog "./hdl/parser_cpu_regs_defines.v"
+read_verilog "./hdl/parser_cpu_regs.v"
 read_verilog "./hdl/agg_datapath.v"
 update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1
@@ -107,30 +107,37 @@ set_property display_name {C_S_AXI_ADDR_WIDTH} [ipx::get_user_parameters C_S_AXI
 set_property value {32} [ipx::get_user_parameters C_S_AXI_ADDR_WIDTH]
 set_property value_format {long} [ipx::get_user_parameters C_S_AXI_ADDR_WIDTH]
 
-ipx::add_user_parameter {ETHER_TYPE_POS} [ipx::current_core]
-set_property value_resolve_type {user} [ipx::get_user_parameters ETHER_TYPE_POS]
-set_property display_name {ETHER_TYPE_POS} [ipx::get_user_parameters ETHER_TYPE_POS]
-set_property value {96} [ipx::get_user_parameters ETHER_TYPE_POS]
-set_property value_format {long} [ipx::get_user_parameters ETHER_TYPE_POS]
+ipx::add_user_parameter {PORTS_BITMAP} [ipx::current_core]
+set_property value_resolve_type {user} [ipx::get_user_parameters PORTS_BITMAP]
+set_property display_name {PORTS_BITMAP} [ipx::get_user_parameters PORTS_BITMAP]
+set_property value {0xF} [ipx::get_user_parameters PORTS_BITMAP]
+set_property value_format {bitstring} [ipx::get_user_parameters PORTS_BITMAP]
 
 
-ipx::add_user_parameter {APP_CODE_POS} [ipx::current_core]
-set_property value_resolve_type {user} [ipx::get_user_parameters APP_CODE_POS]
-set_property display_name {APP_CODE_POS} [ipx::get_user_parameters APP_CODE_POS]
-set_property value {112} [ipx::get_user_parameters APP_CODE_POS]
-set_property value_format {long} [ipx::get_user_parameters APP_CODE_POS]
+ipx::add_user_parameter {MAC_0} [ipx::current_core]
+set_property value_resolve_type {user} [ipx::get_user_parameters MAC_0]
+set_property display_name {MAC_0} [ipx::get_user_parameters MAC_0]
+set_property value {0x0253554d4500} [ipx::get_user_parameters MAC_0]
+set_property value_format {bitstring} [ipx::get_user_parameters MAC_0]
 
-ipx::add_user_parameter {ETHER_TYPE} [ipx::current_core]
-set_property value_resolve_type {user} [ipx::get_user_parameters ETHER_TYPE]
-set_property display_name {ETHER_TYPE} [ipx::get_user_parameters ETHER_TYPE]
-set_property value {0x8888} [ipx::get_user_parameters ETHER_TYPE]
-set_property value_format {bitstring} [ipx::get_user_parameters ETHER_TYPE]
+ipx::add_user_parameter {MAC_1} [ipx::current_core]
+set_property value_resolve_type {user} [ipx::get_user_parameters MAC_1]
+set_property display_name {MAC_1} [ipx::get_user_parameters MAC_1]
+set_property value {0x0253554d4501} [ipx::get_user_parameters MAC_1]
+set_property value_format {bitstring} [ipx::get_user_parameters MAC_1]
 
-ipx::add_user_parameter {APP_CODE} [ipx::current_core]
-set_property value_resolve_type {user} [ipx::get_user_parameters APP_CODE]
-set_property display_name {APP_CODE} [ipx::get_user_parameters APP_CODE]
-set_property value {0x1} [ipx::get_user_parameters APP_CODE]
-set_property value_format {bitstring} [ipx::get_user_parameters APP_CODE]
+ipx::add_user_parameter {MAC_2} [ipx::current_core]
+set_property value_resolve_type {user} [ipx::get_user_parameters MAC_2]
+set_property display_name {MAC_2} [ipx::get_user_parameters MAC_2]
+set_property value {0x0253554d4502} [ipx::get_user_parameters MAC_2]
+set_property value_format {bitstring} [ipx::get_user_parameters MAC_2]
+
+ipx::add_user_parameter {MAC_3} [ipx::current_core]
+set_property value_resolve_type {user} [ipx::get_user_parameters MAC_3]
+set_property display_name {MAC_2} [ipx::get_user_parameters MAC_3]
+set_property value {0x0253554d4503} [ipx::get_user_parameters MAC_3]
+set_property value_format {bitstring} [ipx::get_user_parameters MAC_3]
+
 
 ipx::add_user_parameter {C_BASEADDR} [ipx::current_core]
 set_property value_resolve_type {user} [ipx::get_user_parameters C_BASEADDR]
