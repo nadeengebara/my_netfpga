@@ -427,7 +427,7 @@ module nf_datapath #(
       );
 
 
-simple_agg_ip fp_datapath (
+fp_datapath_ip fp_datapath_0 (
   .axis_aclk(axis_aclk),              // input wire axis_aclk
   .axis_resetn(axis_resetn),          // input wire axis_resetn
   .s_axis_0_tdata(s_axis_agg_0_tdata),    // input wire [63 : 0] s_axis_0_tdata

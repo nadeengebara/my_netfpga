@@ -81,6 +81,7 @@ set_property generate_synth_checkpoint false [get_files pswitch_parser_ip.xci]
 reset_target all [get_ips pswitch_parser_ip]
 generate_target all [get_ips pswitch_parser_ip]
 
+
 #create_ip -name switch_lite_output_port_lookup -vendor NetFPGA -library NetFPGA -module_name output_port_lookup_ip
 #set_property generate_synth_checkpoint false [get_files output_port_lookup_ip.xci]
 #reset_target all [get_ips output_port_lookup_ip]
@@ -95,6 +96,21 @@ generate_target all [get_ips pswitch_parser_ip]
 #set_property generate_synth_checkpoint false [get_files output_queues_ip.xci]
 #reset_target all [get_ips output_queues_ip]
 #generate_target all [get_ips output_queues_ip]
+
+
+#creates fp_adder ip
+source ./create_ip/fp_adder_interface.tcl
+
+source ./create_ip/fp_datapath_interface.tcl
+
+create_ip -name fp_datapath -vendor NetFPGA -library NetFPGA -module_name fp_datapath_ip
+set_property generate_synth_checkpoint false [get_files fp_datapath_ip.xci]
+reset_target all [get_ips fp_datapath_ip]
+generate_target all [get_ips fp_datapath_ip]
+
+
+
+
 
 #create the IPI Block Diagram
 source ./tcl/control_sub.tcl

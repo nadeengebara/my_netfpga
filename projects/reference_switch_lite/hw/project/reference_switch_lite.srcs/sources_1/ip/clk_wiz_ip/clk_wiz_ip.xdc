@@ -54,7 +54,7 @@
 #----------------------------------------------------------------
 # Connect to input port when clock capable pin is selected for input
 create_clock -period 5.0 [get_ports clk_in1]
-set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.05
+set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.050000000000000003
 
 
 set_false_path -to [get_cells  -hier {*seq_reg*[0]} -filter {is_sequential}]
