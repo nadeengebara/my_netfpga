@@ -3,6 +3,8 @@
 
 create_ip -name floating_point -vendor xilinx.com -library ip -version 7.1 -module_name axi_fp_unit
 
+set_property -dict [list CONFIG.Add_Sub_Value {Add}] [get_ips axi_fp_unit]
+
 set_property -dict [list CONFIG.Flow_Control {NonBlocking}] [get_ips axi_fp_unit]
 
 set_property -dict [list CONFIG.Has_RESULT_TREADY {false}] [get_ips axi_fp_unit]
@@ -11,7 +13,7 @@ set_property -dict [list CONFIG.Maximum_Latency {false}] [get_ips axi_fp_unit]
 
 set_property -dict [list CONFIG.C_Latency {1}] [get_ips axi_fp_unit]
 
- 
+
 
 set_property generate_synth_checkpoint false [get_files axi_fp_unit.xci]
 

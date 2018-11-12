@@ -559,7 +559,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Mon Nov 12 01:29:38 UTC 2018</spirit:value>
+            <spirit:value>Mon Nov 12 23:27:56 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>boundaryCRC</spirit:name>
@@ -571,7 +571,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRC</spirit:name>
-            <spirit:value>7f2faa9e</spirit:value>
+            <spirit:value>6b64819b</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRCversion</spirit:name>
@@ -628,7 +628,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Mon Nov 12 01:29:38 UTC 2018</spirit:value>
+            <spirit:value>Mon Nov 12 23:27:56 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>boundaryCRC</spirit:name>
@@ -640,7 +640,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRC</spirit:name>
-            <spirit:value>7f2faa9e</spirit:value>
+            <spirit:value>6b64819b</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRCversion</spirit:name>
@@ -659,7 +659,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Mon Nov 12 01:29:38 UTC 2018</spirit:value>
+            <spirit:value>Mon Nov 12 23:27:56 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>boundaryCRC</spirit:name>
@@ -671,7 +671,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRC</spirit:name>
-            <spirit:value>7f2faa9e</spirit:value>
+            <spirit:value>6b64819b</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRCversion</spirit:name>
@@ -725,7 +725,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Mon Nov 12 01:29:38 UTC 2018</spirit:value>
+            <spirit:value>Mon Nov 12 23:27:56 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>boundaryCRC</spirit:name>
@@ -737,7 +737,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRC</spirit:name>
-            <spirit:value>6c05d2ad</spirit:value>
+            <spirit:value>851237eb</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRCversion</spirit:name>
@@ -756,7 +756,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Mon Nov 12 01:29:38 UTC 2018</spirit:value>
+            <spirit:value>Mon Nov 12 23:27:56 UTC 2018</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>boundaryCRC</spirit:name>
@@ -768,7 +768,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRC</spirit:name>
-            <spirit:value>6c05d2ad</spirit:value>
+            <spirit:value>851237eb</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>customizationCRCversion</spirit:name>
@@ -1584,7 +1584,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>PORTS_BITMAP</spirit:name>
         <spirit:displayName>Ports Bitmap</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PORTS_BITMAP" spirit:bitStringLength="4">&quot;1100&quot;</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PORTS_BITMAP" spirit:bitStringLength="4">&quot;0011&quot;</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>NUM_FP_UNITS</spirit:name>
@@ -2145,7 +2145,7 @@
     <spirit:parameter>
       <spirit:name>PORTS_BITMAP</spirit:name>
       <spirit:displayName>PORTS_BITMAP</spirit:displayName>
-      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.PORTS_BITMAP" spirit:bitStringLength="4">0xC</spirit:value>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.PORTS_BITMAP" spirit:bitStringLength="4">0x3</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>NUM_FP_UNITS</spirit:name>

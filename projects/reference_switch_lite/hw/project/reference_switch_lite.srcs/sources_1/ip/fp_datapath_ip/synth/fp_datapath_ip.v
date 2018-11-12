@@ -219,7 +219,7 @@ output wire m_axis_3_tlast;
     .SRC_MAC_POS(48),
     .DEST_MAC_POS(0),
     .NEW_DEST_MAC(48'HFFFFFFFFFFFF),
-    .PORTS_BITMAP(4'B1100),
+    .PORTS_BITMAP(4'B0011),
     .NUM_FP_UNITS(2),
     .FP_DATA_WIDTH(32),
     .MY_HEADERS_POS(272),

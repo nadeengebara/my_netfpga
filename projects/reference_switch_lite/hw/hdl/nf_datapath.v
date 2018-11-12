@@ -229,7 +229,7 @@ module nf_datapath #(
     .axis_aclk(axis_aclk),
     .axis_resetn(axis_resetn),
     .m_axis_agg_tdata(s_axis_agg_0_tdata),
-    .m_axis_agg_tkeep(s_axis_0_agg_tkeep),
+    .m_axis_agg_tkeep(s_axis_agg_0_tkeep),
     .m_axis_agg_tuser(s_axis_agg_0_tuser),
     .m_axis_agg_tvalid(s_axis_agg_0_tvalid),
     .m_axis_agg_tready(s_axis_agg_0_tready),

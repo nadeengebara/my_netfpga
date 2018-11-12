@@ -38,7 +38,7 @@ module fp_datapath
     parameter SRC_MAC_POS           = 48,
     parameter DEST_MAC_POS          = 0,
     parameter NEW_DEST_MAC          = 48'hFFFFFFFFFFFF,
-    parameter PORTS_BITMAP	    = 4'b1100,
+    parameter PORTS_BITMAP	    = 4'b0011,
     parameter NUM_FP_UNITS          = 2,
     parameter FP_DATA_WIDTH         = 32,
     
@@ -209,7 +209,6 @@ Width    FIFO Index:bits     //Indexing starts at 1
    wire [C_M_AXIS_TUSER_WIDTH-1:0]                          in_tuser[NUM_QUEUES-1:0];
    wire [NUM_QUEUES-1:0]                                    in_tvalid;
    wire [NUM_QUEUES-1:0]                                    in_tlast;
-   reg  [NUM_QUEUES-1:0]		                    in_tready;
 
 //Signals of Input FIFOs
    wire [C_S_AXIS_TUSER_WIDTH-1:0]                          in_fifo_out_tuser[NUM_QUEUES-1:0];
@@ -286,17 +285,17 @@ Width    FIFO Index:bits     //Indexing starts at 1
   genvar j;
   for(j=0; j<NUM_FP_UNITS;j=j+1) begin: fp_unit
   
-   fp_adder_ip(
-  .S_AXIS_0_tdata(in_fifo_out_tdata[0][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]),    // input wire from 0
-  .S_AXIS_0_tvalid(fp_valid[0]),  // input wire S_AXIS_A_1_tvalid
-  .S_AXIS_1_tdata(in_fifo_out_tdata[1][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]),       // input wire from 1
-  .S_AXIS_1_tvalid(fp_valid[1]),      // input wire S_AXIS_A_tvalid
-  .S_AXIS_2_tdata(in_fifo_out_tdata[2][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]),    // input wire [31 : 0] S_AXIS_B_1_tdata
-  .S_AXIS_2_tvalid(fp_valid[2]),  // input wire S_AXIS_B_1_tvalid
-  .S_AXIS_3_tdata(in_fifo_out_tdata[3][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]),        // input wire [31 : 0] S_AXIS_B_tdata
-  .S_AXIS_3_tvalid(fp_valid[3]),      // input wire S_AXIS_B_tvalid
+   fp_adder_ip fp_adder_j(
+  .S_AXIS_0_tdata({<<8{in_fifo_out_tdata[0][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]}} & {{FP_DATA_WIDTH{PORTS_BITMAP[0]}}}),    // input wire from 0
+  .S_AXIS_0_tvalid(!(fp_valid&~PORTS_BITMAP)),  // input wire S_AXIS_A_1_tvalid
+  .S_AXIS_1_tdata({<<8{in_fifo_out_tdata[1][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]}}& {{FP_DATA_WIDTH{PORTS_BITMAP[1]}}}),       // input wire from 1
+  .S_AXIS_1_tvalid(!(fp_valid&~PORTS_BITMAP)),      // input wire S_AXIS_A_tvalid
+  .S_AXIS_2_tdata({<<8{in_fifo_out_tdata[2][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]}}& {{FP_DATA_WIDTH{PORTS_BITMAP[2]}}}),    // input wire [31 : 0] S_AXIS_B_1_tdata
+  .S_AXIS_2_tvalid(!(fp_valid&~PORTS_BITMAP)),  // input wire S_AXIS_B_1_tvalid
+  .S_AXIS_3_tdata({<<8{in_fifo_out_tdata[3][(j+1)*FP_DATA_WIDTH-1:j*FP_DATA_WIDTH]}}& {{FP_DATA_WIDTH{PORTS_BITMAP[3]}}}),        // input wire [31 : 0] S_AXIS_B_tdata
+  .S_AXIS_3_tvalid(!(fp_valid&~PORTS_BITMAP)),      // input wire S_AXIS_B_tvalid
   .aclk(axis_aclk),                          // input wire clock
-  .dout(fp_dout[j]),                            // output wire [31 : 0] dout
+  .dout({<<8{fp_dout[j]}}),                            // output wire [31 : 0] dout
   .empty(fp_empty[j]),                          // output wire empty
   .rd_en(!(PORTS_BITMAP&~fp_rd_en)),                          // input wire rd_en
   .full(full),
@@ -341,13 +340,14 @@ endgenerate
          .rd_en                          (meta_fifo_rd_en[i]),
          .reset                          (~axis_resetn),
          .clk                            (axis_aclk));
-   end
+  
 
-  always @(*) begin
+  always @(in_fifo_empty,in_fifo_out_tdata[i],in_fifo_out_tkeep[i],in_fifo_out_tuser[i],in_fifo_out_tlast[i],input_state[i],meta_nearly_full) begin
+      
       input_state_next[i]=input_state[i];
-      in_fifo_rd_en=0; 
-      meta_fifo_wr_en=0;
-      fp_valid=0;
+      in_fifo_rd_en[i]=0; 
+      meta_fifo_wr_en[i]=0;
+      fp_valid[i]=0;
       data_reg_next[i] =data_reg[i];
       tkeep_reg_next[i]=tkeep_reg[i];
       tlast_reg_next[i]=tlast_reg[i];
@@ -356,13 +356,13 @@ endgenerate
 	case(input_state[i])
 	 IDLE: begin
 	  if(PORTS_BITMAP[i]==1) begin
-	   if (!(in_fifo_empty&PORTS_BITMAP)) begin
+	    if (!(in_fifo_empty&PORTS_BITMAP)) begin
         	//write values to header_reg whenever input data is valid
-                data_reg_next[i]={in_fifo_out_tdata[i],data_reg[i]>>C_M_AXIS_DATA_WIDTH};                    
-                tuser_reg_next[i]={in_fifo_out_tuser[i],tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH};                    
-                tkeep_reg_next[i]={in_fifo_out_tkeep[i],tkeep_reg[i]>>(C_M_AXIS_DATA_WIDTH/8)};                    
-                tlast_reg_next[i]={in_tlast[i],tlast_reg[i]>>1};                    
-		if(input_write_count[i]===DATA_OFFSET_INDEX-1) begin
+                data_reg_next[i]={in_fifo_out_tdata[i],data_reg[i] [C_M_AXIS_DATA_WIDTH*DATA_OFFSET_INDEX-1:C_M_AXIS_DATA_WIDTH]};                    
+                tuser_reg_next[i]={in_fifo_out_tuser[i],tuser_reg[i][C_M_AXIS_TUSER_WIDTH*DATA_OFFSET_INDEX-1:C_M_AXIS_TUSER_WIDTH]};                    
+                tkeep_reg_next[i]={in_fifo_out_tkeep[i],tkeep_reg[i][C_M_AXIS_DATA_WIDTH/8*DATA_OFFSET_INDEX-1:C_M_AXIS_DATA_WIDTH/8]};                    
+                tlast_reg_next[i]={in_fifo_out_tlast[i],tlast_reg[i][3:1]};                    
+		if(input_write_count[i]==DATA_OFFSET_INDEX) begin
 			input_state_next[i]=INSPECT_MODIFY_HEADER;
 			input_write_count[i]=4'b0000;   //will reset write count here for now
 		end
@@ -392,10 +392,10 @@ endgenerate
 	end
 	
 	FSM_START_AGG: begin
-	if (!(in_fifo_empty&PORTS_BITMAP) && !(PORTS_BITMAP&meta_nearly_full)) begin          //come here only if PORTS_BITMAP=1
-		  meta_fifo_wr_en[i]=1;
-		  fp_valid[i]=1;
-			if(in_tlast[i]) begin
+	if (!(in_fifo_empty&PORTS_BITMAP) && !(PORTS_BITMAP&meta_nearly_full)) begin          //come here only if PORTS_BITMAP=1	  
+	        fp_valid[i]=1;
+         	meta_fifo_wr_en[i]=1;	
+		if(in_tlast[i]) begin
  				if(!start_agg[i]) begin
 				  input_state_next[i]=IDLE;
 			        end
@@ -416,7 +416,7 @@ endgenerate
   end // @always
   
 //OUTPUT SIDE FSM THAT HANDLES AGG
-  always @(*) begin
+  always @(output_agg_state[i],fp_empty,fp_dout,out_tready,meta_empty) begin
     data_reg_next[i] =data_reg[i];
     tkeep_reg_next[i]=tkeep_reg[i];
     tlast_reg_next[i]=tlast_reg[i];
@@ -436,12 +436,13 @@ endgenerate
                   out_tuser[i] = tuser_reg_out[i];
 		  out_tvalid[i]= 1;
 		  if(out_tready[i]==1) begin
-		   output_write_count[i]=output_write_count[i]+1;
-		   data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
+		   output_write_count[i]=output_write_count[i]+1; 
+                   data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
 		   tkeep_reg_next[i]=tkeep_reg[i]>>C_M_AXIS_DATA_WIDTH/8;
 		   tlast_reg_next[i]=tlast_reg[i]>>1;
 		   tuser_reg_next[i]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;
-		  end
+		  
+		end
 	       end
                else begin
 			output_write_count[i]=0;
@@ -487,7 +488,7 @@ endgenerate
         fp_valid[i]<=0;
         fp_rd_en[i]<=0;
 		in_fifo_rd_en<=0;
-		in_tready<=0;  		
+			
                 
 	//must reset kel regs here
      end
@@ -500,6 +501,7 @@ endgenerate
 		    output_agg_state[i]<=output_agg_state_next[i];
            end
 	end
+  end
  endgenerate
 
 
@@ -552,9 +554,38 @@ endgenerate
   assign tkeep_reg_out[2]    = tkeep_reg[2][C_M_AXIS_DATA_WIDTH/8-1:0];
   assign tlast_reg_out[2]    = tlast_reg[2][0];
 
-  assign data_reg_out[3]     = data_reg[3][C_M_AXIS_DATA_WIDTH-1:0];
+  assign m_axis_3_tdata      = data_reg[3][C_M_AXIS_DATA_WIDTH-1:0];
   assign tuser_reg_out[3]    = tuser_reg[3][C_M_AXIS_TUSER_WIDTH-1:0];
   assign tkeep_reg_out[3]    = tkeep_reg[3][C_M_AXIS_DATA_WIDTH/8-1:0];
   assign tlast_reg_out[3]    = tlast_reg[3][0];
+
+  assign m_axis_0_tdata      = out_tdata[0];
+  assign m_axis_0_tuser      = out_tuser[0];
+  assign m_axis_0_tkeep      = out_tkeep[0];
+  assign m_axis_0_tvalid     = out_tvalid[0];
+  assign m_axis_0_tlast      = out_tlast[0];
+  assign out_tready[0]       = m_axis_0_tready;  
+
+  assign m_axis_1_tdata      = out_tdata[1];
+  assign m_axis_1_tkeep      = out_tkeep[1];
+  assign m_axis_1_tuser      = out_tuser[1];
+  assign m_axis_1_tvalid     = out_tvalid[1];
+  assign m_axis_1_tlast      = out_tlast[1];
+  assign out_tready[1]       = m_axis_1_tready;  
+
+
+  assign m_axis_2_tdata      = out_tdata[2];
+  assign m_axis_2_tkeep      = out_tkeep[2];
+  assign m_axis_2_tuser      = out_tuser[2];
+  assign m_axis_2_tvalid     = out_tvalid[2];
+  assign m_axis_2_tlast      = out_tlast[2];
+  assign out_tready[2]       = m_axis_2_tready;  
+
+  assign m_axis_3_tdata      = out_tdata[3];
+  assign m_axis_3_tkeep      = out_tkeep[3];
+  assign m_axis_3_tuser      = out_tuser[3];
+  assign m_axis_3_tvalid     = out_tvalid[3];
+  assign m_axis_3_tlast      = out_tlast[3];
+  assign out_tready[3]       = m_axis_3_tready;  
 
 endmodule

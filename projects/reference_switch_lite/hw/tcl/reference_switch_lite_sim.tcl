@@ -76,9 +76,9 @@ generate_target all [get_ips pswitch_parser_ip]
 
 
 #creates fp_adder ip
-source ./create_ip/fp_adder_interface.tcl
+source $::env(NF_DESIGN_DIR)/hw/create_ip/fp_adder_interface.tcl
 
-source ./create_ip/fp_datapath_interface.tcl
+source $::env(NF_DESIGN_DIR)/hw/create_ip/fp_datapath_interface.tcl
 
 create_ip -name fp_datapath -vendor NetFPGA -library NetFPGA -module_name fp_datapath_ip
 set_property generate_synth_checkpoint false [get_files fp_datapath_ip.xci]
