@@ -197,9 +197,10 @@ Width    FIFO Index:bits     //Indexing starts at 1
 
 // OUTPUT SIDE FSM
 
-   localparam  NUM_OUT_STATES           = 1;
-   localparam  SEND_HEADER              = 0;
-   localparam  WRITE_OUT_RESULT         = 1;
+   localparam  NUM_OUT_STATES           = 2;
+   localparam  IDLE_OUT			= 0;
+   localparam  SEND_HEADER              = 1;
+   localparam  WRITE_OUT_RESULT         = 2;
 
 
 //Input Signals from parser
@@ -303,7 +304,7 @@ Width    FIFO Index:bits     //Indexing starts at 1
   .S_AXIS_3_tdata(fp_axis_3_data[j] & {FP_DATA_WIDTH{PORTS_BITMAP[3]}}),        // input wire [31 : 0] S_AXIS_B_tdata
   .S_AXIS_3_tvalid(!(~fp_valid&PORTS_BITMAP)),      // input wire S_AXIS_B_tvalid
   .aclk(axis_aclk),                          // input wire clock
-  .dout(fp_dout[j]),                            // output wire [31 : 0] dout
+  .dout({<<8{fp_dout[j]}}),                            // output wire [31 : 0] dout
   .empty(fp_empty[j]),                          // output wire empty
   .rd_en(!(PORTS_BITMAP&~fp_rd_en)),                          // input wire rd_en
   .full(full),
@@ -440,7 +441,7 @@ endgenerate
   end // @always
   
 //OUTPUT SIDE FSM THAT HANDLES AGG
-  always @(output_agg_state[i],out_tready[i],start_agg[i],output_write_count[i],fp_empty,fp_dout,meta_fifo_out_tlast[i],meta_empty) begin
+  always @(output_agg_state[i],out_tready[i],start_agg[i],output_write_count[i],fp_empty,fp_dout,meta_fifo_out_tlast[i],meta_empty,data_reg[i],tlast_reg[i],tkeep_reg[i],tuser_reg[i]) begin
     data_reg_next[i] =data_reg[i];
     tkeep_reg_next[i]=tkeep_reg[i];
     tlast_reg_next[i]=tlast_reg[i];
@@ -453,31 +454,43 @@ endgenerate
     output_write_count_next[i]=output_write_count[i];      
   
         case(output_agg_state[i])
-	SEND_HEADER: begin
-        // if(((PORTS_BITMAP[i] & start_agg[i])==1) && !(PORTS_BITMAP&~start_agg)) begin 
-	   if((PORTS_BITMAP[i] & start_agg[i])==1) begin 
-             if(output_write_count[i]<=DATA_OFFSET_INDEX) begin
-		  out_tdata[i] = data_reg_out[i];
+	
+	IDLE_OUT: begin
+
+	   if((PORTS_BITMAP[i] & start_agg[i])==1) begin
+                  out_tdata[i] = data_reg_out[i];
 		  out_tkeep[i] = tkeep_reg_out[i];
                   out_tlast[i] = tlast_reg_out[i];
                   out_tuser[i] = tuser_reg_out[i];
+		  output_agg_state_next[i]= SEND_HEADER;
+	      end
+        end
+
+	SEND_HEADER: begin
+        // if(((PORTS_BITMAP[i] & start_agg[i])==1) && !(PORTS_BITMAP&~start_agg)) begin 
+                  out_tdata[i] = data_reg_out[i];
+		  out_tkeep[i] = tkeep_reg_out[i];
+                  out_tlast[i] = tlast_reg_out[i];
+                  out_tuser[i] = tuser_reg_out[i];
+             if(output_write_count[i]==DATA_OFFSET_INDEX) begin
+		output_write_count_next[i]=0;
+	       	start_agg_next[i]=0;
+		output_agg_state_next[i]=WRITE_OUT_RESULT;
+	     end
+	     else begin
 		  out_tvalid[i]= 1;
-		  if(out_tready[i]==1) begin
-		   output_write_count_next[i]=output_write_count[i]+1; 
-                   data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
-		   tkeep_reg_next[i]=tkeep_reg[i]>>C_M_AXIS_DATA_WIDTH/8;
-		   tlast_reg_next[i]=tlast_reg[i]>>1;
-		   tuser_reg_next[i]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;	  
-		end
-               output_agg_state_next[i]=SEND_HEADER; 
-               end
-               else begin
-			output_write_count_next[i]=0;
-	        	start_agg_next[i]=0;
-			output_agg_state_next[i]=WRITE_OUT_RESULT;
-			
-		end           	   
-	  end
+		  if (out_tready[i]==1) begin
+		  output_write_count_next[i]=output_write_count[i]+1; 
+                  data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
+		  tkeep_reg_next[i]=tkeep_reg[i]>>C_M_AXIS_DATA_WIDTH/8;
+		  tlast_reg_next[i]=tlast_reg[i]>>1;
+		  tuser_reg_next[i]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;	  
+		  end
+		  else begin
+		   out_tvalid[i]=0;
+		  end
+	     end
+                      	   
 	end
 				
 /*8 NOTE: FIFO FROM FP in fallthrough mode   8*/
@@ -492,7 +505,7 @@ endgenerate
 				fp_rd_en[i]=1;
 				meta_fifo_rd_en[i]=1;
 				if(out_tlast[i]==1) begin
-					output_agg_state_next[i]=SEND_HEADER;
+					output_agg_state_next[i]=IDLE_OUT;
 				end
 			end
 				
@@ -508,7 +521,7 @@ endgenerate
   always @(posedge axis_aclk) begin
 	if(~axis_resetn) begin
 		input_state[i]<=IDLE;
-		output_agg_state[i]<=SEND_HEADER;		
+		output_agg_state[i]<=IDLE_OUT;		
         input_write_count[i]<=0;
 		output_write_count[i]<=0; 
 		out_tvalid[i]<=0;

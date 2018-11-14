@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Wed Nov 14 18:08:19 2018
-# Process ID: 19436
+# Start of session at: Wed Nov 14 20:38:56 2018
+# Process ID: 28716
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_datapath_v1_0_0
 # Command line: vivado -mode batch -source fp_datapath.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_datapath_v1_0_0/vivado.log
@@ -42,8 +42,8 @@ WARNING: [IP_Flow 19-587] [HDL Parser] HDL port or parameter 'tkeep_reg_next' ha
 WARNING: [IP_Flow 19-587] [HDL Parser] HDL port or parameter 'tlast_reg_next' has a dependency on the module local parameter or undefined parameter 'DATA_OFFSET_INDEX'.
 INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_INPUT_STATES' by 2 for port or parameter 'input_state'
 INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_INPUT_STATES' by 2 for port or parameter 'input_state_next'
-INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_OUT_STATES' by 1 for port or parameter 'output_agg_state'
-INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_OUT_STATES' by 1 for port or parameter 'output_agg_state_next'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_OUT_STATES' by 2 for port or parameter 'output_agg_state'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_OUT_STATES' by 2 for port or parameter 'output_agg_state_next'
 INFO: [IP_Flow 19-2228] Inferred bus interface 'm_axis_0' of definition 'xilinx.com:interface:axis:1.0'.
 INFO: [IP_Flow 19-2228] Inferred bus interface 'm_axis_1' of definition 'xilinx.com:interface:axis:1.0'.
 INFO: [IP_Flow 19-2228] Inferred bus interface 'm_axis_2' of definition 'xilinx.com:interface:axis:1.0'.
@@ -212,4 +212,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 # update_ip_catalog
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
-INFO: [Common 17-206] Exiting Vivado at Wed Nov 14 18:08:25 2018...
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 14 20:39:02 2018...
