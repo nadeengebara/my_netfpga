@@ -399,7 +399,7 @@ endgenerate
 //only come here when  everyone else comes
     INSPECT_MODIFY_HEADER: begin
 	 if(PORTS_BITMAP[i]==1 & !(PORTS_BITMAP&meta_nearly_full)) begin
-	      data_reg_next[i][DEST_MAC_POS+48-1:DEST_MAC_POS]=NEW_DEST_MAC;
+	       data_reg_next[i][DEST_MAC_POS+48-1:DEST_MAC_POS]=NEW_DEST_MAC;
 	       start_agg_next[i]=1;
 	       input_state_next[i]=FSM_START_AGG;
                fp_valid[i]=1;
@@ -418,7 +418,6 @@ endgenerate
 	
 	FSM_START_AGG: begin
 	if (!(PORTS_BITMAP&meta_nearly_full)) begin          //come here only if PORTS_BITMAP=1	  
-	//       start_agg_next[i]=1;
 		in_fifo_rd_en[i]=1;
 	        fp_valid[i]=1;
          	meta_fifo_wr_en[i]=1;	
@@ -457,6 +456,7 @@ endgenerate
         case(output_agg_state[i])
 	
 	IDLE_OUT: begin
+
 	   if((PORTS_BITMAP[i] & start_agg[i])==1) begin
                   out_tdata[i] = data_reg_out[i];
 		  out_tkeep[i] = tkeep_reg_out[i];
@@ -464,16 +464,15 @@ endgenerate
                   out_tuser[i] = tuser_reg_out[i];
 		  output_agg_state_next[i]= SEND_HEADER;
 	      end
-          
         end
 
 	SEND_HEADER: begin
         // if(((PORTS_BITMAP[i] & start_agg[i])==1) && !(PORTS_BITMAP&~start_agg)) begin 
-	          out_tdata[i] = data_reg_out[i];
+                  out_tdata[i] = data_reg_out[i];
 		  out_tkeep[i] = tkeep_reg_out[i];
                   out_tlast[i] = tlast_reg_out[i];
                   out_tuser[i] = tuser_reg_out[i];
-                if(output_write_count[i]==DATA_OFFSET_INDEX) begin
+             if(output_write_count[i]==DATA_OFFSET_INDEX) begin
 		output_write_count_next[i]=0;
 	       	start_agg_next[i]=0;
 		output_agg_state_next[i]=WRITE_OUT_RESULT;
