@@ -7,6 +7,7 @@
 # of Vivado)
 ################################################################################
 create_clock -name axi_lite_aclk -period 10 [get_ports axi_lite_aclk]
-create_clock -name core_clk -period 5 [get_ports core_clk]
+create_clock -name axis_datapath_aclk -period 10 [get_ports axis_datapath_aclk]
+create_clock -name sys_clk -period 10 [get_ports sys_clk]
 
 ################################################################################

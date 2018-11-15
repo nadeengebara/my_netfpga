@@ -120,8 +120,8 @@ for i in range(num_agg_test):
   #  pkt = make_IP_pkt(src_MAC="aa:bb:cc:dd:ee:ff", dst_MAC=routerMAC[0],src_IP="192.168.0.1", dst_IP="192.168.1.1", pkt_len=100)
     pkt0=Ether(src="aa:bb:aa:bb:aa:bb",dst="00:00:ff:00:00:00",type=0x8888)/IP(src="0.0.0.1",dst="127.0.0.1")/'\x00\x00\x00\x00\x00\x00'/payload_0
     pkt1=Ether(src="cc:dd:cc:dd:cc:dd",dst="00:00:ff:00:00:00",type=0x8888)/IP(src="0.0.0.2",dst="127.0.0.1")/'\x00\x00\x00\x00\x00\x00'/payload_1
-    pkt0_result=Ether(src="aa:bb:aa:bb:aa:bb",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.1",dst="127.0.0.1")/result
-    pkt1_result=Ether(src="cc:dd:cc:dd:cc:dd",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.2",dst="127.0.0.1")/result
+    pkt0_result=Ether(src="aa:bb:aa:bb:aa:bb",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.1",dst="127.0.0.1")/'\x00\x00\x00\x00\x00\x00'/result
+    pkt1_result=Ether(src="cc:dd:cc:dd:cc:dd",dst="ff:ff:ff:ff:ff:ff",type=0x8888)/IP(src="0.0.0.2",dst="127.0.0.1")/'\x00\x00\x00\x00\x00\x00'/result
 
     pkt0.time = ((i*(1e-8)) + (2e-6))
     pkt1.time = ((i*(1e-8)) + (2e-6))
@@ -134,15 +134,17 @@ for i in range(num_agg_test):
     pkts0_result.append(pkt0_result)
     pkts1_result.append(pkt1_result)	
 
-#    if isHW():
-#      nftest_send_phy('nf0', pkt)
-#        nftest_expect_phy('nf1', pkt)
+if isHW():
+    nftest_send_phy('nf0', pkts0)
+    nftest_send_phy('nf1', pkts1)
+    nftest_expect_phy('nf0', pkts0_result)
+ #   nftest_expect_phy('nf1', pkts1_result)
    
 if not isHW():
     nftest_send_phy('nf0', pkts0)
     nftest_send_phy('nf1',pkts1)
- #   nftest_expect_phy('nf0', pkts0_result)
- #   nftest_expect_phy('nf1', pkts1_result)
+    nftest_expect_phy('nf0', pkts0_result)
+    nftest_expect_phy('nf1', pkts1_result)
   #  nftest_expect_phy('nf2', pkts)
   #  nftest_expect_phy('nf3', pkts)
 
@@ -152,23 +154,23 @@ nftest_barrier()
 if isHW():
     # Now we expect to see the lut_hit and lut_miss registers incremented and we
     # verify this by doing a regread_expect
-    rres1= nftest_regread_expect(SUME_PSWITCH_PARSER_0_PKTOUT_OQ(), num_oq)
-#    rres2= nftest_regread_expect(SUME_PSWITCH_PARSER_0_PKTOUT_AGG(), num_agg)
-    # List containing the return values of the reg_reads
-    mres=[rres1,rres2]
-else:
-  
-    rres0=nftest_regread(SUME_PSWITCH_PARSER_0_PKTIN())	
     rres1= nftest_regread(SUME_PSWITCH_PARSER_0_PKTOUT_OQ())
+    rres2= nftest_regread(SUME_PSWITCH_PARSER_0_PKTOUT_AGG())
+    # List containing the return values of the reg_reads
+#    mres=[rres1,rres2]
+#else:
+  
+#    rres0=nftest_regread(SUME_PSWITCH_PARSER_0_PKTIN())	
+#    rres1= nftest_regread(SUME_PSWITCH_PARSER_0_PKTOUT_OQ())
 #    rres2= nftest_regread_expect(SUME_PSWITCH_PARSER_0_PKTOUT_AGG(), num_agg)
-    mres=[]
+#    mres=[]
 
 cd="/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/projects/reference_switch_lite/test"
 f=os.path.join(cd,'registervalues.txt')
 file=open(f,"w")
-file.write("PKTSin= %d \r\n"%rres0)
+#file.write("PKTSin= %d \r\n"%rres0)
 file.write("PKTSoq= %d \r\n"%rres1)
-#file.write("PKTagg= %d \r\n"%rres2)
+file.write("PKTagg= %d \r\n"%rres2)
 file.close()
 
 

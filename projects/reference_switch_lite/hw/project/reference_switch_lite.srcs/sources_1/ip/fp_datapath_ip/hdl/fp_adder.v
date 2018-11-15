@@ -77,10 +77,10 @@ axi_fp_unit fp_unit_0 (
 );
 
 axi_fp_unit fp_unit_1 (
-    .s_axis_a_tdata        (S_AXIS_1_tdata),
-    .s_axis_a_tvalid       (S_AXIS_1_tvalid),
-    .s_axis_b_tdata        (S_AXIS_2_tdata),
-    .s_axis_b_tvalid       (S_AXIS_2_tvalid),
+    .s_axis_a_tdata        (S_AXIS_2_tdata),
+    .s_axis_a_tvalid       (S_AXIS_2_tvalid),
+    .s_axis_b_tdata        (S_AXIS_3_tdata),
+    .s_axis_b_tvalid       (S_AXIS_3_tvalid),
     .m_axis_result_tdata   (fp1_result),
     .m_axis_result_tvalid  (fp1_result_valid),
     .aclk                  (aclk)

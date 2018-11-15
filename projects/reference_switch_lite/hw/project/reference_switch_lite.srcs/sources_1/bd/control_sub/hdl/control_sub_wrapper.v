@@ -1,7 +1,7 @@
 //Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2016.4 (lin64) Build 1756540 Mon Jan 23 19:11:19 MST 2017
-//Date        : Mon Nov 12 23:28:19 2018
+//Date        : Thu Nov 15 14:36:17 2018
 //Host        : PRIME running 64-bit Ubuntu 16.04.5 LTS
 //Command     : generate_target control_sub_wrapper.bd
 //Design      : control_sub_wrapper
@@ -162,50 +162,38 @@ module control_sub_wrapper
     M07_AXI_wready,
     M07_AXI_wstrb,
     M07_AXI_wvalid,
-    S00_AXI_araddr,
-    S00_AXI_arburst,
-    S00_AXI_arcache,
-    S00_AXI_arlen,
-    S00_AXI_arlock,
-    S00_AXI_arprot,
-    S00_AXI_arqos,
-    S00_AXI_arready,
-    S00_AXI_arregion,
-    S00_AXI_arsize,
-    S00_AXI_arvalid,
-    S00_AXI_awaddr,
-    S00_AXI_awburst,
-    S00_AXI_awcache,
-    S00_AXI_awlen,
-    S00_AXI_awlock,
-    S00_AXI_awprot,
-    S00_AXI_awqos,
-    S00_AXI_awready,
-    S00_AXI_awregion,
-    S00_AXI_awsize,
-    S00_AXI_awvalid,
-    S00_AXI_bready,
-    S00_AXI_bresp,
-    S00_AXI_bvalid,
-    S00_AXI_rdata,
-    S00_AXI_rlast,
-    S00_AXI_rready,
-    S00_AXI_rresp,
-    S00_AXI_rvalid,
-    S00_AXI_wdata,
-    S00_AXI_wlast,
-    S00_AXI_wready,
-    S00_AXI_wstrb,
-    S00_AXI_wvalid,
     axi_lite_aclk,
-    axi_lite_areset,
-    core_clk,
-    core_resetn);
-  output [31:0]M00_AXI_araddr;
+    axi_lite_aresetn,
+    axis_datapath_aclk,
+    axis_datapath_aresetn,
+    iic_fpga_scl_io,
+    iic_fpga_sda_io,
+    iic_reset,
+    m_axis_dma_tx_tdata,
+    m_axis_dma_tx_tkeep,
+    m_axis_dma_tx_tlast,
+    m_axis_dma_tx_tready,
+    m_axis_dma_tx_tuser,
+    m_axis_dma_tx_tvalid,
+    pcie_7x_mgt_rxn,
+    pcie_7x_mgt_rxp,
+    pcie_7x_mgt_txn,
+    pcie_7x_mgt_txp,
+    s_axis_dma_rx_tdata,
+    s_axis_dma_rx_tkeep,
+    s_axis_dma_rx_tlast,
+    s_axis_dma_rx_tready,
+    s_axis_dma_rx_tuser,
+    s_axis_dma_rx_tvalid,
+    sys_clk,
+    sys_reset,
+    uart_rxd,
+    uart_txd);
+  output [11:0]M00_AXI_araddr;
   output [2:0]M00_AXI_arprot;
   input M00_AXI_arready;
   output M00_AXI_arvalid;
-  output [31:0]M00_AXI_awaddr;
+  output [11:0]M00_AXI_awaddr;
   output [2:0]M00_AXI_awprot;
   input M00_AXI_awready;
   output M00_AXI_awvalid;
@@ -220,11 +208,11 @@ module control_sub_wrapper
   input M00_AXI_wready;
   output [3:0]M00_AXI_wstrb;
   output M00_AXI_wvalid;
-  output [31:0]M01_AXI_araddr;
+  output [11:0]M01_AXI_araddr;
   output [2:0]M01_AXI_arprot;
   input M01_AXI_arready;
   output M01_AXI_arvalid;
-  output [31:0]M01_AXI_awaddr;
+  output [11:0]M01_AXI_awaddr;
   output [2:0]M01_AXI_awprot;
   input M01_AXI_awready;
   output M01_AXI_awvalid;
@@ -239,11 +227,11 @@ module control_sub_wrapper
   input M01_AXI_wready;
   output [3:0]M01_AXI_wstrb;
   output M01_AXI_wvalid;
-  output [31:0]M02_AXI_araddr;
+  output [11:0]M02_AXI_araddr;
   output [2:0]M02_AXI_arprot;
   input M02_AXI_arready;
   output M02_AXI_arvalid;
-  output [31:0]M02_AXI_awaddr;
+  output [11:0]M02_AXI_awaddr;
   output [2:0]M02_AXI_awprot;
   input M02_AXI_awready;
   output M02_AXI_awvalid;
@@ -258,11 +246,11 @@ module control_sub_wrapper
   input M02_AXI_wready;
   output [3:0]M02_AXI_wstrb;
   output M02_AXI_wvalid;
-  output [31:0]M03_AXI_araddr;
+  output [11:0]M03_AXI_araddr;
   output [2:0]M03_AXI_arprot;
   input M03_AXI_arready;
   output M03_AXI_arvalid;
-  output [31:0]M03_AXI_awaddr;
+  output [11:0]M03_AXI_awaddr;
   output [2:0]M03_AXI_awprot;
   input M03_AXI_awready;
   output M03_AXI_awvalid;
@@ -277,11 +265,11 @@ module control_sub_wrapper
   input M03_AXI_wready;
   output [3:0]M03_AXI_wstrb;
   output M03_AXI_wvalid;
-  output [31:0]M04_AXI_araddr;
+  output [11:0]M04_AXI_araddr;
   output [2:0]M04_AXI_arprot;
   input M04_AXI_arready;
   output M04_AXI_arvalid;
-  output [31:0]M04_AXI_awaddr;
+  output [11:0]M04_AXI_awaddr;
   output [2:0]M04_AXI_awprot;
   input M04_AXI_awready;
   output M04_AXI_awvalid;
@@ -296,11 +284,11 @@ module control_sub_wrapper
   input M04_AXI_wready;
   output [3:0]M04_AXI_wstrb;
   output M04_AXI_wvalid;
-  output [31:0]M05_AXI_araddr;
+  output [11:0]M05_AXI_araddr;
   output [2:0]M05_AXI_arprot;
   input M05_AXI_arready;
   output M05_AXI_arvalid;
-  output [31:0]M05_AXI_awaddr;
+  output [11:0]M05_AXI_awaddr;
   output [2:0]M05_AXI_awprot;
   input M05_AXI_awready;
   output M05_AXI_awvalid;
@@ -315,11 +303,11 @@ module control_sub_wrapper
   input M05_AXI_wready;
   output [3:0]M05_AXI_wstrb;
   output M05_AXI_wvalid;
-  output [31:0]M06_AXI_araddr;
+  output [11:0]M06_AXI_araddr;
   output [2:0]M06_AXI_arprot;
   input M06_AXI_arready;
   output M06_AXI_arvalid;
-  output [31:0]M06_AXI_awaddr;
+  output [11:0]M06_AXI_awaddr;
   output [2:0]M06_AXI_awprot;
   input M06_AXI_awready;
   output M06_AXI_awvalid;
@@ -334,11 +322,11 @@ module control_sub_wrapper
   input M06_AXI_wready;
   output [3:0]M06_AXI_wstrb;
   output M06_AXI_wvalid;
-  output [31:0]M07_AXI_araddr;
+  output [11:0]M07_AXI_araddr;
   output [2:0]M07_AXI_arprot;
   input M07_AXI_arready;
   output M07_AXI_arvalid;
-  output [31:0]M07_AXI_awaddr;
+  output [11:0]M07_AXI_awaddr;
   output [2:0]M07_AXI_awprot;
   input M07_AXI_awready;
   output M07_AXI_awvalid;
@@ -353,51 +341,39 @@ module control_sub_wrapper
   input M07_AXI_wready;
   output [3:0]M07_AXI_wstrb;
   output M07_AXI_wvalid;
-  input [31:0]S00_AXI_araddr;
-  input [1:0]S00_AXI_arburst;
-  input [3:0]S00_AXI_arcache;
-  input [7:0]S00_AXI_arlen;
-  input [0:0]S00_AXI_arlock;
-  input [2:0]S00_AXI_arprot;
-  input [3:0]S00_AXI_arqos;
-  output S00_AXI_arready;
-  input [3:0]S00_AXI_arregion;
-  input [2:0]S00_AXI_arsize;
-  input S00_AXI_arvalid;
-  input [31:0]S00_AXI_awaddr;
-  input [1:0]S00_AXI_awburst;
-  input [3:0]S00_AXI_awcache;
-  input [7:0]S00_AXI_awlen;
-  input [0:0]S00_AXI_awlock;
-  input [2:0]S00_AXI_awprot;
-  input [3:0]S00_AXI_awqos;
-  output S00_AXI_awready;
-  input [3:0]S00_AXI_awregion;
-  input [2:0]S00_AXI_awsize;
-  input S00_AXI_awvalid;
-  input S00_AXI_bready;
-  output [1:0]S00_AXI_bresp;
-  output S00_AXI_bvalid;
-  output [31:0]S00_AXI_rdata;
-  output S00_AXI_rlast;
-  input S00_AXI_rready;
-  output [1:0]S00_AXI_rresp;
-  output S00_AXI_rvalid;
-  input [31:0]S00_AXI_wdata;
-  input S00_AXI_wlast;
-  output S00_AXI_wready;
-  input [3:0]S00_AXI_wstrb;
-  input S00_AXI_wvalid;
   input axi_lite_aclk;
-  input axi_lite_areset;
-  input core_clk;
-  input core_resetn;
+  input axi_lite_aresetn;
+  input axis_datapath_aclk;
+  input axis_datapath_aresetn;
+  inout iic_fpga_scl_io;
+  inout iic_fpga_sda_io;
+  output [1:0]iic_reset;
+  output [255:0]m_axis_dma_tx_tdata;
+  output [31:0]m_axis_dma_tx_tkeep;
+  output m_axis_dma_tx_tlast;
+  input m_axis_dma_tx_tready;
+  output [255:0]m_axis_dma_tx_tuser;
+  output m_axis_dma_tx_tvalid;
+  input [7:0]pcie_7x_mgt_rxn;
+  input [7:0]pcie_7x_mgt_rxp;
+  output [7:0]pcie_7x_mgt_txn;
+  output [7:0]pcie_7x_mgt_txp;
+  input [255:0]s_axis_dma_rx_tdata;
+  input [31:0]s_axis_dma_rx_tkeep;
+  input s_axis_dma_rx_tlast;
+  output s_axis_dma_rx_tready;
+  input [255:0]s_axis_dma_rx_tuser;
+  input s_axis_dma_rx_tvalid;
+  input sys_clk;
+  input sys_reset;
+  input uart_rxd;
+  output uart_txd;
 
-  wire [31:0]M00_AXI_araddr;
+  wire [11:0]M00_AXI_araddr;
   wire [2:0]M00_AXI_arprot;
   wire M00_AXI_arready;
   wire M00_AXI_arvalid;
-  wire [31:0]M00_AXI_awaddr;
+  wire [11:0]M00_AXI_awaddr;
   wire [2:0]M00_AXI_awprot;
   wire M00_AXI_awready;
   wire M00_AXI_awvalid;
@@ -412,11 +388,11 @@ module control_sub_wrapper
   wire M00_AXI_wready;
   wire [3:0]M00_AXI_wstrb;
   wire M00_AXI_wvalid;
-  wire [31:0]M01_AXI_araddr;
+  wire [11:0]M01_AXI_araddr;
   wire [2:0]M01_AXI_arprot;
   wire M01_AXI_arready;
   wire M01_AXI_arvalid;
-  wire [31:0]M01_AXI_awaddr;
+  wire [11:0]M01_AXI_awaddr;
   wire [2:0]M01_AXI_awprot;
   wire M01_AXI_awready;
   wire M01_AXI_awvalid;
@@ -431,11 +407,11 @@ module control_sub_wrapper
   wire M01_AXI_wready;
   wire [3:0]M01_AXI_wstrb;
   wire M01_AXI_wvalid;
-  wire [31:0]M02_AXI_araddr;
+  wire [11:0]M02_AXI_araddr;
   wire [2:0]M02_AXI_arprot;
   wire M02_AXI_arready;
   wire M02_AXI_arvalid;
-  wire [31:0]M02_AXI_awaddr;
+  wire [11:0]M02_AXI_awaddr;
   wire [2:0]M02_AXI_awprot;
   wire M02_AXI_awready;
   wire M02_AXI_awvalid;
@@ -450,11 +426,11 @@ module control_sub_wrapper
   wire M02_AXI_wready;
   wire [3:0]M02_AXI_wstrb;
   wire M02_AXI_wvalid;
-  wire [31:0]M03_AXI_araddr;
+  wire [11:0]M03_AXI_araddr;
   wire [2:0]M03_AXI_arprot;
   wire M03_AXI_arready;
   wire M03_AXI_arvalid;
-  wire [31:0]M03_AXI_awaddr;
+  wire [11:0]M03_AXI_awaddr;
   wire [2:0]M03_AXI_awprot;
   wire M03_AXI_awready;
   wire M03_AXI_awvalid;
@@ -469,11 +445,11 @@ module control_sub_wrapper
   wire M03_AXI_wready;
   wire [3:0]M03_AXI_wstrb;
   wire M03_AXI_wvalid;
-  wire [31:0]M04_AXI_araddr;
+  wire [11:0]M04_AXI_araddr;
   wire [2:0]M04_AXI_arprot;
   wire M04_AXI_arready;
   wire M04_AXI_arvalid;
-  wire [31:0]M04_AXI_awaddr;
+  wire [11:0]M04_AXI_awaddr;
   wire [2:0]M04_AXI_awprot;
   wire M04_AXI_awready;
   wire M04_AXI_awvalid;
@@ -488,11 +464,11 @@ module control_sub_wrapper
   wire M04_AXI_wready;
   wire [3:0]M04_AXI_wstrb;
   wire M04_AXI_wvalid;
-  wire [31:0]M05_AXI_araddr;
+  wire [11:0]M05_AXI_araddr;
   wire [2:0]M05_AXI_arprot;
   wire M05_AXI_arready;
   wire M05_AXI_arvalid;
-  wire [31:0]M05_AXI_awaddr;
+  wire [11:0]M05_AXI_awaddr;
   wire [2:0]M05_AXI_awprot;
   wire M05_AXI_awready;
   wire M05_AXI_awvalid;
@@ -507,11 +483,11 @@ module control_sub_wrapper
   wire M05_AXI_wready;
   wire [3:0]M05_AXI_wstrb;
   wire M05_AXI_wvalid;
-  wire [31:0]M06_AXI_araddr;
+  wire [11:0]M06_AXI_araddr;
   wire [2:0]M06_AXI_arprot;
   wire M06_AXI_arready;
   wire M06_AXI_arvalid;
-  wire [31:0]M06_AXI_awaddr;
+  wire [11:0]M06_AXI_awaddr;
   wire [2:0]M06_AXI_awprot;
   wire M06_AXI_awready;
   wire M06_AXI_awvalid;
@@ -526,11 +502,11 @@ module control_sub_wrapper
   wire M06_AXI_wready;
   wire [3:0]M06_AXI_wstrb;
   wire M06_AXI_wvalid;
-  wire [31:0]M07_AXI_araddr;
+  wire [11:0]M07_AXI_araddr;
   wire [2:0]M07_AXI_arprot;
   wire M07_AXI_arready;
   wire M07_AXI_arvalid;
-  wire [31:0]M07_AXI_awaddr;
+  wire [11:0]M07_AXI_awaddr;
   wire [2:0]M07_AXI_awprot;
   wire M07_AXI_awready;
   wire M07_AXI_awvalid;
@@ -545,45 +521,39 @@ module control_sub_wrapper
   wire M07_AXI_wready;
   wire [3:0]M07_AXI_wstrb;
   wire M07_AXI_wvalid;
-  wire [31:0]S00_AXI_araddr;
-  wire [1:0]S00_AXI_arburst;
-  wire [3:0]S00_AXI_arcache;
-  wire [7:0]S00_AXI_arlen;
-  wire [0:0]S00_AXI_arlock;
-  wire [2:0]S00_AXI_arprot;
-  wire [3:0]S00_AXI_arqos;
-  wire S00_AXI_arready;
-  wire [3:0]S00_AXI_arregion;
-  wire [2:0]S00_AXI_arsize;
-  wire S00_AXI_arvalid;
-  wire [31:0]S00_AXI_awaddr;
-  wire [1:0]S00_AXI_awburst;
-  wire [3:0]S00_AXI_awcache;
-  wire [7:0]S00_AXI_awlen;
-  wire [0:0]S00_AXI_awlock;
-  wire [2:0]S00_AXI_awprot;
-  wire [3:0]S00_AXI_awqos;
-  wire S00_AXI_awready;
-  wire [3:0]S00_AXI_awregion;
-  wire [2:0]S00_AXI_awsize;
-  wire S00_AXI_awvalid;
-  wire S00_AXI_bready;
-  wire [1:0]S00_AXI_bresp;
-  wire S00_AXI_bvalid;
-  wire [31:0]S00_AXI_rdata;
-  wire S00_AXI_rlast;
-  wire S00_AXI_rready;
-  wire [1:0]S00_AXI_rresp;
-  wire S00_AXI_rvalid;
-  wire [31:0]S00_AXI_wdata;
-  wire S00_AXI_wlast;
-  wire S00_AXI_wready;
-  wire [3:0]S00_AXI_wstrb;
-  wire S00_AXI_wvalid;
   wire axi_lite_aclk;
-  wire axi_lite_areset;
-  wire core_clk;
-  wire core_resetn;
+  wire axi_lite_aresetn;
+  wire axis_datapath_aclk;
+  wire axis_datapath_aresetn;
+  wire iic_fpga_scl_i;
+  wire iic_fpga_scl_io;
+  wire iic_fpga_scl_o;
+  wire iic_fpga_scl_t;
+  wire iic_fpga_sda_i;
+  wire iic_fpga_sda_io;
+  wire iic_fpga_sda_o;
+  wire iic_fpga_sda_t;
+  wire [1:0]iic_reset;
+  wire [255:0]m_axis_dma_tx_tdata;
+  wire [31:0]m_axis_dma_tx_tkeep;
+  wire m_axis_dma_tx_tlast;
+  wire m_axis_dma_tx_tready;
+  wire [255:0]m_axis_dma_tx_tuser;
+  wire m_axis_dma_tx_tvalid;
+  wire [7:0]pcie_7x_mgt_rxn;
+  wire [7:0]pcie_7x_mgt_rxp;
+  wire [7:0]pcie_7x_mgt_txn;
+  wire [7:0]pcie_7x_mgt_txp;
+  wire [255:0]s_axis_dma_rx_tdata;
+  wire [31:0]s_axis_dma_rx_tkeep;
+  wire s_axis_dma_rx_tlast;
+  wire s_axis_dma_rx_tready;
+  wire [255:0]s_axis_dma_rx_tuser;
+  wire s_axis_dma_rx_tvalid;
+  wire sys_clk;
+  wire sys_reset;
+  wire uart_rxd;
+  wire uart_txd;
 
   control_sub control_sub_i
        (.M00_AXI_araddr(M00_AXI_araddr),
@@ -738,43 +708,45 @@ module control_sub_wrapper
         .M07_AXI_wready(M07_AXI_wready),
         .M07_AXI_wstrb(M07_AXI_wstrb),
         .M07_AXI_wvalid(M07_AXI_wvalid),
-        .S00_AXI_araddr(S00_AXI_araddr),
-        .S00_AXI_arburst(S00_AXI_arburst),
-        .S00_AXI_arcache(S00_AXI_arcache),
-        .S00_AXI_arlen(S00_AXI_arlen),
-        .S00_AXI_arlock(S00_AXI_arlock),
-        .S00_AXI_arprot(S00_AXI_arprot),
-        .S00_AXI_arqos(S00_AXI_arqos),
-        .S00_AXI_arready(S00_AXI_arready),
-        .S00_AXI_arregion(S00_AXI_arregion),
-        .S00_AXI_arsize(S00_AXI_arsize),
-        .S00_AXI_arvalid(S00_AXI_arvalid),
-        .S00_AXI_awaddr(S00_AXI_awaddr),
-        .S00_AXI_awburst(S00_AXI_awburst),
-        .S00_AXI_awcache(S00_AXI_awcache),
-        .S00_AXI_awlen(S00_AXI_awlen),
-        .S00_AXI_awlock(S00_AXI_awlock),
-        .S00_AXI_awprot(S00_AXI_awprot),
-        .S00_AXI_awqos(S00_AXI_awqos),
-        .S00_AXI_awready(S00_AXI_awready),
-        .S00_AXI_awregion(S00_AXI_awregion),
-        .S00_AXI_awsize(S00_AXI_awsize),
-        .S00_AXI_awvalid(S00_AXI_awvalid),
-        .S00_AXI_bready(S00_AXI_bready),
-        .S00_AXI_bresp(S00_AXI_bresp),
-        .S00_AXI_bvalid(S00_AXI_bvalid),
-        .S00_AXI_rdata(S00_AXI_rdata),
-        .S00_AXI_rlast(S00_AXI_rlast),
-        .S00_AXI_rready(S00_AXI_rready),
-        .S00_AXI_rresp(S00_AXI_rresp),
-        .S00_AXI_rvalid(S00_AXI_rvalid),
-        .S00_AXI_wdata(S00_AXI_wdata),
-        .S00_AXI_wlast(S00_AXI_wlast),
-        .S00_AXI_wready(S00_AXI_wready),
-        .S00_AXI_wstrb(S00_AXI_wstrb),
-        .S00_AXI_wvalid(S00_AXI_wvalid),
         .axi_lite_aclk(axi_lite_aclk),
-        .axi_lite_areset(axi_lite_areset),
-        .core_clk(core_clk),
-        .core_resetn(core_resetn));
+        .axi_lite_aresetn(axi_lite_aresetn),
+        .axis_datapath_aclk(axis_datapath_aclk),
+        .axis_datapath_aresetn(axis_datapath_aresetn),
+        .iic_fpga_scl_i(iic_fpga_scl_i),
+        .iic_fpga_scl_o(iic_fpga_scl_o),
+        .iic_fpga_scl_t(iic_fpga_scl_t),
+        .iic_fpga_sda_i(iic_fpga_sda_i),
+        .iic_fpga_sda_o(iic_fpga_sda_o),
+        .iic_fpga_sda_t(iic_fpga_sda_t),
+        .iic_reset(iic_reset),
+        .m_axis_dma_tx_tdata(m_axis_dma_tx_tdata),
+        .m_axis_dma_tx_tkeep(m_axis_dma_tx_tkeep),
+        .m_axis_dma_tx_tlast(m_axis_dma_tx_tlast),
+        .m_axis_dma_tx_tready(m_axis_dma_tx_tready),
+        .m_axis_dma_tx_tuser(m_axis_dma_tx_tuser),
+        .m_axis_dma_tx_tvalid(m_axis_dma_tx_tvalid),
+        .pcie_7x_mgt_rxn(pcie_7x_mgt_rxn),
+        .pcie_7x_mgt_rxp(pcie_7x_mgt_rxp),
+        .pcie_7x_mgt_txn(pcie_7x_mgt_txn),
+        .pcie_7x_mgt_txp(pcie_7x_mgt_txp),
+        .s_axis_dma_rx_tdata(s_axis_dma_rx_tdata),
+        .s_axis_dma_rx_tkeep(s_axis_dma_rx_tkeep),
+        .s_axis_dma_rx_tlast(s_axis_dma_rx_tlast),
+        .s_axis_dma_rx_tready(s_axis_dma_rx_tready),
+        .s_axis_dma_rx_tuser(s_axis_dma_rx_tuser),
+        .s_axis_dma_rx_tvalid(s_axis_dma_rx_tvalid),
+        .sys_clk(sys_clk),
+        .sys_reset(sys_reset),
+        .uart_rxd(uart_rxd),
+        .uart_txd(uart_txd));
+  IOBUF iic_fpga_scl_iobuf
+       (.I(iic_fpga_scl_o),
+        .IO(iic_fpga_scl_io),
+        .O(iic_fpga_scl_i),
+        .T(iic_fpga_scl_t));
+  IOBUF iic_fpga_sda_iobuf
+       (.I(iic_fpga_sda_o),
+        .IO(iic_fpga_sda_io),
+        .O(iic_fpga_sda_i),
+        .T(iic_fpga_sda_t));
 endmodule

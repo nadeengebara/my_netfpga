@@ -41,7 +41,7 @@
 `timescale 1ps / 1ps
 
  module top # (  
-  parameter          C_DATA_WIDTH                        = 256,         // RX/TX interface data width
+  parameter          C_DATA_WIDTH                        = 64,         // RX/TX interface data width
   parameter          C_TUSER_WIDTH                       = 128         // RX/TX interface data width    
 ) (
 
@@ -560,7 +560,7 @@ nf_datapath
     .C_S_AXI_ADDR_WIDTH (12),
     .C_M_AXIS_TUSER_WIDTH (128),
     .C_S_AXIS_TUSER_WIDTH (128),
-    .NUM_QUEUES (5)
+    .NUM_QUEUES (4)
 )
 nf_datapath_0 
 (
