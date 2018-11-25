@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Sun Nov 11 22:16:52 2018
-# Process ID: 12691
+# Start of session at: Tue Nov 20 12:38:20 2018
+# Process ID: 837
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/pswitch_parser_v1_0_0
 # Command line: vivado -mode batch -source pswitch_parser.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/pswitch_parser_v1_0_0/vivado.log
@@ -29,8 +29,8 @@ Creating Parser IP
 # update_compile_order -fileset sim_1
 # ipx::package_project
 WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
-INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_STATES' by 2 for port or parameter 'state_write'
-INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_STATES' by 2 for port or parameter 'state_write_next'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_STATES' by 1 for port or parameter 'state_write'
+INFO: [IP_Flow 19-1976] HDL Parser: Replacing 'NUM_STATES' by 1 for port or parameter 'state_write_next'
 INFO: [IP_Flow 19-1842] HDL Parser: Found include file "hdl/parser_cpu_regs_defines.v" from the top-level HDL file.
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw'.
@@ -74,7 +74,7 @@ WARNING: [IP_Flow 19-3656] If you move the project, the path for repository '/ho
 # ipx::add_user_parameter {C_S_AXIS_DATA_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # set_property display_name {C_S_AXIS_DATA_WIDTH} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
-# set_property value {256} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
+# set_property value {64} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # set_property value_format {long} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # ipx::add_user_parameter {C_M_AXIS_TUSER_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_M_AXIS_TUSER_WIDTH]
@@ -144,4 +144,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 # update_ip_catalog
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
-INFO: [Common 17-206] Exiting Vivado at Sun Nov 11 22:16:58 2018...
+INFO: [Common 17-206] Exiting Vivado at Tue Nov 20 12:38:26 2018...

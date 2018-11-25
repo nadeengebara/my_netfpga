@@ -34,8 +34,8 @@
 
 module nf_endianess_manager
 #(
-        parameter       C_S_AXIS_TDATA_WIDTH = 256,
-        parameter       C_M_AXIS_TDATA_WIDTH = 256,
+        parameter       C_S_AXIS_TDATA_WIDTH = 64,
+        parameter       C_M_AXIS_TDATA_WIDTH = 64,
         parameter       C_M_AXIS_TUSER_WIDTH = 128,
         parameter       C_S_AXIS_TUSER_WIDTH = 128
 )

@@ -36,8 +36,8 @@
 `include "nf_10g_interface_shared_cpu_regs_defines.v"
 
 module nf_10g_interface_shared #(
-	parameter 				C_M_AXIS_DATA_WIDTH	= 256,
-	parameter 				C_S_AXIS_DATA_WIDTH	= 256,
+	parameter 				C_M_AXIS_DATA_WIDTH	= 64,
+	parameter 				C_S_AXIS_DATA_WIDTH	= 64,
 	parameter 				C_M_AXIS_TUSER_WIDTH	= 128,
 	parameter 				C_S_AXIS_TUSER_WIDTH	= 128,
 	parameter				C_BASE_ADDRESS		= 32'h00000000,

@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Sun Nov 11 22:17:21 2018
-# Process ID: 12889
+# Start of session at: Tue Nov 20 12:38:55 2018
+# Process ID: 1088
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/nf_axis_converter_v1_0_0
 # Command line: vivado -mode batch -source nf_axis_converter.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/nf_axis_converter_v1_0_0/vivado.log
@@ -69,7 +69,7 @@ INFO: [IP_Flow 19-4728] Bus Interface 'axi_aclk': Added interface parameter 'ASS
 # ipx::add_user_parameter {C_S_AXIS_DATA_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # set_property display_name {C_S_AXIS_DATA_WIDTH} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
-# set_property value {256} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
+# set_property value {64} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # set_property value_format {long} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 # ipx::add_user_parameter {C_M_AXIS_TUSER_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters C_M_AXIS_TUSER_WIDTH]
@@ -133,4 +133,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
 # file delete -force ${proj_dir} 
-INFO: [Common 17-206] Exiting Vivado at Sun Nov 11 22:17:27 2018...
+INFO: [Common 17-206] Exiting Vivado at Tue Nov 20 12:39:01 2018...

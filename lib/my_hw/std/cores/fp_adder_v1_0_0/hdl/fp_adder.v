@@ -26,8 +26,6 @@
 module fp_adder
 #(
 FP_DATA_WIDTH=32
-
-
 )
 (
     // Part 1: System side signals
@@ -44,10 +42,11 @@ FP_DATA_WIDTH=32
     input S_AXIS_2_tvalid,
     input [FP_DATA_WIDTH - 1:0] S_AXIS_3_tdata,
     input S_AXIS_3_tvalid,
-    output [FP_DATA_WIDTH-1:0] dout,
-    output empty,
-    output full,
-    input rd_en
+    output reg[FP_DATA_WIDTH-1:0] dout,
+    output reg dout_valid  
+//  output empty,
+  //  output full,
+  //  input rd_en
 
 );
 
@@ -56,14 +55,53 @@ FP_DATA_WIDTH=32
 
 //signals
 
+  
+
   wire [FP_DATA_WIDTH-1:0] fp0_result;
   wire 			   fp0_result_valid;
   wire [FP_DATA_WIDTH-1:0] fp1_result;
   wire			   fp1_result_valid;
   wire [FP_DATA_WIDTH-1:0] fp2_result; 
   wire 			   fp2_result_valid;
+  reg[FP_DATA_WIDTH-1:0]   dout_next;
+  reg			   dout_valid_next;
 
 
+/*
+ reg [FP_DATA_WIDTH-1:0]  fp0_result_reg;
+ reg [FP_DATA_WIDTH-1:0]  fp0_result_reg_next;
+ reg                      fp0_result_valid_reg;
+ reg                      fp0_result_valid_reg_next;
+
+  reg [FP_DATA_WIDTH-1:0]  fp1_result_reg;
+  reg [FP_DATA_WIDTH-1:0]  fp1_result_reg_next;
+  reg                      fp1_result_valid_reg;
+  reg                      fp1_result_valid_reg_next;
+
+
+  reg [FP_DATA_WIDTH-1:0]  fp2_result_reg;
+  reg [FP_DATA_WIDTH-1:0]  fp2_result_reg_next;
+  reg                      fp2_result_valid_reg;
+  reg                      fp2_result_valid_reg_next;
+
+  reg [FP_DATA_WIDTH-1:0]  in0_reg;
+  reg 			   in0_reg_next;
+  reg [FP_DATA_WIDTH-1:0]  in1_reg;
+  reg [FP_DATA_WIDTH-1:0]  in1_reg_next;
+  reg [FP_DATA_WIDTH-1:0]  in2_reg;
+  reg 			   in2_reg_next;
+  reg [FP_DATA_WIDTH-1:0]  in3_reg;
+  reg [FP_DATA_WIDTH-1:0]  in3_reg_next;
+
+  reg [FP_DATA_WIDTH-1:0]  in0_reg_valid;
+  reg 			   in0_reg_valid_next;
+  reg [FP_DATA_WIDTH-1:0]  in1_reg_valid;
+  reg [FP_DATA_WIDTH-1:0]  in1_reg_valid_next;
+  reg [FP_DATA_WIDTH-1:0]  in2_reg_valid;
+  reg 			   in2_reg_valid_next;
+  reg [FP_DATA_WIDTH-1:0]  in3_reg_valid;
+  reg [FP_DATA_WIDTH-1:0]  in3_reg_valid_next;
+*/
 
 
 axi_fp_unit fp_unit_0 (
@@ -97,6 +135,9 @@ axi_fp_unit fp_unit_2 (
 );
 
 
+
+
+/*
 result_fifo result_fifo_0 (
     .full                  (full),
     .din                   (fp2_result),
@@ -107,5 +148,103 @@ result_fifo result_fifo_0 (
     .clk                   (aclk),
     .srst                  (srst)
 );
+*/
+/*
+fallthrough_small_fifo
+#( .WIDTH(FP_DATA_WIDTH),
+           .MAX_DEPTH_BITS(3))
+      input_fifo
+        (// Outputs
+         .dout                           (dout),
+         .full                           (),
+         .nearly_full                    (),
+         .prog_full                      (),
+         .empty                          (empty),
+         // Inputs
+         .din                            (fp2_result),
+         .wr_en                          (fp2_result_valid),
+         .rd_en                          (rd_en),
+         .reset                          (srst),
+         .clk                            (aclk)
+);
+*/
+
+
+/*
+always @(posedge aclk) begin
+if (srst ==1) begin
+  fp0_result_reg<=0;
+  fp0_result_valid_reg<=0;
+  fp1_result_reg<=0;
+  fp1_result_valid_reg<=0;
+  fp2_result_reg<=0;
+  fp2_result_valid_reg<=0;
+  in0_reg<=0;
+  in0_reg_valid<=0;
+  in1_reg<=0;
+  in1_reg_valid<=0;
+  in2_reg<=0;
+  in2_reg_valid<=0;
+  in3_reg<=0;
+  in3_reg_valid<=0;
+  end
+ 
+else begin
+  fp0_result_reg       <=fp0_result_reg_next;
+  fp0_result_valid_reg <=fp0_result_valid_reg_next;
+  fp1_result_reg       <=fp1_result_reg_next;
+  fp1_result_valid_reg <=fp1_result_valid_reg_next;
+  fp2_result_reg       <=fp2_result_reg_next;
+  fp2_result_valid_reg <=fp2_result_valid_reg_next;
+  in0_reg<=in0_reg_next;
+  in0_reg_valid<=in0_reg_valid_next;
+  in1_reg<=in1_reg_next;
+  in1_reg_valid<=in1_reg_valid_next;
+  in2_reg<=in2_reg_next;
+  in2_reg_valid<=in2_reg_valid_next;
+  in3_reg<=in3_reg_next;
+  in3_reg_valid<=in3_reg_valid_next;
+
+ end
+end //always
+
+always @ (*) 
+begin
+ fp0_result_reg_next        <= fp0_result;
+ fp0_result_valid_reg_next  <= fp0_result_valid;
+ fp1_result_reg_next        <= fp1_result;
+ fp1_result_valid_reg_next  <= fp1_result_valid;
+ fp2_result_reg_next        <= fp2_result;
+ fp2_result_valid_reg_next  <= fp2_result_valid;
+ in0_reg_next <= S_AXIS_0_tdata;
+ in0_reg_valid_next<=S_AXIS_0_tvalid;;
+ in1_reg_next <= S_AXIS_1_tdata;
+ in1_reg_valid_next<=S_AXIS_1_tvalid;;
+ in2_reg_next <= S_AXIS_2_tdata;
+ in2_reg_valid_next<=S_AXIS_2_tvalid;;
+ in3_reg_next <= S_AXIS_3_tdata;
+ in3_reg_valid_next<=S_AXIS_3_tvalid;;
+
+
+end
+
+*/
+
+always @(posedge aclk) begin
+if (srst ==1) begin
+  dout<=0;
+  dout_valid<=0;
+end
+else begin
+  dout<=dout_next;
+  dout_valid<=dout_valid_next;
+end
+end
+
+always @(*) begin
+dout_next<=fp2_result;
+dout_valid_next<=fp2_result_valid;
+end
 
 endmodule
+ 

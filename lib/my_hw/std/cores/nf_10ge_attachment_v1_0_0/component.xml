@@ -341,7 +341,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>891eb2b6</spirit:value>
+            <spirit:value>d7851376</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -363,7 +363,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>891eb2b6</spirit:value>
+            <spirit:value>d7851376</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -616,7 +616,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH&apos;)) - 1)">255</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH&apos;)) - 1)">63</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -633,7 +633,7 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH&apos;)) / 8) - 1)">31</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH&apos;)) / 8) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -706,7 +706,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH&apos;)) - 1)">255</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH&apos;)) - 1)">63</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -723,7 +723,7 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH&apos;)) / 8) - 1)">31</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH&apos;)) / 8) - 1)">7</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
@@ -796,12 +796,12 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>C_M_AXIS_DATA_WIDTH</spirit:name>
         <spirit:displayName>C M Axis Data Width</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH">256</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_M_AXIS_DATA_WIDTH">64</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_S_AXIS_DATA_WIDTH</spirit:name>
         <spirit:displayName>C S Axis Data Width</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH">256</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXIS_DATA_WIDTH">64</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_M_AXIS_TUSER_WIDTH</spirit:name>
@@ -869,7 +869,7 @@
       <spirit:file>
         <spirit:name>hdl/nf_10g_attachment.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_01a5c5b6</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_9c19e58e</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -948,12 +948,12 @@
     <spirit:parameter>
       <spirit:name>C_M_AXIS_DATA_WIDTH</spirit:name>
       <spirit:displayName>C M Axis Data Width</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M_AXIS_DATA_WIDTH" spirit:choiceRef="choice_list_5fb5ea9f">256</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_M_AXIS_DATA_WIDTH" spirit:choiceRef="choice_list_5fb5ea9f">64</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_S_AXIS_DATA_WIDTH</spirit:name>
       <spirit:displayName>C S Axis Data Width</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXIS_DATA_WIDTH" spirit:choiceRef="choice_list_5fb5ea9f">256</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXIS_DATA_WIDTH" spirit:choiceRef="choice_list_5fb5ea9f">64</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_M_AXIS_TUSER_WIDTH</spirit:name>
@@ -998,15 +998,15 @@
       <xilinx:vendorDisplayName>NetFPGA</xilinx:vendorDisplayName>
       <xilinx:vendorURL>http://www.netfpga.org</xilinx:vendorURL>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2018-11-11T22:18:15Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-11-20T12:39:48Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2016.4</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="f9388f47"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="a8bf7ffd"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="abc81afd"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="24ab2c11"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="219bf649"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="7d3679ed"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="d7bb1dcf"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="f8dbf578"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="81b116ca"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

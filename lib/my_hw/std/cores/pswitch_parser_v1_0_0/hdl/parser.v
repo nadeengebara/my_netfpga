@@ -94,10 +94,13 @@ module parser
     output                                    S_AXI_WREADY,
     output     [1 :0]                         S_AXI_BRESP,
     output                                    S_AXI_BVALID,
-    output                                    S_AXI_AWREADY
+    output                                    S_AXI_AWREADY,
     // stats
     //output reg pkt_fwd */
-
+    //debug
+    output[1:0]                   write_state,
+    output[2:0]			  debug_wire,
+    output [2:0]                 debug_count
 );
 
  function integer log2;
@@ -113,10 +116,9 @@ module parser
    // ------------ Internal Params --------
 
     
-   localparam NUM_STATES              = 2;
+   localparam NUM_STATES              = 1;
    localparam PARSE_HEADER            = 0;
    localparam WAIT_PACKET             = 1;
-   localparam IDLE                    = 0;
    localparam MAX_PKT_SIZE            = 2000; // In bytes
    localparam IN_FIFO_DEPTH_BIT       = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
    localparam FIRST_BEAT_FIFO_DEPTH   = log2(MAX_PKT_SIZE/(C_M_AXIS_DATA_WIDTH / 8));
@@ -124,7 +126,7 @@ module parser
    localparam COUNT_REQUIRED_ETH      = ETHER_TYPE_POS/C_M_AXIS_DATA_WIDTH;
    localparam RELATIVE_ETHER_TYPE_POS = ETHER_TYPE_POS-(COUNT_REQUIRED_ETH*C_M_AXIS_DATA_WIDTH);
    localparam RELATIVE_APP_CODE_POS   = APP_CODE_POS-(COUNT_REQUIRED_APP*C_M_AXIS_DATA_WIDTH);
-
+   localparam ETHER_TYPE_IP	      =	16'h0008;
    
 // ------------- Regs/ wires -----------
    
@@ -151,7 +153,7 @@ module parser
    wire agg_fifo_empty;
    wire agg_fifo_out;
    wire agg_fifo_in;   
-  
+   wire agg_fifo_nearly_full; 
   
 
    // Signals from TX Queues
@@ -160,20 +162,22 @@ module parser
 
    //Signals I want
    reg [15:0] ethertype;
-   reg [1:0] appcode;  
-   integer write_count=0;  
-   integer local_pos;
+   reg [1:0]  appcode;  
+   reg [31:0] write_count; 
+   reg [31:0] write_count_next; 
+   integer    local_pos;
    // Registers
    reg agg_fifo_wr_en;
-   reg agg_fifo_rd_en;
-   reg  fifo_rd_en;
-   reg  agg_valid;
-   reg  OQ_valid;
+   wire agg_fifo_rd_en;
+   wire  fifo_rd_en;
+   wire  agg_valid;
+   wire  OQ_valid;
    reg  agg_packet;
-   reg [NUM_STATES-1:0]                state_write,state_read;
-   reg [NUM_STATES-1:0]                state_write_next,state_read_next;
-      
-   
+   reg [NUM_STATES-1:0]                state_write;
+   reg [NUM_STATES-1:0]                state_write_next;
+   wire [2:0] 				debug_wire;
+   wire [2:0]					debug_count;    
+   reg	[2:0]				debug_reg;  
    //Slave register signals
 
    reg      [`REG_ID_BITS]    id_reg;
@@ -220,7 +224,7 @@ module parser
         (// Outputs
          .dout                           (agg_fifo_out),
          .full                           (),
-         .nearly_full                    (),
+         .nearly_full                    (agg_fifo_nearly_full),
 	 .prog_full                      (),
          .empty                          (agg_fifo_empty),
          // Inputs
@@ -239,9 +243,9 @@ module parser
    assign in_rxq_tdata      = s_axis_rxq_tdata;
    assign in_rxq_tkeep      = s_axis_rxq_tkeep;
    assign in_rxq_tuser      = s_axis_rxq_tuser;
-   assign s_axis_rxq_tready = !fifo_nearly_full;
+   assign s_axis_rxq_tready = ~fifo_nearly_full;
    
-   
+   assign write_state = state_write;
    //output side
 
    assign m_axis_agg_tdata  = fifo_out_tdata;
@@ -265,46 +269,95 @@ module parser
 
    always @(*) begin
       state_write_next         = state_write;
-      agg_fifo_wr_en     =0;
-      agg_packet=0;
+      write_count_next	       = write_count;
+      agg_fifo_wr_en           =0;
+      agg_packet               =0;
+      
       case(state_write)
         /* cycle between input queues until one is not empty */
         PARSE_HEADER: begin
-	    if(in_rxq_tvalid&s_axis_rxq_tready==1) begin
+	  if(in_rxq_tvalid&s_axis_rxq_tready==1) begin    
+          
               if(COUNT_REQUIRED_ETH==COUNT_REQUIRED_APP && COUNT_REQUIRED_ETH==write_count) begin
+               debug_reg=3'b000;
 	       ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
                appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
-	        if(ethertype===ETHER_TYPE || appcode===APP_CODE) begin	
+	            if(ethertype===ETHER_TYPE || appcode===APP_CODE) begin	
                     $display(" AGG PACKET");
                     agg_packet=1;
+		    end else begin
+		    agg_packet=0;
 		    end
-                    agg_fifo_wr_en=1;
-	            state_write_next=WAIT_PACKET;    
+               agg_fifo_wr_en=1;
+                     if(in_rxq_tlast!=1) begin
+	            	state_write_next=WAIT_PACKET;    
+		     end
+		    else begin
+			write_count_next=0; //DETERMINED WHAT TO DO AND TLAST IS 1, RESET COUNT AND PARSE NEXT HEADER
+		     end 
                 end
 
-                else if (COUNT_REQUIRED_ETH<COUNT_REQUIRED_APP && write_count==COUNT_REQUIRED_APP) begin
-                     appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
-                     if(appcode==APP_CODE) begin
+              else if (COUNT_REQUIRED_ETH<COUNT_REQUIRED_APP && write_count==COUNT_REQUIRED_APP) begin
+                debug_reg=3'b001; 
+		appcode=in_rxq_tdata[RELATIVE_APP_CODE_POS+1:RELATIVE_APP_CODE_POS];
+                    if(appcode==APP_CODE) begin
 			agg_packet=1;
                       end 
                     agg_fifo_wr_en=1;
-	            state_write_next=WAIT_PACKET;    
+                    if(in_rxq_tlast!=1) begin
+	            	state_write_next=WAIT_PACKET;    
+		    end
+		    else begin
+			write_count_next=0;    //IF THIS IS MY LAST FLIT RESET COUNT AND STAY HERE
+		    end
                 end
 
-                else if (write_count==COUNT_REQUIRED_ETH) begin
-	             ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
+                else if (COUNT_REQUIRED_ETH<COUNT_REQUIRED_APP && write_count==COUNT_REQUIRED_ETH) begin
+	        debug_reg=3'b010;     
+		ethertype=in_rxq_tdata[RELATIVE_ETHER_TYPE_POS+15:RELATIVE_ETHER_TYPE_POS];
                      if(ethertype==ETHER_TYPE) begin
 			agg_packet=1;
                         agg_fifo_wr_en=1;
-	                state_write_next=WAIT_PACKET;    
+                         if(in_rxq_tlast!=1) begin
+	                  state_write_next=WAIT_PACKET;    
+                         end
+			  else begin
+			   write_count_next=0;
+                          end
                         end
-		
-		     else begin
-			write_count=write_count+1;
-                      end
+                 else if (ethertype != ETHER_TYPE_IP) begin
+			agg_packet=0;
+			agg_fifo_wr_en=1;
+                         if(in_rxq_tlast!=1) begin
+	                  state_write_next=WAIT_PACKET;    
+                         end
+			  else begin
+			   write_count_next=0;
+                          end 
 		end
-	else begin
-		write_count=write_count+1;
+		  
+		 else begin
+			if(in_rxq_tlast!=1) begin
+			   write_count_next=write_count+1;
+			end
+			else begin
+                            agg_packet=0;
+			    agg_fifo_wr_en=1;
+			    write_count_next=0;
+			end
+                   end
+               end
+	
+	        else if (in_rxq_tlast ==1 && write_count <COUNT_REQUIRED_APP) begin    
+                debug_reg=3'b011;
+		agg_packet=0;
+		agg_fifo_wr_en=1;
+		write_count_next=0;
+		end        
+
+	else begin		
+		debug_reg=3'b100;
+		write_count_next=write_count_next+1;
                end
            end
          end
@@ -313,48 +366,32 @@ module parser
            /* Determine type of packet */
 	if(in_rxq_tvalid&s_axis_rxq_tready&in_rxq_tlast==1) begin
 		  agg_packet=0;
-                  write_count=0;
+                  write_count_next=0;
                   state_write_next=PARSE_HEADER; 
 	     end
       end
 	endcase // case(state)
    end // always @ (*)
                 
+      assign debug_count=write_count[2:0];
+      assign debug_wire=debug_reg;
+      assign agg_valid =  (~fifo_empty & ~agg_fifo_empty) & (agg_fifo_out==1);
+      assign OQ_valid =   (~fifo_empty & ~agg_fifo_empty) & (agg_fifo_out==0);
+      assign fifo_rd_en = (m_axis_agg_tvalid & in_agg_tready) | ( OQ_valid & in_OQ_tready);
+      assign agg_fifo_rd_en = fifo_rd_en & fifo_out_tlast;       
 
-       always @(*) begin
-	
-	agg_fifo_rd_en=0;
-	fifo_rd_en=0;
-        agg_valid=0;
-        OQ_valid=0;
-        state_read_next=state_read;
-
-	case(state_read) 
-
-        IDLE:begin 
-        agg_valid  = agg_fifo_out&~fifo_empty&~agg_fifo_empty;
-        OQ_valid   = ~agg_fifo_out&~fifo_empty&~agg_fifo_empty;
-	if((agg_valid && in_agg_tready )||(OQ_valid && in_OQ_tready)) begin
-		fifo_rd_en=1;
-            if(fifo_out_tlast == 1) begin
-                  agg_fifo_rd_en=1;
-                  end
-          end
-        end
-       endcase
-     end
-   
   always @(posedge axis_aclk) begin
       if(~axis_resetn) begin
         write_count<=0; 
-	agg_valid<=0;
-	OQ_valid<=0;
+//	agg_valid<=0;
+//	OQ_valid<=0;
 	state_write <= PARSE_HEADER;
-        state_read <= IDLE;
+ //       state_read <= IDLE;
       end
       else begin
          state_write <= state_write_next;
-	 state_read <= state_read_next;
+         write_count <= write_count_next;
+//	 state_read <= state_read_next;
       end
    end
 
@@ -433,21 +470,13 @@ always @(posedge axis_aclk)
                 id_reg <= #1    `REG_ID_DEFAULT;
                 version_reg <= #1    `REG_VERSION_DEFAULT;
                 ip2cpu_flip_reg <= #1    ~cpu2ip_flip_reg;
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-                pktin_reg[`REG_PKTIN_WIDTH -2: 0] <= #1  clear_counters | pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) ;
+       
+//		pktin_reg<= #1 s_axis_rxq_tready;  
+            
+      pktin_reg[`REG_PKTIN_WIDTH -2: 0] <= #1  clear_counters | pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) ;
 
         pktin_reg[`REG_PKTIN_WIDTH-1] <= #1 clear_counters | pktin_reg_clear ? 1'h0 : pktin_reg_clear ? 'h0  : pktin_reg[`REG_PKTIN_WIDTH-2:0] + pktin_reg[`REG_PKTIN_WIDTH-2:0] + (s_axis_rxq_tlast && s_axis_rxq_tvalid && s_axis_rxq_tready ) > {(`REG_PKTIN_WIDTH-1){1'b1}} ? 1'b1 : pktin_reg[`REG_PKTIN_WIDTH-1];
+
 
                 pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready ) ;
                 pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1]<= #1  clear_counters | pktout_agg_reg_clear ? 'h0  : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-2:0] + (m_axis_agg_tvalid && m_axis_agg_tlast && m_axis_agg_tready) > {(`REG_PKTOUT_AGG_WIDTH-1){1'b1}} ?1'b1 : pktout_agg_reg [`REG_PKTOUT_AGG_WIDTH-1];

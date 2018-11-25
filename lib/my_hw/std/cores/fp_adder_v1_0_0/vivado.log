@@ -2,8 +2,8 @@
 # Vivado v2016.4 (64-bit)
 # SW Build 1756540 on Mon Jan 23 19:11:19 MST 2017
 # IP Build 1755317 on Mon Jan 23 20:30:07 MST 2017
-# Start of session at: Mon Nov 12 01:28:48 2018
-# Process ID: 31664
+# Start of session at: Sun Nov 25 20:36:30 2018
+# Process ID: 12567
 # Current directory: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_adder_v1_0_0
 # Command line: vivado -mode batch -source fp_adder.tcl
 # Log file: /home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/fp_adder_v1_0_0/vivado.log
@@ -54,8 +54,8 @@ WARNING: [IP_Flow 19-3656] If you move the project, the path for repository '/ho
 # ipx::add_subcore xilinx.com:ip:floating_point:7.1  [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
 # ipx::add_subcore xilinx.com:ip:floating_point:7.1  [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 # ipx::infer_user_parameters [ipx::current_core]
-# ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
-# ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
+# ipx::add_subcore NetFPGA:NetFPGA:fallthrough_small_fifo:1.00 [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
+# ipx::add_subcore NetFPGA:NetFPGA:fallthrough_small_fifo:1.00 [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 # ipx::infer_user_parameters [ipx::current_core]
 # ipx::add_user_parameter {FP_DATA_WIDTH} [ipx::current_core]
 # set_property value_resolve_type {user} [ipx::get_user_parameters FP_DATA_WIDTH]
@@ -78,4 +78,4 @@ INFO: [IP_Flow 19-2187] The Product Guide file is missing.
 INFO: [IP_Flow 19-1839] IP Catalog is up to date.
 # close_project
 # exit
-INFO: [Common 17-206] Exiting Vivado at Mon Nov 12 01:28:54 2018...
+INFO: [Common 17-206] Exiting Vivado at Sun Nov 25 20:36:36 2018...

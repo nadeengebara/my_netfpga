@@ -32,7 +32,7 @@
 
 module bridge
 #(
-    parameter C_AXIS_DATA_WIDTH = 256,
+    parameter C_AXIS_DATA_WIDTH = 64,
     parameter C_AXIS_TUSER_WIDTH = 128,
     parameter NUM_QUEUES = 8,
     parameter NUM_QUEUES_WIDTH = log2(NUM_QUEUES)

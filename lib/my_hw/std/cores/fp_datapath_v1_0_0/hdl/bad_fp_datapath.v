@@ -232,6 +232,15 @@ Width    FIFO Index:bits     //Indexing starts at 1
    reg [C_M_AXIS_DATA_WIDTH/8*DATA_OFFSET_INDEX-1:0]        tkeep_reg_next[NUM_QUEUES-1:0];
    reg [DATA_OFFSET_INDEX-1:0]				    tlast_reg_next[NUM_QUEUES-1:0];
 
+   reg [C_M_AXIS_DATA_WIDTH*DATA_OFFSET_INDEX-1:0]          data_reg_output [NUM_QUEUES-1:0];
+   reg [C_M_AXIS_TUSER_WIDTH*DATA_OFFSET_INDEX-1:0]         tuser_reg_output[NUM_QUEUES-1:0];
+   reg [C_M_AXIS_DATA_WIDTH/8*DATA_OFFSET_INDEX-1:0]        tkeep_reg_output[NUM_QUEUES-1:0];
+   reg [DATA_OFFSET_INDEX-1:0]				    tlast_reg_output[NUM_QUEUES-1:0];
+
+   reg [C_M_AXIS_DATA_WIDTH*DATA_OFFSET_INDEX-1:0]          data_reg_output_next [NUM_QUEUES-1:0];
+   reg [C_M_AXIS_TUSER_WIDTH*DATA_OFFSET_INDEX-1:0]         tuser_reg_output_next[NUM_QUEUES-1:0];
+   reg [C_M_AXIS_DATA_WIDTH/8*DATA_OFFSET_INDEX-1:0]        tkeep_reg_output_next[NUM_QUEUES-1:0];
+   reg [DATA_OFFSET_INDEX-1:0]				    tlast_reg_output_next[NUM_QUEUES-1:0];
    
   //wires out of headers_regs
    wire[C_M_AXIS_DATA_WIDTH-1:0]                            data_reg_out  [NUM_QUEUES-1:0];
@@ -254,6 +263,10 @@ Width    FIFO Index:bits     //Indexing starts at 1
 
    reg [NUM_QUEUES-1:0] start_agg		 = 0;
    reg [NUM_QUEUES-1:0] start_agg_next		 = 0;
+  
+   reg [NUM_QUEUES-1:0] done_with_headers        = 0;
+   reg [NUM_QUEUES-1:0] done_with_headers_next	 = 0;
+
    reg [3:0] output_write_count [NUM_QUEUES-1:0]  = {{4'b0000},{4'b0000},{4'b0000},{4'b0000}};
    reg [3:0] output_write_count_next [NUM_QUEUES-1:0]  = {{4'b0000},{4'b0000},{4'b0000},{4'b0000}};
 
@@ -357,7 +370,7 @@ endgenerate
          .clk                            (axis_aclk));
   
 
-  always @(in_fifo_empty,in_fifo_out_tdata[i],in_fifo_out_tkeep[i],in_fifo_out_tuser[i],in_fifo_out_tlast[i],input_state[i],meta_nearly_full,start_agg[i]) begin
+  always @(in_fifo_empty,in_fifo_out_tdata[i],in_fifo_out_tkeep[i],in_fifo_out_tuser[i],in_fifo_out_tlast[i],input_state[i],meta_nearly_full,start_agg[i],done_with_headers[i]) begin
       
       input_state_next[i]=input_state[i];
       in_fifo_rd_en[i]=0; 
@@ -367,9 +380,10 @@ endgenerate
       tkeep_reg_next[i]=tkeep_reg[i];
       tlast_reg_next[i]=tlast_reg[i];
       tuser_reg_next[i]=tuser_reg[i];
-      start_agg_next[i]=start_agg[i]; 
+        
       input_write_count_next[i]=input_write_count[i];
-	case(input_state[i])
+      start_agg_next[i]=start_agg[i];	
+     case(input_state[i])
 	 
 
 
@@ -399,12 +413,12 @@ endgenerate
 //only come here when  everyone else comes
     INSPECT_MODIFY_HEADER: begin
 	 if(PORTS_BITMAP[i]==1 & !(PORTS_BITMAP&meta_nearly_full)) begin
-	       data_reg_next[i][DEST_MAC_POS+48-1:DEST_MAC_POS]=NEW_DEST_MAC;
+	      data_reg_next[i][DEST_MAC_POS+48-1:DEST_MAC_POS]=NEW_DEST_MAC;
 	       start_agg_next[i]=1;
 	       input_state_next[i]=FSM_START_AGG;
                fp_valid[i]=1;
+               meta_fifo_wr_en[i]=1; 
                in_fifo_rd_en[i]=1;
-               meta_fifo_wr_en[i]=1;
 	       if(i==MASTER) begin
 		 if(data_reg[i][FIN_POS]==1) begin
 			current_vector_index=0;
@@ -418,23 +432,31 @@ endgenerate
 	
 	FSM_START_AGG: begin
 	if (!(PORTS_BITMAP&meta_nearly_full)) begin          //come here only if PORTS_BITMAP=1	  
+	
 		in_fifo_rd_en[i]=1;
 	        fp_valid[i]=1;
          	meta_fifo_wr_en[i]=1;	
 		if(in_fifo_out_tlast[i]==1) begin
- 				if(!start_agg[i]) begin
+                start_agg_next[i]=0;
+ 				if(done_with_headers[i]) begin
 				  input_state_next[i]=IDLE;
 			        end
 				else begin
 				input_state_next[i]=BUBBLE_AGG;
+				
 			        end
 			end
 		 end
 	end
 	
 	BUBBLE_AGG: begin
-		if(start_agg[i]==0) begin
+		if(done_with_headers[i]==1) begin
 			input_state_next[i]=IDLE;
+		    data_reg_next[i]=0;                    
+                    tuser_reg_next[i]=0;                    
+                    tkeep_reg_next[i]=0;                    
+                    tlast_reg_next[i]=0;                    
+
 		end
 	end		
     endcase
@@ -442,49 +464,50 @@ endgenerate
   
 //OUTPUT SIDE FSM THAT HANDLES AGG
   always @(output_agg_state[i],out_tready[i],start_agg[i],output_write_count[i],fp_empty,fp_dout,meta_fifo_out_tlast[i],meta_empty,data_reg[i],tlast_reg[i],tkeep_reg[i],tuser_reg[i]) begin
-    data_reg_next[i] =data_reg[i];
-    tkeep_reg_next[i]=tkeep_reg[i];
-    tlast_reg_next[i]=tlast_reg[i];
-    tuser_reg_next[i]=tuser_reg[i];
+    data_reg_output_next[i] =data_reg_output[i];
+    tkeep_reg_output_next[i]=tkeep_reg_output[i];
+    tlast_reg_output_next[i]=tlast_reg_output[i];
+    tuser_reg_output_next[i]=tuser_reg_output[i];
     fp_rd_en[i]=0; 
     out_tvalid[i]=0;
     meta_fifo_rd_en[i]=0;
     output_agg_state_next[i]=output_agg_state[i];
-    start_agg_next[i]=start_agg[i];	
+    done_with_headers_next[i]=done_with_headers[i];
     output_write_count_next[i]=output_write_count[i];      
   
         case(output_agg_state[i])
 	
 	IDLE_OUT: begin
-
 	   if((PORTS_BITMAP[i] & start_agg[i])==1) begin
-                  out_tdata[i] = data_reg_out[i];
-		  out_tkeep[i] = tkeep_reg_out[i];
-                  out_tlast[i] = tlast_reg_out[i];
-                  out_tuser[i] = tuser_reg_out[i];
+                  done_with_headers_next[i]=0;
+		  data_reg_output_next[i] = data_reg[i];
+		  tkeep_reg_output_next[i] = tkeep_reg[i];
+                  tlast_reg_output_next[i] = tlast_reg[i];
+                  tuser_reg_output_next[i] = tuser_reg[i];
 		  output_agg_state_next[i]= SEND_HEADER;
 	      end
+          
         end
 
 	SEND_HEADER: begin
         // if(((PORTS_BITMAP[i] & start_agg[i])==1) && !(PORTS_BITMAP&~start_agg)) begin 
-                  out_tdata[i] = data_reg_out[i];
+	          out_tdata[i] = data_reg_out[i];
 		  out_tkeep[i] = tkeep_reg_out[i];
                   out_tlast[i] = tlast_reg_out[i];
                   out_tuser[i] = tuser_reg_out[i];
-             if(output_write_count[i]==DATA_OFFSET_INDEX) begin
+                if(output_write_count[i]==DATA_OFFSET_INDEX) begin
 		output_write_count_next[i]=0;
-	       	start_agg_next[i]=0;
+	       	done_with_headers_next[i]=1;
 		output_agg_state_next[i]=WRITE_OUT_RESULT;
 	     end
 	     else begin
 		  out_tvalid[i]= 1;
 		  if (out_tready[i]==1) begin
 		  output_write_count_next[i]=output_write_count[i]+1; 
-                  data_reg_next[i]=data_reg[i]>>C_M_AXIS_DATA_WIDTH;
-		  tkeep_reg_next[i]=tkeep_reg[i]>>C_M_AXIS_DATA_WIDTH/8;
-		  tlast_reg_next[i]=tlast_reg[i]>>1;
-		  tuser_reg_next[i]=tuser_reg[i]>>C_M_AXIS_TUSER_WIDTH;	  
+                  data_reg_output_next[i]=data_reg_output[i]>>C_M_AXIS_DATA_WIDTH;
+		  tkeep_reg_output_next[i]=tkeep_reg_output[i]>>C_M_AXIS_DATA_WIDTH/8;
+		  tlast_reg_output_next[i]=tlast_reg_output[i]>>1;
+		  tuser_reg_output_next[i]=tuser_reg_output[i]>>C_M_AXIS_TUSER_WIDTH;	  
 		  end
 		  else begin
 		   out_tvalid[i]=0;
@@ -528,7 +551,8 @@ endgenerate
         fp_valid[i]<=0;
         fp_rd_en[i]<=0;
          start_agg[i]<=0;
-		in_fifo_rd_en<=0;
+	done_with_headers[i]<=0;	
+	in_fifo_rd_en<=0;
                 
 	//must reset kel regs here
      end
@@ -537,12 +561,17 @@ endgenerate
     		tkeep_reg[i]       <=tkeep_reg_next[i];
     		tlast_reg[i]       <=tlast_reg_next[i];
             tuser_reg[i]       <=tuser_reg_next[i];
+     		data_reg_output[i]        <=data_reg_output_next[i];
+    		tkeep_reg_output[i]       <=tkeep_reg_output_next[i];
+    		tlast_reg_output[i]       <=tlast_reg_output_next[i];
+            tuser_reg_output[i]       <=tuser_reg_output_next[i];
             input_state[i]     <=input_state_next[i];
 	    output_agg_state[i]<=output_agg_state_next[i];
             start_agg[i]<=start_agg_next[i];
             output_write_count[i]<=output_write_count_next[i];
 	    input_write_count[i]<=input_write_count_next[i];
-           end
+            done_with_headers[i]<=done_with_headers_next[i];   
+	end
 	end
   end
  endgenerate
@@ -582,25 +611,25 @@ endgenerate
   
 //assigning values to signal outputs from regs
 
-  assign data_reg_out[0]     = data_reg[0][C_M_AXIS_DATA_WIDTH-1:0];
-  assign tuser_reg_out[0]    = tuser_reg[0][C_M_AXIS_TUSER_WIDTH-1:0];
-  assign tkeep_reg_out[0]    = tkeep_reg[0][C_M_AXIS_DATA_WIDTH/8-1:0];
-  assign tlast_reg_out[0]    = tlast_reg[0][0];
+  assign data_reg_out[0]     = data_reg_output[0][C_M_AXIS_DATA_WIDTH-1:0];
+  assign tuser_reg_out[0]    = tuser_reg_output[0][C_M_AXIS_TUSER_WIDTH-1:0];
+  assign tkeep_reg_out[0]    = tkeep_reg_output[0][C_M_AXIS_DATA_WIDTH/8-1:0];
+  assign tlast_reg_out[0]    = tlast_reg_output[0][0];
  
-  assign data_reg_out[1]     = data_reg[1][C_M_AXIS_DATA_WIDTH-1:0];
-  assign tuser_reg_out[1]    = tuser_reg[1][C_M_AXIS_TUSER_WIDTH-1:0];
-  assign tkeep_reg_out[1]    = tkeep_reg[1][C_M_AXIS_DATA_WIDTH/8-1:0];
-  assign tlast_reg_out[1]    = tlast_reg[1][0];
+  assign data_reg_out[1]     = data_reg_output[1][C_M_AXIS_DATA_WIDTH-1:0];
+  assign tuser_reg_out[1]    = tuser_reg_output[1][C_M_AXIS_TUSER_WIDTH-1:0];
+  assign tkeep_reg_out[1]    = tkeep_reg_output[1][C_M_AXIS_DATA_WIDTH/8-1:0];
+  assign tlast_reg_out[1]    = tlast_reg_output[1][0];
 
-  assign data_reg_out[2]     = data_reg[2][C_M_AXIS_DATA_WIDTH-1:0];
-  assign tuser_reg_out[2]    = tuser_reg[2][C_M_AXIS_TUSER_WIDTH-1:0];
-  assign tkeep_reg_out[2]    = tkeep_reg[2][C_M_AXIS_DATA_WIDTH/8-1:0];
-  assign tlast_reg_out[2]    = tlast_reg[2][0];
+  assign data_reg_out[2]     = data_reg_output[2][C_M_AXIS_DATA_WIDTH-1:0];
+  assign tuser_reg_out[2]    = tuser_reg_output[2][C_M_AXIS_TUSER_WIDTH-1:0];
+  assign tkeep_reg_out[2]    = tkeep_reg_output[2][C_M_AXIS_DATA_WIDTH/8-1:0];
+  assign tlast_reg_out[2]    = tlast_reg_output[2][0];
 
-  assign m_axis_3_tdata      = data_reg[3][C_M_AXIS_DATA_WIDTH-1:0];
-  assign tuser_reg_out[3]    = tuser_reg[3][C_M_AXIS_TUSER_WIDTH-1:0];
-  assign tkeep_reg_out[3]    = tkeep_reg[3][C_M_AXIS_DATA_WIDTH/8-1:0];
-  assign tlast_reg_out[3]    = tlast_reg[3][0];
+  assign data_reg_out[3]      = data_reg_output[3][C_M_AXIS_DATA_WIDTH-1:0];
+  assign tuser_reg_out[3]    = tuser_reg_output[3][C_M_AXIS_TUSER_WIDTH-1:0];
+  assign tkeep_reg_out[3]    = tkeep_reg_output[3][C_M_AXIS_DATA_WIDTH/8-1:0];
+  assign tlast_reg_out[3]    = tlast_reg_output[3][0];
 
   assign m_axis_0_tdata      = out_tdata[0];
   assign m_axis_0_tuser      = out_tuser[0];

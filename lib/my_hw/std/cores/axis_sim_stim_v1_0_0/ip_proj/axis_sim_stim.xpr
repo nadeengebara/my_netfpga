@@ -6,7 +6,7 @@
 <Project Version="7" Minor="17" Path="/home/nadeen/SIGCOMM/PANAMA/Vivado/my_netfpga/lib/my_hw/std/cores/axis_sim_stim_v1_0_0/ip_proj/axis_sim_stim.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="f5ddd4fedc8d4c5b99b1855959431951"/>
+    <Option Name="Id" Val="a338d241ee484d6e95f196ccdec6889b"/>
     <Option Name="Part" Val="xc7vx690tffg1761-3"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -20,7 +20,7 @@
     <Option Name="ActiveSimSet" Val="sim_1"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ManageIP" Val="TRUE"/>
-    <Option Name="IPRepoPath" Val="$PPRDIR/../../../../../hw"/>
+    <Option Name="IPRepoPath" Val="$PPRDIR/../../../../../my_hw"/>
     <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
     <Option Name="IPCachePermission" Val="read"/>
     <Option Name="IPCachePermission" Val="write"/>

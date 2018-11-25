@@ -69,9 +69,14 @@ ipx::add_subcore xilinx.com:ip:floating_point:7.1  [ipx::get_file_groups xilinx_
 ipx::add_subcore xilinx.com:ip:floating_point:7.1  [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 ipx::infer_user_parameters [ipx::current_core]
 
-ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
-ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
+#ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
+#ipx::add_subcore xilinx.com:ip:fifo_generator:13.1  [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
+#ipx::infer_user_parameters [ipx::current_core]
+
+ipx::add_subcore NetFPGA:NetFPGA:fallthrough_small_fifo:1.00 [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
+ipx::add_subcore NetFPGA:NetFPGA:fallthrough_small_fifo:1.00 [ipx::get_file_groups xilinx_anylanguagebehavioralsimulation -of_objects [ipx::current_core]]
 ipx::infer_user_parameters [ipx::current_core]
+
 
 ipx::add_user_parameter {FP_DATA_WIDTH} [ipx::current_core]
 set_property value_resolve_type {user} [ipx::get_user_parameters FP_DATA_WIDTH]

@@ -33,8 +33,8 @@
 // wrapper module for 10G interface without nonshared logic.
 
 module nf_10g_interface_block #(
-	parameter 				C_M_AXIS_DATA_WIDTH		= 256,
-	parameter 				C_S_AXIS_DATA_WIDTH		= 256,
+	parameter 				C_M_AXIS_DATA_WIDTH		= 64,
+	parameter 				C_S_AXIS_DATA_WIDTH		= 64,
 	parameter 				C_AXIS_DATA_INTERNAL_WIDTH	= 64,
 	parameter 				C_M_AXIS_TUSER_WIDTH		= 128,
 	parameter 				C_S_AXIS_TUSER_WIDTH		= 128

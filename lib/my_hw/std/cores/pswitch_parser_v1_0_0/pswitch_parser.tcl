@@ -80,7 +80,7 @@ set_property value_format {long} [ipx::get_user_parameters C_M_AXIS_DATA_WIDTH]
 ipx::add_user_parameter {C_S_AXIS_DATA_WIDTH} [ipx::current_core]
 set_property value_resolve_type {user} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 set_property display_name {C_S_AXIS_DATA_WIDTH} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
-set_property value {256} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
+set_property value {64} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 set_property value_format {long} [ipx::get_user_parameters C_S_AXIS_DATA_WIDTH]
 
 ipx::add_user_parameter {C_M_AXIS_TUSER_WIDTH} [ipx::current_core]

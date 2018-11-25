@@ -41,7 +41,7 @@ set axis_sim_pkg_path ../axis_sim_pkg_v1_0_0/hdl/
 create_project -name ${design} -force -dir "./${proj_dir}" -part ${device} -ip
 set_property source_mgmt_mode All [current_project]  
 set_property top ${design} [current_fileset]
-set_property ip_repo_paths $::env(SUME_FOLDER)/lib/hw/  [current_fileset]
+set_property ip_repo_paths $::env(SUME_FOLDER)/lib/my_hw/  [current_fileset]
 
 # IP build.
 file copy -force ${axis_sim_pkg_path}/ "./hdl/axis_sim_pkg/"
